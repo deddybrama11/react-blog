@@ -5,7 +5,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
-@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
 @import "functions";
 @import "variables";
 @import "mixins";
@@ -44,26 +44,72 @@
 @import "utilities";
 @import "print";
 
-header{
-    border-bottom: 1px solid $gray-200;
-    width: 100%;
-    position: relative;
-    margin-bottom: 30px;
-    .navbar{
-        a.navbar-brand{
-            color: $indigo;
-            font-weight: 600;
-            font-size: 30px;
-        }
-        background-color: #fff;
-        height: 80px;
-        ul.navbar-nav{
-            li.nav-item{
-                a.nav-link{
-                    color: $primary;
-                }
-            }
+header {
+  border-bottom: 1px solid $gray-200;
+  width: 100%;
+  position: relative;
+  .navbar {
+    .navbar-collapse.collapse.in {
+      display: inline-block;
+    }
+    a.navbar-brand {
+      color: $indigo;
+      font-weight: 600;
+      font-size: 30px;
+    }
+    background-color: #fff;
+    min-height: 80px;
+    ul.navbar-nav {
+      li.nav-item {
+        margin-right: 8px;
+        a.nav-link {
+          color: $primary;
+          font-weight: 500;
+          font-size: 16px;
+          letter-spacing: 1px;
+          &:hover {
+            text-decoration: underline;
+          }
         }
 
+        &.active {
+          a {
+            color: $indigo;
+          }
+        }
+      }
     }
+  }
+}
+
+.gradient-bg::after {
+    z-index: 1;
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 680px;
+    width: 100%;
+    background: linear-gradient(to bottom, transparent 0%, black 100%);
+}
+.wrapper-hero-content{
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    font-size: 48px;
+    color: $blue;
+    font-weight: 700;
+    line-height: 60px;
+    
+  
+    position: absolute;
+}
+.text-tes{
+    margin-right: 100px;
+    white-space: normal;
+}
+.btn{
+    font-weight: 600;
+    
 }

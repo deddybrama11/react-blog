@@ -45,6 +45,9 @@
       @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
     }
   }
+  &.btn-shadow{
+    box-shadow: 0px 8px 15px rgba($indigo, $alpha: 0.3);
+  }
 }
 
 // Future-proof disabling of clicks on `<a>` elements
