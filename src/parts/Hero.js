@@ -5,16 +5,16 @@ import React from "react";
 export default function Hero() {
     function showArticle(){
         window.scrollTo({
-            top:200,
+            top:600,
             behavior:"smooth"
         })
     }
   return (
-    <div className="row gradient-bg" style={{ height: "680px" }}>
+    <section className="row gradient-bg" style={{ height: "680px" }}>
       <img
         className="img-fluid"
         style={{ height: "auto", objectFit: "cover" }}
-        src="/image/image-hero.jpg"
+        src="/images/image-hero.jpg"
       ></img>
       <div className="wrapper-hero-content">
         <div className="container" style={{ marginTop: "250px" }}>
@@ -34,6 +34,6 @@ export default function Hero() {
           
         </div>
       </div>
-    </div>
+    </section>
   );
 }

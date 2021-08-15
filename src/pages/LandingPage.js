@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Header from "../parts/Header";
 import Hero from "../parts/Hero";
+import Content from "../parts/Content";
+import landingPage from "json/landingPage.json";
+import Footer from "../parts/Footer";
 
 export class LandingPage extends Component {
   constructor(props) {
@@ -17,7 +20,9 @@ export class LandingPage extends Component {
     return (
       <>
         <Header {...this.props} />
-        <Hero/>
+        <Hero />
+        <Content data={landingPage.articles}/>
+        <Footer/>
       </>
     );
   }
