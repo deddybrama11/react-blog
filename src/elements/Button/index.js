@@ -58,6 +58,19 @@ export default function Button(props) {
     }
   }
 
+  if (props.type === "submit") {
+    <div>
+      <button
+        className={className.join(" ")}
+        style={props.style}
+        onClick={onClick}
+        type="submit"
+      >
+        {props.children}
+      </button>
+    </div>;
+  }
+
   return (
     <div>
       <button

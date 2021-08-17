@@ -1,3 +1,4 @@
+import LoginPage from './pages/LoginPage';
 import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -9,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Route path="/" component={LandingPage}></Route>
+        <Route path="/" component={LoginPage}></Route>
       </Router>
     </div>
   );

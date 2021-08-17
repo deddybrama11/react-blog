@@ -44,6 +44,11 @@
 @import "utilities";
 @import "print";
 
+html, body, .App, #root {
+  height: 100%
+}
+
+
 header {
   border-bottom: 1px solid $gray-200;
   width: 100%;
@@ -112,6 +117,13 @@ header {
   font-weight: 600;
 }
 
+.title-lg{
+  font-size: 36px;
+  font-weight: 700;
+  color: $white;
+}
+
+
 .title-md {
   font-size: 24px;
   color: $indigo;
@@ -172,4 +184,13 @@ h6{
 .copyrights{
   color: $gray-600;
   padding: 35px;
+}
+.bg-blue{
+  background-color: $blue;
+}
+
+.input-new{
+  padding: "25px";
+  border: 1px solid $blue;
+
 }
