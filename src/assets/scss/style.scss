@@ -44,10 +44,12 @@
 @import "utilities";
 @import "print";
 
-html, body, .App, #root {
-  height: 100%
+html,
+body,
+.App,
+#root {
+  height: 100%;
 }
-
 
 header {
   border-bottom: 1px solid $gray-200;
@@ -117,12 +119,11 @@ header {
   font-weight: 600;
 }
 
-.title-lg{
+.title-lg {
   font-size: 36px;
   font-weight: 700;
   color: $white;
 }
-
 
 .title-md {
   font-size: 24px;
@@ -177,20 +178,109 @@ hr {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-h6{
-  color:$indigo
+h6 {
+  color: $indigo;
 }
 
-.copyrights{
+.copyrights {
   color: $gray-600;
   padding: 35px;
 }
-.bg-blue{
-  background-color: $blue;
+.bg-blue {
+  // background-color: rgba($color: $blue, $alpha: 0.1);
+  background-color: #f1f7ff;
 }
 
-.input-new{
+.input-new {
   padding: "25px";
   border: 1px solid $blue;
+}
+.overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 998;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+  display: block;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+}
+#dismiss {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  /* top right corner of the sidebar */
+  top: 10px;
+  right: 10px;
+}
 
+.text-blue {
+  color: $blue;
+  font-weight: 600;
+  font-size: 36px;
+}
+
+@media only screen and (max-width: 796px) {
+  .side-navbar {
+    flex: 0 0 40%;
+    max-width: 40%;
+    position: fixed;
+    z-index: 9999;
+    left: -1000px;
+    transition: all 0.5s ease-in-out;
+
+    &.active {
+      top: 0;
+      left: 0;
+      transition: all 0.5s ease-in-out;
+    }
+  }
+  #dismiss {
+    cursor: pointer;
+    display: inline !important;
+    
+    &:hover{
+      transform: scale(1.2);
+    }
+  }
+  #sidebarCollapse {
+    display: inline-block !important;
+  }
+}
+#dismiss {
+  display: none;
+}
+#sidebarCollapse {
+  display: none;
+}
+
+.side-navbar {
+  .side-navbar-item {
+    padding: 1px;
+    overflow: hidden;
+    align-self: flex-start;
+    width: 100%;
+    .item {
+      align-self: center;
+      color: $gray-500;
+      width: 80%;
+      padding: 15px;
+      margin: 10px 0px 0px 0px;
+      border-radius: 10px;
+      &.active {
+        background-color: rgba(116, 185, 255, 0.19);
+        // border: 1px solid $indigo;
+        color: black;
+      }
+      &:hover {
+        background-color: rgba(116, 185, 255, 0.19);
+        text-decoration: none;
+      }
+    }
+  }
 }

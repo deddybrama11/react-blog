@@ -7,15 +7,15 @@ export default function Article(props) {
   if (props.type === "big") {
     return (
       <div className="col" style={{ marginBottom: "15px" }}>
-        <div class="card card-article">
+        <div className="card card-article">
           <img
-            class="card-img-top"
+            className="card-img-top"
             src={props.article.imageUrl}
             alt="Card image cap"
           />
-          <div class="card-body">
-            <h5 class="card-title title-article-bg">{props.article.title}</h5>
-            <p class="card-text description-article">
+          <div className="card-body">
+            <h5 className="card-title title-article-bg">{props.article.title}</h5>
+            <p className="card-text description-article">
               {props.article.description}
             </p>
             <Button
@@ -57,15 +57,15 @@ export default function Article(props) {
   } else if (props.type === "small") {
     return (
       <div className="col-md-3" style={{ marginBottom: "15px" }}>
-        <div class="card card-article">
+        <div className="card card-article">
           <img
-            class="card-img-top"
+            className="card-img-top"
             src={props.article.imageUrl}
             alt="Card image cap"
           />
-          <div class="card-body">
-            <h5 class="card-title title-article-sm">{props.article.title}</h5>
-            <p class="card-text description-article">
+          <div className="card-body">
+            <h5 className="card-title title-article-sm">{props.article.title}</h5>
+            <p className="card-text description-article">
               {props.article.description}
             </p>
             <Button
