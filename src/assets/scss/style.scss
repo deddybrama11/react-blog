@@ -186,9 +186,13 @@ h6 {
   color: $gray-600;
   padding: 35px;
 }
-.bg-blue {
+.bg-young-blue {
   // background-color: rgba($color: $blue, $alpha: 0.1);
   background-color: #f1f7ff;
+}
+
+.bg-blue{
+  background-color: $blue;
 }
 
 .input-new {

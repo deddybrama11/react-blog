@@ -9,10 +9,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 class Articles extends Component {
-  constructor(props) {
-    super(props);
-  }
-  state = {};
+  // constructor(props) {
+  //   super(props);
+  // }
+  // state = {};
   render() {
     return (
       <div

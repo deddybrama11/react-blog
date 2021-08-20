@@ -19,7 +19,7 @@ export default function SideNavbar(props) {
 
   return (
     <div
-      className="d-flex flex-column col-3 side-navbar bg-blue"
+      className="d-flex flex-column col-3 side-navbar bg-young-blue"
       id="sidebar"
       style={{ height: "100%", padding: 0 }}
     >

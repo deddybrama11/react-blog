@@ -15,6 +15,7 @@ export default function Hero() {
         className="img-fluid"
         style={{ height: "auto", objectFit: "cover" }}
         src="/images/image-hero.jpg"
+        alt="hero-img"
       ></img>
       <div className="wrapper-hero-content">
         <div className="container" style={{ marginTop: "250px" }}>

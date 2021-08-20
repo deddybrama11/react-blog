@@ -8,7 +8,7 @@ export default function Header(props) {
     <header className="spacing-sm">
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/">
             Mize.
           </a>
           <button

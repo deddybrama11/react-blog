@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 import Button from "elements/Button";
 
@@ -11,7 +10,7 @@ export default function Article(props) {
           <img
             className="card-img-top"
             src={props.article.imageUrl}
-            alt="Card image cap"
+            alt="card-cover-top"
           />
           <div className="card-body">
             <h5 className="card-title title-article-bg">{props.article.title}</h5>
@@ -61,7 +60,7 @@ export default function Article(props) {
           <img
             className="card-img-top"
             src={props.article.imageUrl}
-            alt="Card image cap"
+            alt="card-cap"
           />
           <div className="card-body">
             <h5 className="card-title title-article-sm">{props.article.title}</h5>

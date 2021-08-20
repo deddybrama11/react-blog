@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "elements/Button";
+// import Button from "elements/Button";
 export default function Footer() {
   return (
     <div>
@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="container">
           <div className="row">
             <div className="col mr-5">
-              <a href="#" style={{ fontSize: "30px", fontWeight: "600" }}>
+              <a href="/" style={{ fontSize: "30px", fontWeight: "600" }}>
                 Mize.
               </a>
               <p className="brand-tagline">
