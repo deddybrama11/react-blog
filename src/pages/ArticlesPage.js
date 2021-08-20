@@ -2,7 +2,11 @@ import SideNavbar from "parts/SideNavbar";
 import React, { Component } from "react";
 import Button from "elements/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAlignLeft,
+  faPencilAlt,
+  faEraser,
+} from "@fortawesome/free-solid-svg-icons";
 
 class Articles extends Component {
   constructor(props) {
@@ -69,7 +73,36 @@ class Articles extends Component {
                   <td>@mdo</td>
                   <td>blabla</td>
                   <td>blabla</td>
-                  <td>blabla</td>
+                  <td>
+                    <Button
+                      type="link"
+                      style={{ backgroundColor: "green", padding: "3px" }}
+                      href={"/admin/articles/1/edit"}
+                    >
+                      <FontAwesomeIcon
+                        style={{
+                          color: "white",
+                          marginRight: "3px",
+                          marginLeft: "3px",
+                        }}
+                        icon={faPencilAlt}
+                      />
+                    </Button>
+                    <Button
+                      type="link"
+                      href={"/admin/articles/1/delete"}
+                      style={{ backgroundColor: "red", padding: "3px" }}
+                    >
+                      <FontAwesomeIcon
+                        style={{
+                          color: "white",
+                          marginRight: "3px",
+                          marginLeft: "3px",
+                        }}
+                        icon={faEraser}
+                      />
+                    </Button>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">2</th>
@@ -78,7 +111,36 @@ class Articles extends Component {
                   <td>@fat</td>
                   <td>blabla</td>
                   <td>blabla</td>
-                  <td>blabla</td>
+                  <td>
+                    <Button
+                      type="link"
+                      style={{ backgroundColor: "green", padding: "3px" }}
+                      href={"/admin/articles/1/edit"}
+                    >
+                      <FontAwesomeIcon
+                        style={{
+                          color: "white",
+                          marginRight: "3px",
+                          marginLeft: "3px",
+                        }}
+                        icon={faPencilAlt}
+                      />
+                    </Button>
+                    <Button
+                      type="link"
+                      href={"/admin/articles/1/delete"}
+                      style={{ backgroundColor: "red", padding: "3px" }}
+                    >
+                      <FontAwesomeIcon
+                        style={{
+                          color: "white",
+                          marginRight: "3px",
+                          marginLeft: "3px",
+                        }}
+                        icon={faEraser}
+                      />
+                    </Button>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">3</th>
@@ -87,7 +149,36 @@ class Articles extends Component {
                   <td>@twitter</td>
                   <td>blabla</td>
                   <td>blabla</td>
-                  <td>blabla</td>
+                  <td>
+                    <Button
+                      type="link"
+                      style={{ backgroundColor: "green", padding: "3px" }}
+                      href={"/admin/articles/1/edit"}
+                    >
+                      <FontAwesomeIcon
+                        style={{
+                          color: "white",
+                          marginRight: "3px",
+                          marginLeft: "3px",
+                        }}
+                        icon={faPencilAlt}
+                      />
+                    </Button>
+                    <Button
+                      type="link"
+                      href={"/admin/articles/1/delete"}
+                      style={{ backgroundColor: "red", padding: "3px" }}
+                    >
+                      <FontAwesomeIcon
+                        style={{
+                          color: "white",
+                          marginRight: "3px",
+                          marginLeft: "3px",
+                        }}
+                        icon={faEraser}
+                      />
+                    </Button>
+                  </td>
                 </tr>
               </tbody>
             </table>
