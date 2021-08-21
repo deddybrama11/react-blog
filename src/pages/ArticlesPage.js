@@ -2,6 +2,7 @@ import SideNavbar from "parts/SideNavbar";
 import React, { Component } from "react";
 import Button from "elements/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import $ from "jquery";
 import {
   faAlignLeft,
   faPencilAlt,
@@ -13,6 +14,23 @@ class Articles extends Component {
   //   super(props);
   // }
   // state = {};
+  componentDidMount() {
+    $("#dismiss, .overlay, .side-navbar-item").on("click", function () {
+      // hide sidebar
+      $("#sidebar").removeClass("active");
+      // hide overlay
+      $(".overlay").removeClass("active");
+    });
+
+    $("#sidebarCollapse").on("click", function () {
+      // open sidebar
+      $("#sidebar").addClass("active");
+      // fade in the overlay
+      $(".overlay").addClass("active");
+      $(".collapse.in").toggleClass("in");
+      $("a[aria-expanded=true]").attr("aria-expanded", "false");
+    });
+  }
   render() {
     return (
       <div
