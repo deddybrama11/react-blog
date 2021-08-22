@@ -6,6 +6,7 @@ import "./assets/scss/style.scss"
 
 import LandingPage from "./pages/LandingPage.js";
 import ArticlesPage from './pages/ArticlesPage';
+import CreateArticle from './pages/article/Create';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path="/" component={LandingPage}></Route>
         <Route exact path="/admin" component={LoginPage}></Route>
         <Route exact path="/admin/articles" component={ArticlesPage}></Route>
+        <Route exact path="/admin/articles/create" component={CreateArticle}></Route>
       </Router>
     </div>
   );

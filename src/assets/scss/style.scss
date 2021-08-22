@@ -149,6 +149,12 @@ section {
     }
   }
 }
+
+.card-border-blue {
+  border: 2px solid $blue;
+  border-radius: 15px;
+}
+
 .description-article {
   padding-left: 2px;
   padding-right: 2px;
@@ -191,7 +197,7 @@ h6 {
   background-color: #f1f7ff;
 }
 
-.bg-blue{
+.bg-blue {
   background-color: $blue;
 }
 
@@ -247,8 +253,8 @@ h6 {
   #dismiss {
     cursor: pointer;
     display: inline !important;
-    
-    &:hover{
+
+    &:hover {
       transform: scale(1.2);
     }
   }
@@ -287,4 +293,10 @@ h6 {
       }
     }
   }
+}
+
+.title-xs {
+  color: $blue;
+  font-weight: 500;
+  font-size: 14px;
 }
