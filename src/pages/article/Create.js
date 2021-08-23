@@ -2,14 +2,29 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import SideNavbar from "parts/SideNavbar";
-import $ from "jquery";
+import $, { data } from "jquery";
+import EditorJs from "react-editor-js";
+import { EDITOR_JS_TOOLS } from "constants/editorconst";
+
+// import Button from "elements/Button";
 
 class CreateArticle extends Component {
+  constructor(props){
+    super(props);
+    this.editorInstance = React.createRef();
+  }
+
   state = {
     value: "",
   };
 
+  handleSave = () => {
+    const savedData = this.editorInstance.save();
+    console.log(savedData)
+  }
+  
   componentDidMount() {
+    // this.editorInstance;
     $("#dismiss, .overlay, .side-navbar-item").on("click", function () {
       // hide sidebar
       $("#sidebar").removeClass("active");
@@ -54,7 +69,16 @@ class CreateArticle extends Component {
                   style={{ height: "100%" }}
                 >
                   <div className="card-body">
-                    
+                    Your content here
+                    <div id="editorjs">
+                      <EditorJs
+                        instanceRef={(instance) =>
+                          (this.editorInstance = instance)
+                        }
+                        tools={EDITOR_JS_TOOLS}
+                      />
+                    </div>
+                    <button onClick={this.handleSave}>Save</button>
                   </div>
                 </div>
               </div>
