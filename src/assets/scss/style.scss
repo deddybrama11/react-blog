@@ -300,3 +300,11 @@ h6 {
   font-weight: 500;
   font-size: 14px;
 }
+
+.card-editor{
+  .card-body{
+    margin: 10px;
+    height: 85vh;
+    overflow: auto;
+  }
+}

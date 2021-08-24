@@ -23,7 +23,6 @@ export default function SideNavbar(props) {
       id="sidebar"
       style={{ height: "100%", padding: 0 }}
     >
-      
       <div
         id="dismiss"
         style={{
@@ -51,8 +50,8 @@ export default function SideNavbar(props) {
       <div className="d-flex flex-column side-navbar-item">
         <Button
           type="link"
-          className={`item ${getNavLinkClass("/admin/articles/")}`}
-          href={`/admin/articles/`}
+          className={`item ${getNavLinkClass("/admin/articles")}`}
+          href={`/admin/articles`}
           // onClick={showArticle}
         >
           <div>
@@ -77,26 +76,6 @@ export default function SideNavbar(props) {
         >
           <div>
             <FontAwesomeIcon icon={faTags} /> {"\u00A0"}Tags
-          </div>
-        </Button>
-        <Button
-          type="link"
-          className={`item ${getNavLinkClass("/admin/comments/")}`}
-          href={`/admin/comments/`}
-          // onClick={showArticle}
-        >
-          <div>
-            <FontAwesomeIcon icon={faComment} /> {"\u00A0"}Comments
-          </div>
-        </Button>
-        <Button
-          type="link"
-          className={`item ${getNavLinkClass("/admin/users/")}`}
-          href={`/admin/users/`}
-          // onClick={showArticle}
-        >
-          <div>
-            <FontAwesomeIcon icon={faUsers} /> {"\u00A0"}Users
           </div>
         </Button>
         <Button

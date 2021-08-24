@@ -9,7 +9,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import Button from "elements/Button";
 
-class CreateArticle extends Component {
+class EditArticle extends Component {
   constructor(props) {
     super(props);
     this.editorInstance = React.createRef();
@@ -61,14 +61,13 @@ class CreateArticle extends Component {
               </button>
             </div>
             <div className="row p-2 ml-2">
-              <span className="title-md"><FontAwesomeIcon icon={faBars} /> New Article</span>
+              <span className="title-md">
+                <FontAwesomeIcon icon={faBars} /> New Article
+              </span>
             </div>
-            <div className="row" style={{ height: "100%", marginLeft:"2px" }}>
+            <div className="row" style={{ height: "100%", marginLeft: "2px" }}>
               <div className="col-md-9 p-2">
-                <div
-                  className="card card-border-blue card-editor"
-                  
-                >
+                <div className="card card-border-blue card-editor">
                   <div className="card-body">
                     Your content here
                     <div id="editorjs">
@@ -79,7 +78,16 @@ class CreateArticle extends Component {
                         tools={EDITOR_JS_TOOLS}
                       />
                     </div>
-                    <Button type="submit" isPrimary isLarge hasShadow className="btn text-white" onClick={this.handleSave}>Save</Button>
+                    <Button
+                      type="submit"
+                      isPrimary
+                      isLarge
+                      hasShadow
+                      className="btn text-white"
+                      onClick={this.handleSave}
+                    >
+                      Save
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -94,8 +102,11 @@ class CreateArticle extends Component {
                   >
                     Article Information
                   </div>
-                  <hr style={{ marginTop:"3px", marginBottom:"3px" }}></hr>
-                  <div className="card-body" style={{ padding: "1rem", overflow:"auto" }}>
+                  <hr style={{ marginTop: "3px", marginBottom: "3px" }}></hr>
+                  <div
+                    className="card-body"
+                    style={{ padding: "1rem", overflow: "auto" }}
+                  >
                     <div className="title-xs">Title</div>
                     <input
                       type="text"
@@ -161,4 +172,4 @@ class CreateArticle extends Component {
   }
 }
 
-export default CreateArticle;
+export default EditArticle;
