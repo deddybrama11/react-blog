@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "elements/Button";
+import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faNewspaper,
@@ -80,19 +81,21 @@ export default function SideNavbar(props) {
         </Button>
         <Button
           type="link"
-          className={`item ${getNavLinkClass("/admin/profile/")}`}
-          href={`/admin/profile/`}
+          className={`item ${getNavLinkClass("/admin/profile")}`}
+          href={`/admin/profile`}
           // onClick={showArticle}
         >
           <div>
-            <FontAwesomeIcon icon={faUser} /> {"\u00A0"}Users
+            <FontAwesomeIcon icon={faUser} /> {"\u00A0"}Profile
           </div>
         </Button>
         <Button
           type="link"
-          className={`item ${getNavLinkClass("/admin/logout/")}`}
-          href={`/admin/logout/`}
-          // onClick={showArticle}
+          className={`item ${getNavLinkClass("/admin/logout")}`}
+          href={`/admin`}
+          onClick={()=> {
+            if(window.confirm('Are you sure want to logout ?')) localStorage.clear()
+          }}  
         >
           <div>
             <FontAwesomeIcon icon={faSignOutAlt} /> {"\u00A0"}Logout

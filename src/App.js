@@ -1,22 +1,28 @@
 import LoginPage from './pages/LoginPage';
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ProtectedRoute } from './parts/protected.route';
 import "./assets/scss/style.scss"
 
 import LandingPage from "./pages/LandingPage.js";
 import ArticlesPage from './pages/ArticlesPage';
 import CreateArticle from './pages/article/Create';
+import ProfilePage from './pages/ProfilePage'
+import CategoriesPage from 'pages/CategoriesPage';
+
 
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Switch>
         <Route exact path="/" component={LandingPage}></Route>
         <Route exact path="/admin" component={LoginPage}></Route>
-        <Route exact path="/admin/articles" component={ArticlesPage}></Route>
-        <Route exact path="/admin/articles/create" component={CreateArticle}></Route>
-      </Router>
+        <ProtectedRoute exact path="/admin/articles" component={ArticlesPage}></ProtectedRoute>
+        <ProtectedRoute exact path="/admin/articles/create" component={CreateArticle}></ProtectedRoute>
+        <ProtectedRoute exact path="/admin/profile" component={() => <ProfilePage />}></ProtectedRoute>
+        <ProtectedRoute exact path="/admin/categories" component={() => <CategoriesPage />}></ProtectedRoute>
+        <Route exact path="*" component={()=> "404 NOT FOUND"}></Route>
+      </Switch>
     </div>
   );
 }

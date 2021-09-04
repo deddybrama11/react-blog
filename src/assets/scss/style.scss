@@ -7,6 +7,7 @@
 
 @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
 @import "functions";
+@import "~react-datepicker/dist/react-datepicker.css";
 @import "variables";
 @import "mixins";
 @import "root";
@@ -202,8 +203,9 @@ h6 {
 }
 
 .input-new {
-  padding: "25px";
+  padding: 25px;
   border: 1px solid $blue;
+  width: 100%;
 }
 .overlay {
   display: none;
@@ -301,8 +303,8 @@ h6 {
   font-size: 14px;
 }
 
-.card-editor{
-  .card-body{
+.card-editor {
+  .card-body {
     margin: 10px;
     height: 85vh;
     overflow: auto;
