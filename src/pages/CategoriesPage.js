@@ -47,7 +47,7 @@ export default function CategoriesPage(props) {
     axios
       .delete("/v1/categories/" + id)
       .then((response) => {
-        if(response.status === 200 && response.tatusText === "OK"){
+        if(response.status === 200 && response.statusText === "OK"){
           getCategories()
         }
       })
