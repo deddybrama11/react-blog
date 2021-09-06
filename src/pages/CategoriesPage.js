@@ -128,6 +128,7 @@ export default function CategoriesPage(props) {
               <FontAwesomeIcon icon={faAlignLeft} />
             </button>
           </div>
+          <div className="title-md m-3">Categories</div>
 
           <div className="d-flex justify-content-between mr-5">
             <input
