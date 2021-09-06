@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import $, { type } from "jquery";
+import $, { map, type } from "jquery";
 import { useLocation } from "react-router-dom";
 import {
   faAlignLeft,
@@ -15,8 +15,10 @@ import { useAlert } from "react-alert";
 export default function CategoriesPage(props) {
   var object = {};
   object.location = useLocation();
+  const initState = ["dsasa", "sdsadsa"];
 
-  const [data, setData] = useState({categories : []});
+  const [data, setData] = useState();
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
     $("#dismiss, .overlay, .side-navbar-item").on("click", function () {
@@ -41,18 +43,58 @@ export default function CategoriesPage(props) {
   //   )
   //   }
 
-  useEffect(() => {
+  const handleDelete = id => () => {
     axios
-      .get("/v1/categories")
+      .delete("/v1/categories/" + id)
       .then((response) => {
-        console.log(response.data.data.categories)
-        setData(response.data.data.categories);
-        console.log(data);
+        if(response.status === 200 && response.tatusText === "OK"){
+          getCategories()
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleChange = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const getCategories = async () => {
+    axios
+      .get("/v1/categories")
+      .then((response) => {
+        setData(response.data.data.categories);
+        console.log(response)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const saveCategory = async () => {
+    axios
+      .post("/v1/categories", {
+        category: category,
+      })
+      .then((response) => {
+        if (response.status === 200 && response.statusText === "OK") {
+          getCategories();
+          setCategory("")
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getCategories();
   }, []);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div
@@ -77,16 +119,15 @@ export default function CategoriesPage(props) {
               type="text"
               className="input-new mb-2 mt-5"
               aria-describedby="search"
-              placeholder="Search"
-              // value={this.state.value}
-              // onChange={this.handleChange}
+              placeholder="Type new category here .."
+              value={category}
+              onChange={handleChange}
               style={{ padding: "10px" }}
             ></input>
             <Button
               isPrimary
               type="button"
-              onClick={{}}
-              //   href={`/admin/categories/create`}
+              onClick={saveCategory}
               style={{ height: "40px" }}
               className="btn text-white mt-5 ml-3"
             >
@@ -98,129 +139,49 @@ export default function CategoriesPage(props) {
             <thead>
               <tr>
                 <th scope="col">id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Categories</th>
-                <th scope="col">Tags</th>
-                <th scope="col">Publish Date</th>
-                <th scope="col">Publish</th>
-                <th scope="col">Action</th>
+                <th scope="col">Category name</th>
+                <th scope="col">Edit / Delete</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>blabla</td>
-                <td>blabla</td>
-                <td>
-                  <Button
-                    type="link"
-                    style={{ backgroundColor: "green", padding: "3px" }}
-                    href={"/admin/articles/1/edit"}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faPencilAlt}
-                    />
-                  </Button>
-                  <Button
-                    type="link"
-                    href={"/admin/articles/1/delete"}
-                    style={{ backgroundColor: "red", padding: "3px" }}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faEraser}
-                    />
-                  </Button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>blabla</td>
-                <td>blabla</td>
-                <td>
-                  <Button
-                    type="link"
-                    style={{ backgroundColor: "green", padding: "3px" }}
-                    href={"/admin/articles/1/edit"}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faPencilAlt}
-                    />
-                  </Button>
-                  <Button
-                    type="link"
-                    href={"/admin/articles/1/delete"}
-                    style={{ backgroundColor: "red", padding: "3px" }}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faEraser}
-                    />
-                  </Button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>blabla</td>
-                <td>blabla</td>
-                <td>
-                  <Button
-                    type="link"
-                    style={{ backgroundColor: "green", padding: "3px" }}
-                    href={"/admin/articles/1/edit"}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faPencilAlt}
-                    />
-                  </Button>
-                  <Button
-                    type="link"
-                    href={"/admin/articles/1/delete"}
-                    style={{ backgroundColor: "red", padding: "3px" }}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faEraser}
-                    />
-                  </Button>
-                </td>
-              </tr>
+              {data &&
+                data.map((object) => (
+                  <tr key={object.id_category}>
+                    <th scope="row">{object.id_category}</th>
+                    <td>{object.category}</td>
+                    <td>
+                      <Button
+                        type="link"
+                        style={{ backgroundColor: "green", padding: "3px" }}
+                        href={"/admin/articles/1/edit"}
+                      >
+                        <FontAwesomeIcon
+                          style={{
+                            color: "white",
+                            marginRight: "3px",
+                            marginLeft: "3px",
+                          }}
+                          icon={faPencilAlt}
+                        />
+                      </Button>
+                      <Button
+                        href="#"
+                        type="link"
+                        onClick={handleDelete(object.id_category)}
+                        style={{ backgroundColor: "red", padding: "3px" }}
+                      >
+                        <FontAwesomeIcon
+                          style={{
+                            color: "white",
+                            marginRight: "3px",
+                            marginLeft: "3px",
+                          }}
+                          icon={faEraser}
+                        />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
