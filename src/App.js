@@ -9,6 +9,7 @@ import ArticlesPage from './pages/ArticlesPage';
 import CreateArticle from './pages/article/Create';
 import ProfilePage from './pages/ProfilePage'
 import CategoriesPage from 'pages/CategoriesPage';
+import EditCategory from 'pages/categories/Edit';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <ProtectedRoute exact path="/admin/articles/create" component={CreateArticle}></ProtectedRoute>
         <ProtectedRoute exact path="/admin/profile" component={() => <ProfilePage />}></ProtectedRoute>
         <ProtectedRoute exact path="/admin/categories" component={() => <CategoriesPage />}></ProtectedRoute>
+        <ProtectedRoute exact path="/admin/categories/:id" component={() => <EditCategory />}></ProtectedRoute>
         <Route exact path="*" component={()=> "404 NOT FOUND"}></Route>
       </Switch>
     </div>

@@ -15,8 +15,8 @@ import { useAlert } from "react-alert";
 export default function CategoriesPage(props) {
   var object = {};
   object.location = useLocation();
-  const initState = ["dsasa", "sdsadsa"];
 
+  const alert = useAlert();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
 
@@ -38,21 +38,26 @@ export default function CategoriesPage(props) {
     });
   }, []);
 
-  //   const handleSave = useCallback((event) => {
-  //     console.log("submit clicked");
-  //   )
-  //   }
-
-  const handleDelete = id => () => {
+  const handleDelete = (id) => () => {
     axios
       .delete("/v1/categories/" + id)
       .then((response) => {
-        if(response.status === 200 && response.statusText === "OK"){
-          getCategories()
+        if (response.status === 200 && response.statusText === "OK") {
+          getCategories();
+          alert.show("Data deleted successfully", {
+            type: "success",
+          });
+        } else {
+          alert.show("There is something wrong with your data or server", {
+            type: "error",
+          });
         }
       })
       .catch((err) => {
         console.log(err);
+        alert.show("Error: Check your internet connection", {
+          type: "error",
+        });
       });
   };
 
@@ -65,7 +70,7 @@ export default function CategoriesPage(props) {
       .get("/v1/categories")
       .then((response) => {
         setData(response.data.data.categories);
-        console.log(response)
+        console.log(response);
       })
       .catch((err) => {
         console.log(err);
@@ -80,11 +85,21 @@ export default function CategoriesPage(props) {
       .then((response) => {
         if (response.status === 200 && response.statusText === "OK") {
           getCategories();
-          setCategory("")
+          setCategory("");
+          alert.show("Data saved successfully", {
+            type: "success",
+          });
+        } else {
+          alert.show("There is something wrong with your data or server", {
+            type: "error",
+          });
         }
       })
       .catch((err) => {
         console.log(err);
+        alert.show("Error: Check your internet connection", {
+          type: "error",
+        });
       });
   };
 
@@ -153,7 +168,7 @@ export default function CategoriesPage(props) {
                       <Button
                         type="link"
                         style={{ backgroundColor: "green", padding: "3px" }}
-                        href={"/admin/articles/1/edit"}
+                        href={"/admin/categories/" + object.id_category}
                       >
                         <FontAwesomeIcon
                           style={{
