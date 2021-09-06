@@ -131,7 +131,7 @@ export default function CategoriesPage(props) {
               style={{ height: "40px" }}
               className="btn text-white mt-5 ml-3"
             >
-              Create
+              Save
             </Button>
           </div>
 
