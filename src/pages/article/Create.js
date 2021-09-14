@@ -19,14 +19,10 @@ import { MultiSelect } from "react-multi-select-component";
 import { useLocation, useHistory, useParams } from "react-router-dom";
 import Button from "elements/Button";
 import axios from "axios";
-
-const options = [
-  { label: "Grapes 🍇", value: "grapes" },
-  { label: "Mango 🥭", value: "mango" },
-  { label: "Strawberry 🍓", value: "strawberry", disabled: true },
-];
+import { useAlert } from "react-alert";
 
 export default function CreateArticle() {
+  const alert = useAlert();
   var object = {};
   object.location = useLocation();
 
@@ -38,19 +34,96 @@ export default function CreateArticle() {
   const [dataTags, setDataTags] = useState([]);
   const [isLoadingCategory, setIsLoadingCategory] = useState(true);
   const [isLoadingTag, setIsLoadingTag] = useState(true);
-  const [coverPhoto, setCoverPhoto] = useState()
+  const [coverPhoto, setCoverPhoto] = useState();
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [slug, setSlug] = useState();
 
   async function handleSave() {
     const savedData = await instanceRef.current.save();
+    let ctgrs = [];
+    categories.map((ob) => {
+      ctgrs = [...ctgrs, ob.value];
+    });
+
+    let tgs = [];
+    tags.map((object) => {
+      tgs = [...tgs, object.value];
+    });
     console.log(savedData);
+
+    const instance = axios.create({
+      baseURL: "http://localhost:8181",
+    });
+
+    const formData = new FormData();
+    formData.append("image", coverPhoto);
+
+    const url = await instance
+      .post("/image/upload", formData)
+      .then((response) => {
+        // console.log(response.data.data.location);
+        if (response.data.success === true) {
+          alert.show("Cover Image berhasil di uplaod", {
+            type: "success",
+          });
+        } else {
+          alert.show(response.data.errorMessage, {
+            type: "error",
+          });
+        }
+
+        return response.data.data.location;
+      })
+      .catch((err) => {
+        alert.show("Error: " + err.response.data.errorMessage, {
+          type: "error",
+        });
+      });
+
+    await axios
+      .post("/v1/posts", {
+        title: title,
+        description: description,
+        content: JSON.stringify(savedData),
+        cover: url,
+        slug: slug,
+        categories: ctgrs,
+        tags: tgs,
+      })
+      .then((response) => {
+        if (response.data.success === true) {
+          alert.show("Artikel berhasil disimpan", {
+            type: "success",
+          });
+        } else {
+          alert.show(response.data.errorMessage, {
+            type: "error",
+          });
+        }
+      })
+      .catch((err) => {
+        alert.show("Error: " + err.response.data.errorMessage, {
+          type: "error",
+        });
+      });
   }
 
   const fileImg = useRef();
-
   const handleImage = () => {
-
     setCoverPhoto(fileImg.current.files[0]);
-   
+  };
+
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const handleSlug = (e) => {
+    setSlug(e.target.value);
   };
 
   useEffect(() => {
@@ -84,13 +157,6 @@ export default function CreateArticle() {
         console.log(err);
       });
   }, []);
-
-  // useEffect(() => {
-  //   console.log(dataCategory);
-  // }, [dataCategory]);
-  // useEffect(() => {
-  //   console.log(dataTags);
-  // }, [dataTags]);
 
   useEffect(() => {
     $("#dismiss, .overlay, .side-navbar-item").on("click", function () {
@@ -177,8 +243,8 @@ export default function CreateArticle() {
                     className="form-control input-new mb-3 mt-2"
                     aria-describedby="titleArticle"
                     placeholder="Enter title"
-                    // value={this.state.title}
-                    // onChange={this.handleTitle}
+                    value={title}
+                    onChange={handleTitle}
                   ></input>
                   <div className="title-xs">Description</div>
                   <input
@@ -186,8 +252,8 @@ export default function CreateArticle() {
                     className="form-control input-new mb-3 mt-2"
                     aria-describedby="imageArticle"
                     placeholder="Enter description"
-                    // value={this.state.value}
-                    // onChange={this.handleChange}
+                    value={description}
+                    onChange={handleDescription}
                   ></input>
                   <div className="title-xs">Image</div>
                   <input
@@ -204,8 +270,8 @@ export default function CreateArticle() {
                     className="form-control input-new mb-3 mt-2"
                     aria-describedby="slugArticle"
                     placeholder="Enter slug"
-                    // value={this.state.value}
-                    // onChange={this.handleChange}
+                    value={slug}
+                    onChange={handleSlug}
                   ></input>
                   <div className="title-xs">Category</div>
                   <MultiSelect
@@ -224,7 +290,7 @@ export default function CreateArticle() {
                     options={dataTags}
                     value={tags}
                     onChange={setTags}
-                    labelledBy="Selec"
+                    labelledBy="Select"
                   />
                 </div>
               </div>
