@@ -62,7 +62,6 @@ export default function CreateArticle() {
     const url = await instance
       .post("/image/upload", formData)
       .then((response) => {
-        // console.log(response.data.data.location);
         if (response.data.success === true) {
           alert.show("Cover Image berhasil di uplaod", {
             type: "success",
@@ -72,7 +71,6 @@ export default function CreateArticle() {
             type: "error",
           });
         }
-
         return response.data.data.location;
       })
       .catch((err) => {

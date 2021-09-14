@@ -162,8 +162,8 @@ export default function CategoriesPage(props) {
             <tbody>
               {data &&
                 data.map((object) => (
-                  <tr key={object.ID}>
-                    <th scope="row">{object.ID}</th>
+                  <tr key={object.id_tag}>
+                    <th scope="row">{object.id_tag}</th>
                     <td>{object.name}</td>
                     <td>
                       <Button
