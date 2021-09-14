@@ -15,11 +15,11 @@ const options = {
   // you can also just use 'scale'
   transition: transitions.SCALE,
 };
-
-axios.defaults.baseURL = "http://localhost:8080/";
 axios.defaults.headers.common.Authorization =
   "Bearer " + localStorage.getItem("token");
-
+axios.defaults.baseURL = "http://localhost:8080/";
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 ReactDOM.render(
   <React.StrictMode>
     <AlertProvider template={AlertTemplate} {...options}>

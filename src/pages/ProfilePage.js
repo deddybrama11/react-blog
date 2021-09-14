@@ -8,12 +8,12 @@ import ReactDatePicker from "react-datepicker";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import Button from "elements/Button";
 import axios from "axios";
-import { useAlert } from 'react-alert'
+import { useAlert } from "react-alert";
 
 export default function ProfilePage(props) {
   var object = {};
   object.location = useLocation();
-  const alert = useAlert()
+  const alert = useAlert();
 
   const [imgSrc, setImgSrc] = useState();
   const [name, setName] = useState("");
@@ -21,6 +21,7 @@ export default function ProfilePage(props) {
   const [city, setCity] = useState("");
   const [birthday, setBirthDay] = useState(new Date());
   const [webProfile, setWebProfile] = useState("");
+  const [photoProfile, setPhotoProfile] = useState();
 
   useEffect(() => {
     axios
@@ -31,6 +32,7 @@ export default function ProfilePage(props) {
         setCountry(response.data.data.country);
         setBirthDay(new Date(response.data.data.birthday));
         setWebProfile(response.data.data.web_profile);
+        setImgSrc(response.data.data.photo_profile)
         console.log(response);
       })
       .catch((err) => {
@@ -42,6 +44,7 @@ export default function ProfilePage(props) {
 
   const handleImage = useCallback(() => {
     if (window.FileReader) {
+      setPhotoProfile(fileImg.current.files[0]);
       var file = fileImg.current.files[0];
       var reader = new FileReader();
       if (file && file.type.match("image.*")) {
@@ -56,7 +59,22 @@ export default function ProfilePage(props) {
 
   const handleSave = useCallback((event) => {
     console.log("submit clicked");
-    
+
+    if (photoProfile) {
+      
+      const formData = new FormData();
+      formData.append("photo_profile", photoProfile);
+
+      axios
+        .post("v1/users/"+localStorage.getItem("id_user")+"/photo-profile", formData)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log("gagal upload gambar");
+        });
+    }
+
     axios
       .put("v1/users/" + localStorage.getItem("id_user"), {
         name: name,
@@ -66,20 +84,18 @@ export default function ProfilePage(props) {
         web_profile: webProfile,
       })
       .then((response) => {
-        alert.show('Data saved successfully',
-        {
-          type:'success'
-        })
+        alert.show("Data saved successfully", {
+          type: "success",
+        });
         console.log(response);
       })
       .catch((err) => {
         console.log(err);
-        alert.show('Error: Failed to save data',
-        {
-          type:'error'
-        })
+        alert.show("Error: Failed to save data", {
+          type: "error",
+        });
       });
-    event.preventDefault()
+    event.preventDefault();
   });
 
   useEffect(() => {

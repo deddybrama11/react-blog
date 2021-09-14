@@ -69,7 +69,7 @@ export default function CategoriesPage(props) {
     axios
       .get("/v1/tags")
       .then((response) => {
-        setData(response.data.data.Tags);
+        setData(response.data.data.tags);
         console.log(response);
       })
       .catch((err) => {
@@ -169,7 +169,7 @@ export default function CategoriesPage(props) {
                       <Button
                         type="link"
                         style={{ backgroundColor: "green", padding: "3px" }}
-                        href={"/admin/tags/" + object.ID}
+                        href={"/admin/tags/" + object.id_tag}
                       >
                         <FontAwesomeIcon
                           style={{
@@ -183,7 +183,7 @@ export default function CategoriesPage(props) {
                       <Button
                         href="#"
                         type="link"
-                        onClick={handleDelete(object.ID)}
+                        onClick={handleDelete(object.id_tag)}
                         style={{ backgroundColor: "red", padding: "3px" }}
                       >
                         <FontAwesomeIcon

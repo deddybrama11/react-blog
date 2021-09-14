@@ -1,4 +1,10 @@
-import React, { Component, useRef, useState, useEffect } from "react";
+import React, {
+  Component,
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAlignLeft,
@@ -32,11 +38,20 @@ export default function CreateArticle() {
   const [dataTags, setDataTags] = useState([]);
   const [isLoadingCategory, setIsLoadingCategory] = useState(true);
   const [isLoadingTag, setIsLoadingTag] = useState(true);
+  const [coverPhoto, setCoverPhoto] = useState()
 
   async function handleSave() {
     const savedData = await instanceRef.current.save();
     console.log(savedData);
   }
+
+  const fileImg = useRef();
+
+  const handleImage = () => {
+
+    setCoverPhoto(fileImg.current.files[0]);
+   
+  };
 
   useEffect(() => {
     axios
@@ -57,10 +72,10 @@ export default function CreateArticle() {
     axios
       .get("v1/tags")
       .then((response) => {
-        response.data.data.Tags.map((object) => {
+        response.data.data.tags.map((object) => {
           setDataTags((tags) => [
             ...tags,
-            { label: object.name, value: object.ID },
+            { label: object.name, value: object.id_tag },
           ]);
           setIsLoadingTag(false);
         });
@@ -179,8 +194,9 @@ export default function CreateArticle() {
                     type="file"
                     className="form-control-file  mb-3 mt-2"
                     aria-describedby="titleArticle"
+                    ref={fileImg}
                     // value={this.state.value}
-                    // onChange={this.handleChange}
+                    onChange={handleImage}
                   ></input>
                   <div className="title-xs">Slug</div>
                   <input

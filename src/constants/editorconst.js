@@ -4,7 +4,7 @@ import List from "@editorjs/list";
 import Warning from "@editorjs/warning";
 import Code from "@editorjs/code";
 import LinkTool from "@editorjs/link";
-import Image from "@editorjs/image";
+import ImageTool from "@editorjs/image";
 import Raw from "@editorjs/raw";
 import Header from "@editorjs/header";
 import Quote from "@editorjs/quote";
@@ -13,6 +13,7 @@ import CheckList from "@editorjs/checklist";
 import Delimiter from "@editorjs/delimiter";
 import InlineCode from "@editorjs/inline-code";
 import SimpleImage from "@editorjs/simple-image";
+import axios from "axios";
 
 export const EDITOR_JS_TOOLS = {
   header: {
@@ -23,11 +24,11 @@ export const EDITOR_JS_TOOLS = {
      * If 'true', the common settings will be used.
      * If 'false' or omitted, the Inline Toolbar wont be shown
      */
-    inlineToolbar: ['marker', 'link'],
+    inlineToolbar: ["marker", "link"],
     config: {
-      placeholder: 'Header'
+      placeholder: "Header",
     },
-    shortcut: 'CMD+SHIFT+H'
+    shortcut: "CMD+SHIFT+H",
   },
   embed: Embed,
   table: Table,
@@ -36,7 +37,38 @@ export const EDITOR_JS_TOOLS = {
   warning: Warning,
   code: Code,
   linkTool: LinkTool,
-  image: Image,
+  image: {
+    class: ImageTool,
+    config: {
+      uploader: {
+        async uploadByFile(file) {
+          const instance = axios.create({
+            baseURL: "http://localhost:8181",
+          });
+
+          const formData = new FormData();
+          formData.append("image", file);
+
+          const response = await instance
+            .post("/image/upload", formData)
+            .then((response) => {
+              console.log(response.data.data.location);
+              let a = {
+                success: 1,
+                file: {
+                  url: response.data.data.location,
+                },
+              };
+              return a;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          return response;
+        },
+      },
+    },
+  },
   raw: Raw,
   quote: Quote,
   checklist: CheckList,

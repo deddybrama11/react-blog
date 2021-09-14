@@ -21,7 +21,7 @@ function App() {
         <Route exact path="/" component={LandingPage}></Route>
         <Route exact path="/admin" component={LoginPage}></Route>
         <ProtectedRoute exact path="/admin/articles" component={ArticlesPage}></ProtectedRoute>
-        <ProtectedRoute exact path="/admin/articles/create" component={CreateArticle}></ProtectedRoute>
+        <Route exact path="/admin/articles/create" component={CreateArticle}></Route>
         <ProtectedRoute exact path="/admin/profile" component={() => <ProfilePage />}></ProtectedRoute>
         <ProtectedRoute exact path="/admin/categories" component={() => <CategoriesPage />}></ProtectedRoute>
         <ProtectedRoute exact path="/admin/categories/:id" component={() => <EditCategory />}></ProtectedRoute>

@@ -19,9 +19,9 @@ class LoginPage extends Component {
 
   userAuthenticated = () => {
     axios
-      .get("v1/users/username/"+localStorage.getItem("username"))
+      .get("v1/users/username/" + localStorage.getItem("username"))
       .then((response) => {
-        console.log(response)
+        console.log(response);
         localStorage.setItem("id_user", response.data.data.id_user);
       })
       .catch((err) => {
@@ -38,6 +38,7 @@ class LoginPage extends Component {
   };
 
   handleSubmit = (event) => {
+    delete axios.defaults.headers.common["Authorization"];
     axios
       .post("v1/users/auth", {
         username: this.state.username,
@@ -47,11 +48,16 @@ class LoginPage extends Component {
         if (response.data.errorCode === "") {
           console.log(response.data);
           localStorage.setItem("token", response.data.data.token);
-          localStorage.setItem("username", this.state.username)
-          axios.defaults.headers.common.Authorization = 'Bearer '+localStorage.getItem('token')
+          localStorage.setItem("username", this.state.username);
+          axios.defaults.headers.common.Authorization =
+            "Bearer " + localStorage.getItem("token");
           this.userAuthenticated();
           this.props.history.push("/admin/articles");
-        } else {
+
+          axios.defaults.headers.common.Authorization =
+            "Bearer " + localStorage.getItem("token");
+        
+          } else {
           this.setState({
             errMessage:
               response.data.errorMessage +
