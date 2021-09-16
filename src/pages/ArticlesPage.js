@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import $ from "jquery";
+import axios from "axios";
 import {
   faAlignLeft,
   faPencilAlt,
@@ -14,6 +15,7 @@ import {
 export default function Articles(props) {
   var object = {};
   object.location = useLocation();
+  let history = useHistory();
 
   const alert = useAlert();
 
@@ -34,6 +36,64 @@ export default function Articles(props) {
       $("a[aria-expanded=true]").attr("aria-expanded", "false");
     });
   });
+
+  const [data, setData] = useState();
+
+  const getArticles = async () => {
+    await axios
+      .get("/v1/posts")
+      .then((response) => {
+        setData(response.data.data.posts);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        }
+      });
+  };
+
+  const handleDelete = (id) => () => {
+    axios
+      .delete("/v1/posts/" + id)
+      .then((response) => {
+        if (response.status === 200 && response.statusText === "OK") {
+          getArticles();
+          alert.show("Data deleted successfully", {
+            type: "success",
+          });
+        } else {
+          alert.show("There is something wrong with your data", {
+            type: "error",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        } else {
+          alert.show("Error: Check your internet connection", {
+            type: "error",
+          });
+        }
+      });
+  };
+
+  useEffect(() => {
+    getArticles();
+  }, []);
 
   return (
     <div
@@ -79,129 +139,64 @@ export default function Articles(props) {
             <thead>
               <tr>
                 <th scope="col">id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Categories</th>
-                <th scope="col">Tags</th>
-                <th scope="col">Publish Date</th>
-                <th scope="col">Publish</th>
-                <th scope="col">Action</th>
+                <th scope="col">Article name</th>
+                <th scope="col">cover</th>
+                <th scope="col">categories</th>
+                <th scope="col">tags</th>
+                <th scope="col">slug</th>
+                <th scope="col">Edit / Delete</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>blabla</td>
-                <td>blabla</td>
-                <td>
-                  <Button
-                    type="link"
-                    style={{ backgroundColor: "green", padding: "3px" }}
-                    href={"/admin/articles/1/edit"}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faPencilAlt}
-                    />
-                  </Button>
-                  <Button
-                    type="link"
-                    href={"/admin/articles/1/delete"}
-                    style={{ backgroundColor: "red", padding: "3px" }}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faEraser}
-                    />
-                  </Button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>blabla</td>
-                <td>blabla</td>
-                <td>
-                  <Button
-                    type="link"
-                    style={{ backgroundColor: "green", padding: "3px" }}
-                    href={"/admin/articles/1/edit"}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faPencilAlt}
-                    />
-                  </Button>
-                  <Button
-                    type="link"
-                    href={"/admin/articles/1/delete"}
-                    style={{ backgroundColor: "red", padding: "3px" }}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faEraser}
-                    />
-                  </Button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>blabla</td>
-                <td>blabla</td>
-                <td>
-                  <Button
-                    type="link"
-                    style={{ backgroundColor: "green", padding: "3px" }}
-                    href={"/admin/articles/1/edit"}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faPencilAlt}
-                    />
-                  </Button>
-                  <Button
-                    type="link"
-                    href={"/admin/articles/1/delete"}
-                    style={{ backgroundColor: "red", padding: "3px" }}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        color: "white",
-                        marginRight: "3px",
-                        marginLeft: "3px",
-                      }}
-                      icon={faEraser}
-                    />
-                  </Button>
-                </td>
-              </tr>
+              {data &&
+                data.map((object) => (
+                  <tr key={object.id_post}>
+                    <th scope="row">{object.id_post}</th>
+                    <td>{object.title}</td>
+                    <td>
+                      <img
+                        src={object.cover}
+                        class="img-fluid img-thumbnail"
+                        alt={object.slug}
+                        style={{ height: "100px" }}
+                      />
+                    </td>
+                    <td>{object.categories.map((child) => child.category+", ")}</td>
+                    <td>{object.tags.map((child) => child.tag+", ")}</td>
+                    <td>{object.slug}</td>
+                    <td>
+                      <Button
+                        type="link"
+                        style={{ backgroundColor: "green", padding: "3px" }}
+                        href={"/admin/articles/" + object.id_post}
+                      >
+                        <FontAwesomeIcon
+                          style={{
+                            color: "white",
+                            marginRight: "3px",
+                            marginLeft: "3px",
+                          }}
+                          icon={faPencilAlt}
+                        />
+                      </Button>
+                      <Button
+                        href="#"
+                        type="link"
+                        onClick={handleDelete(object.id_post)}
+                        style={{ backgroundColor: "red", padding: "3px" }}
+                      >
+                        <FontAwesomeIcon
+                          style={{
+                            color: "white",
+                            marginRight: "3px",
+                            marginLeft: "3px",
+                          }}
+                          icon={faEraser}
+                        />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -12,6 +12,7 @@ import CategoriesPage from 'pages/CategoriesPage';
 import EditCategory from 'pages/categories/Edit';
 import TagsPage from 'pages/TagsPage';
 import EditTags from 'pages/tags/Edit';
+import EditArticle from 'pages/article/Edit';
 
 
 function App() {
@@ -20,13 +21,19 @@ function App() {
       <Switch>
         <Route exact path="/" component={LandingPage}></Route>
         <Route exact path="/admin" component={LoginPage}></Route>
+        
         <ProtectedRoute exact path="/admin/articles" component={ArticlesPage}></ProtectedRoute>
-        <Route exact path="/admin/articles/create" component={CreateArticle}></Route>
+        <ProtectedRoute exact path="/admin/articles/create" component={CreateArticle}></ProtectedRoute>
+        <ProtectedRoute exact path="/admin/articles/:id" component={EditArticle}></ProtectedRoute>
+
         <ProtectedRoute exact path="/admin/profile" component={() => <ProfilePage />}></ProtectedRoute>
+        
         <ProtectedRoute exact path="/admin/categories" component={() => <CategoriesPage />}></ProtectedRoute>
         <ProtectedRoute exact path="/admin/categories/:id" component={() => <EditCategory />}></ProtectedRoute>
+        
         <ProtectedRoute exact path="/admin/tags" component={() => <TagsPage />}></ProtectedRoute>
         <ProtectedRoute exact path="/admin/tags/:id" component={() => <EditTags />}></ProtectedRoute>
+        
         <Route exact path="*" component={()=> "404 NOT FOUND"}></Route>
       </Switch>
     </div>

@@ -76,7 +76,7 @@ export default function CategoriesPage(props) {
   };
 
   const getCategories = async () => {
-    axios
+    await axios
       .get("/v1/categories")
       .then((response) => {
         setData(response.data.data.categories);
