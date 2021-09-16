@@ -2,7 +2,7 @@ import SideNavbar from "parts/SideNavbar";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import Button from "elements/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import $ from "jquery";
 import {

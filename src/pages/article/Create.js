@@ -25,6 +25,7 @@ export default function CreateArticle() {
   const alert = useAlert();
   var object = {};
   object.location = useLocation();
+  let history = useHistory();
 
   const instanceRef = useRef(null);
 
@@ -101,9 +102,18 @@ export default function CreateArticle() {
         }
       })
       .catch((err) => {
-        alert.show("Error: " + err.response.data.errorMessage, {
-          type: "error",
-        });
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        } else {
+          alert.show("Error: " + err.response.data.errorMessage, {
+            type: "error",
+          });
+        }
       });
   }
 
@@ -137,6 +147,14 @@ export default function CreateArticle() {
         });
       })
       .catch((err) => {
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        }
         console.log(err);
       });
 
@@ -152,6 +170,14 @@ export default function CreateArticle() {
         });
       })
       .catch((err) => {
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        }
         console.log(err);
       });
   }, []);

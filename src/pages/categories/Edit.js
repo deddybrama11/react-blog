@@ -30,6 +30,14 @@ export default function EditCategory(props) {
         console.log(response);
       })
       .catch((err) => {
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        }
         console.log(err);
       });
   };
@@ -55,9 +63,18 @@ export default function EditCategory(props) {
       })
       .catch((err) => {
         console.log(err);
-        alert.show("Error: Check your internet connection", {
-          type: "error",
-        });
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        } else {
+          alert.show("Error: Check your internet connection", {
+            type: "error",
+          });
+        }
       });
   };
 

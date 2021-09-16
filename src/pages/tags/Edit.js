@@ -23,7 +23,7 @@ export default function EditTags(props) {
   const [tag, setTag] = useState("");
 
   const getTag = async () => {
-      console.log(id)
+    console.log(id);
     axios
       .get("/v1/tags/" + id)
       .then((response) => {
@@ -31,8 +31,17 @@ export default function EditTags(props) {
         setTag(response.data.data.tag);
         console.log(response);
       })
+
       .catch((err) => {
         console.log(err);
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        }
       });
   };
 

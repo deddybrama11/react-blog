@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $, { type } from "jquery";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import ReactDatePicker from "react-datepicker";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +14,7 @@ export default function ProfilePage(props) {
   var object = {};
   object.location = useLocation();
   const alert = useAlert();
+  let history = useHistory();
 
   const [imgSrc, setImgSrc] = useState();
   const [name, setName] = useState("");
@@ -32,10 +33,18 @@ export default function ProfilePage(props) {
         setCountry(response.data.data.country);
         setBirthDay(new Date(response.data.data.birthday));
         setWebProfile(response.data.data.web_profile);
-        setImgSrc(response.data.data.photo_profile)
+        setImgSrc(response.data.data.photo_profile);
         console.log(response);
       })
       .catch((err) => {
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        }
         console.log(err);
       });
   }, []);
@@ -61,16 +70,26 @@ export default function ProfilePage(props) {
     console.log("submit clicked");
 
     if (photoProfile) {
-      
       const formData = new FormData();
       formData.append("photo_profile", photoProfile);
 
       axios
-        .post("v1/users/"+localStorage.getItem("id_user")+"/photo-profile", formData)
+        .post(
+          "v1/users/" + localStorage.getItem("id_user") + "/photo-profile",
+          formData
+        )
         .then((response) => {
           console.log(response);
         })
         .catch((err) => {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
+
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          }
           console.log("gagal upload gambar");
         });
     }
@@ -90,10 +109,19 @@ export default function ProfilePage(props) {
         console.log(response);
       })
       .catch((err) => {
-        console.log(err);
-        alert.show("Error: Failed to save data", {
-          type: "error",
-        });
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        } else {
+          console.log(err);
+          alert.show("Error: Failed to save data", {
+            type: "error",
+          });
+        }
       });
     event.preventDefault();
   });

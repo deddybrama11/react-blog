@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $, { map, type } from "jquery";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import {
   faAlignLeft,
   faPencilAlt,
@@ -15,6 +15,7 @@ import { useAlert } from "react-alert";
 export default function CategoriesPage(props) {
   var object = {};
   object.location = useLocation();
+  let history = useHistory();
 
   const alert = useAlert();
   const [data, setData] = useState();
@@ -55,9 +56,18 @@ export default function CategoriesPage(props) {
       })
       .catch((err) => {
         console.log(err);
-        alert.show("Error: Check your internet connection", {
-          type: "error",
-        });
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        } else {
+          alert.show("Error: Check your internet connection", {
+            type: "error",
+          });
+        }
       });
   };
 
@@ -73,7 +83,15 @@ export default function CategoriesPage(props) {
         console.log(response);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        }
       });
   };
 
@@ -97,9 +115,18 @@ export default function CategoriesPage(props) {
       })
       .catch((err) => {
         console.log(err);
-        alert.show("Error: Check your internet connection", {
-          type: "error",
-        });
+        if (err.response.status === 401) {
+          localStorage.clear();
+          history.push("/admin");
+
+          alert.show("Your credentials expired, please login again", {
+            type: "error",
+          });
+        } else {
+          alert.show("Error: Check your internet connection", {
+            type: "error",
+          });
+        }
       });
   };
 
