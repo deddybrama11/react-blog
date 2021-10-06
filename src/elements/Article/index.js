@@ -11,6 +11,7 @@ export default function Article(props) {
             className="card-img-top"
             src={props.article.cover}
             alt="card-cover-top"
+            style={{ height:"240px" }}
           />
           <div className="card-body">
             <h5 className="card-title title-article-bg">{props.article.title}</h5>
@@ -61,6 +62,7 @@ export default function Article(props) {
             className="card-img-top"
             src={props.article.cover}
             alt="card-cap"
+            style={{ height:"180px" }}
           />
           <div className="card-body">
             <h5 className="card-title title-article-sm">{props.article.title}</h5>

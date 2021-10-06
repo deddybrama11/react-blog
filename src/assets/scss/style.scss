@@ -140,6 +140,7 @@ section {
   border: none;
   .card-img-top {
     border-radius: 10px;
+    object-fit: cover;
   }
   .card-body {
     padding: 0;

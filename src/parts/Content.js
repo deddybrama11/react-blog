@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import Article from "elements/Article";
 import Button from "elements/Button";
+import { data } from "jquery";
 
 export default function Content() {
   const [dataPage, setDataPage] = useState([]);
@@ -12,7 +13,7 @@ export default function Content() {
       .then((response) => {
         setDataPage((category) => [
           ...category,
-          { value: response.data.data.posts },
+          { name: "latest", value: response.data.data.posts },
         ]);
       })
       .catch((err) => {
@@ -24,7 +25,7 @@ export default function Content() {
       .then((response) => {
         setDataPage((category) => [
           ...category,
-          { value: response.data.data.posts },
+          { name: "interesting", value: response.data.data.posts },
         ]);
       })
       .catch((err) => {
@@ -36,12 +37,20 @@ export default function Content() {
       .then((response) => {
         setDataPage((category) => [
           ...category,
-          { value: response.data.data.posts },
+          { name: "popular", value: response.data.data.posts },
         ]);
       })
       .catch((err) => {
         console.log(err.response);
       });
+  };
+
+  const getItem = (item) => {
+    for (var i = 0; i < dataPage.length; i++) {
+      if (dataPage[i].name === item) {
+        return dataPage[i];
+      }
+    }
   };
 
   useEffect(() => {
@@ -58,7 +67,7 @@ export default function Content() {
         <div className="col-lg-8">
           <span className="title-md">Latest Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
-            {dataPage[0].value.map((article, index) => (
+            {getItem("latest").value.map((article, index) => (
               <Article
                 key={`latest-article-` + index}
                 type="big"
@@ -69,9 +78,13 @@ export default function Content() {
         </div>
         <div className="col-lg-4">
           <span className="title-md">Interesting Article</span>
-          <div className="row" style={{ marginTop: "20px" }}>
-            {dataPage[1].value.map((article) => (
-              <Article type="medium" article={article}></Article>
+          <div style={{ marginTop: "20px" }}>
+            {getItem("interesting").value.map((article, index) => (
+              <Article
+                key={`interesting-article-` + index}
+                type="medium"
+                article={article}
+              ></Article>
             ))}
           </div>
         </div>
@@ -80,8 +93,12 @@ export default function Content() {
         <div className="col-12">
           <span className="title-md">Most Popular Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
-            {dataPage[2].value.map((article) => (
-              <Article type="small" article={article}></Article>
+            {getItem("popular").value.map((article, index) => (
+              <Article
+                key={`popular-article-` + index}
+                type="small"
+                article={article}
+              ></Article>
             ))}
           </div>
         </div>
