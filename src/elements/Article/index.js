@@ -9,7 +9,7 @@ export default function Article(props) {
         <div className="card card-article">
           <img
             className="card-img-top"
-            src={props.article.imageUrl}
+            src={props.article.cover}
             alt="card-cover-top"
           />
           <div className="card-body">
@@ -59,7 +59,7 @@ export default function Article(props) {
         <div className="card card-article">
           <img
             className="card-img-top"
-            src={props.article.imageUrl}
+            src={props.article.cover}
             alt="card-cap"
           />
           <div className="card-body">

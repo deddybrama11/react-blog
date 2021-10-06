@@ -1,31 +1,23 @@
-import React, { Component } from "react";
 import Header from "../parts/Header";
 import Hero from "../parts/Hero";
 import Content from "../parts/Content";
 import landingPage from "json/landingPage.json";
 import Footer from "../parts/Footer";
+import { useLocation, useHistory } from "react-router-dom";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import axios from "axios";
 
-export class LandingPage extends Component {
-  constructor(props) {
-    super(props);
-    this.refMostPicked = React.createRef();
-  }
-  componentDidMount() {
-    window.title = "Mize | Blog";
-    window.scrollTo(0, 0);
-  }
+export default function LandingPage() {
+  var object = {};
+  object.location = useLocation();
+  let history = useHistory();
 
-  // state = {  }
-  render() {
-    return (
-      <>
-        <Header {...this.props} />
-        <Hero />
-        <Content data={landingPage.articles}/>
-        <Footer/>
-      </>
-    );
-  }
+  return (
+    <div>
+      <Header {...object} />
+      <Hero />
+      <Content />
+      <Footer />
+    </div>
+  );
 }
-
-export default LandingPage;

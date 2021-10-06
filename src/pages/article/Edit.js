@@ -37,7 +37,7 @@ export default function EditArticle() {
   const [dataTags, setDataTags] = useState([]);
   const [isLoadingCategory, setIsLoadingCategory] = useState(true);
   const [isLoadingTag, setIsLoadingTag] = useState(true);
-  const [coverPhoto, setCoverPhoto] = useState();
+  const [coverPhoto, setCoverPhoto] = useState("");
   const [title, setTitle] = useState();
   const [dataEditor, setDataEditor] = useState();
   const [description, setDescription] = useState();
@@ -52,7 +52,7 @@ export default function EditArticle() {
         setSlug(data.slug);
         setDescription(data.description);
         setTitle(data.title);
-        setUrl(data.cover)
+        setUrl(data.cover);
 
         data.categories.map((object) => {
           setCategories((category) => [
@@ -102,66 +102,103 @@ export default function EditArticle() {
       baseURL: "http://localhost:8181",
     });
 
-    const formData = new FormData();
-    formData.append("image", coverPhoto);
+    if (coverPhoto === "") {
+      await axios
+        .put("/v1/posts/" + id, {
+          title: title,
+          description: description,
+          content: JSON.stringify(savedData),
+          cover: url,
+          slug: slug,
+          categories: ctgrs,
+          tags: tgs,
+        })
+        .then((response) => {
+          if (response.data.success === true) {
+            alert.show("Artikel berhasil diupdate", {
+              type: "success",
+            });
+          } else {
+            alert.show(response.data.errorMessage, {
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
 
-    const url = 
-    await instance
-      .post("/image/upload", formData)
-      .then((response) => {
-        console.log(response);
-        if (response.data.success === true) {
-          alert.show("Cover Image berhasil di uplaod", {
-            type: "success",
-          });
-        } else {
-          alert.show(response.data.errorMessage, {
-            type: "error",
-          });
-        }
-        return response.data.data.location;
-      })
-      .catch((err) => {
-        alert.show("Error: " + err.response.data.errorMessage, {
-          type: "error",
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          } else {
+            alert.show("Error: " + err.response.data.errorMessage, {
+              type: "error",
+            });
+          }
         });
-      });
+    } else {
+      const formData = new FormData();
+      formData.append("image", coverPhoto);
 
-    await axios
-      .put("/v1/posts/" + id, {
-        title: title,
-        description: description,
-        content: JSON.stringify(savedData),
-        cover: url,
-        slug: slug,
-        categories: ctgrs,
-        tags: tgs,
-      })
-      .then((response) => {
-        if (response.data.success === true) {
-          alert.show("Artikel berhasil diupdate", {
-            type: "success",
-          });
-        } else {
-          alert.show(response.data.errorMessage, {
-            type: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
-
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
-        } else {
+      const url = await instance
+        .post("/image/upload", formData)
+        .then((response) => {
+          console.log(response);
+          if (response.data.success === true) {
+            alert.show("Cover Image berhasil di uplaod", {
+              type: "success",
+            });
+          } else {
+            alert.show(response.data.errorMessage, {
+              type: "error",
+            });
+          }
+          return response.data.data.location;
+        })
+        .catch((err) => {
           alert.show("Error: " + err.response.data.errorMessage, {
             type: "error",
           });
-        }
-      });
+        });
+
+      await axios
+        .put("/v1/posts/" + id, {
+          title: title,
+          description: description,
+          content: JSON.stringify(savedData),
+          cover: url,
+          slug: slug,
+          categories: ctgrs,
+          tags: tgs,
+        })
+        .then((response) => {
+          if (response.data.success === true) {
+            alert.show("Artikel berhasil diupdate", {
+              type: "success",
+            });
+          } else {
+            alert.show(response.data.errorMessage, {
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
+
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          } else {
+            alert.show("Error: " + err.response.data.errorMessage, {
+              type: "error",
+            });
+          }
+        });
+    }
   }
 
   const fileImg = useRef();

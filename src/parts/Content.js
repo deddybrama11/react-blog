@@ -1,16 +1,64 @@
-import React from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import axios from "axios";
 import Article from "elements/Article";
 import Button from "elements/Button";
 
-export default function content(props) {
-  console.log(props.data.latest_article);
-  return (
+export default function Content() {
+  const [dataPage, setDataPage] = useState([]);
+
+  const getArticle = () => {
+    axios
+      .get("/v1/posts?page=1&page_size=2&sort=newest")
+      .then((response) => {
+        setDataPage((category) => [
+          ...category,
+          { value: response.data.data.posts },
+        ]);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+
+    axios
+      .get("/v1/posts?page=1&page_size=3&sort=random")
+      .then((response) => {
+        setDataPage((category) => [
+          ...category,
+          { value: response.data.data.posts },
+        ]);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+
+    axios
+      .get("/v1/posts?page=1&page_size=4&sort=popular")
+      .then((response) => {
+        setDataPage((category) => [
+          ...category,
+          { value: response.data.data.posts },
+        ]);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
+  useEffect(() => {
+    getArticle();
+  }, []);
+
+  useEffect(() => {
+    console.log(dataPage[0]);
+  }, [dataPage]);
+
+  return dataPage.length === 3 ? (
     <section className="container justify-center">
       <div className="row">
         <div className="col-lg-8">
           <span className="title-md">Latest Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
-            {props.data.latest_article.map((article, index) => (
+            {dataPage[0].value.map((article, index) => (
               <Article
                 key={`latest-article-` + index}
                 type="big"
@@ -22,7 +70,7 @@ export default function content(props) {
         <div className="col-lg-4">
           <span className="title-md">Interesting Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
-            {props.data.interesting_article.map((article) => (
+            {dataPage[1].value.map((article) => (
               <Article type="medium" article={article}></Article>
             ))}
           </div>
@@ -32,7 +80,7 @@ export default function content(props) {
         <div className="col-12">
           <span className="title-md">Most Popular Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
-            {props.data.most_popular_article.map((article) => (
+            {dataPage[2].value.map((article) => (
               <Article type="small" article={article}></Article>
             ))}
           </div>
@@ -53,5 +101,7 @@ export default function content(props) {
         </Button>
       </div>
     </section>
+  ) : (
+    <span>Loading ...</span>
   );
 }
