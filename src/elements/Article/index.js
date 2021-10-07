@@ -23,7 +23,7 @@ export default function Article(props) {
               hasShadow
               type="link"
               className="btn stretched-link d-block text-white"
-              href={`/article/${props.article._id}`}
+              href={`/article/${props.article.slug}`}
               // onClick={showArticle}
               // style={{ marginTop: "50px" }}
             >
@@ -47,7 +47,7 @@ export default function Article(props) {
         <Button
           type="link"
           // className="btn stretched-link d-block text-white"
-          href={`/article/${props.article._id}`}
+          href={`/article/${props.article.slug}`}
           // onClick={showArticle}
         >
           Read Article
@@ -72,7 +72,7 @@ export default function Article(props) {
             <Button
               type="link"
               // className="btn stretched-link d-block text-white"
-              href={`/article/${props.article._id}`}
+              href={`/article/${props.article.slug}`}
               // onClick={showArticle}
             >
               Read Article

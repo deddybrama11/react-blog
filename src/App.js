@@ -13,6 +13,7 @@ import EditCategory from 'pages/categories/Edit';
 import TagsPage from 'pages/TagsPage';
 import EditTags from 'pages/tags/Edit';
 import EditArticle from 'pages/article/Edit';
+import ArticlePage from 'pages/ArticlePage';
 
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/" component={LandingPage}></Route>
+        <Route exact path="/article/:slug" component={ArticlePage}></Route>
+
         <Route exact path="/admin" component={LoginPage}></Route>
         
         <ProtectedRoute exact path="/admin/articles" component={ArticlesPage}></ProtectedRoute>
