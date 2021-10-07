@@ -7,8 +7,14 @@ import { data } from "jquery";
 export default function Content() {
   const [dataPage, setDataPage] = useState([]);
 
+  const instance = axios.create({
+    baseURL: "http://localhost:8080",
+  });
+
+  delete instance.defaults.headers.common.Authorization
+
   const getArticle = () => {
-    axios
+    instance
       .get("/v1/posts?page=1&page_size=2&sort=newest")
       .then((response) => {
         setDataPage((category) => [
@@ -20,7 +26,7 @@ export default function Content() {
         console.log(err.response);
       });
 
-    axios
+    instance
       .get("/v1/posts?page=1&page_size=3&sort=random")
       .then((response) => {
         setDataPage((category) => [
@@ -32,7 +38,7 @@ export default function Content() {
         console.log(err.response);
       });
 
-    axios
+    instance
       .get("/v1/posts?page=1&page_size=4&sort=popular")
       .then((response) => {
         setDataPage((category) => [
@@ -89,7 +95,7 @@ export default function Content() {
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="row mt-5">
         <div className="col-12">
           <span className="title-md">Most Popular Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
