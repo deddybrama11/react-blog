@@ -2,7 +2,7 @@ import React from "react";
 // import Button from "elements/Button";
 export default function Footer() {
   return (
-    <div>
+    <div style={{ width:"100%" }}>
       <footer>
         <hr />
         <div className="container">
