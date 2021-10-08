@@ -12,8 +12,34 @@ export default function ArticlePage(props) {
   var object = {};
   object.location = useLocation();
 
-  const edjsParser = edjsHTML();
-  // const parse = require('html-react-parser');
+  function customHeader(block){
+    console.log(block.data.level)
+    switch (block.data.level) {
+      case 1 :
+        return `<p className="title-article-content-1"> ${block.data.text} </p>`;
+        
+      case 2 :
+        return `<p className="title-article-content-2"> ${block.data.text} </p>`;
+
+      case 3 :
+        return `<p className="title-article-content-3"> ${block.data.text} </p>`;  
+
+      case 4 :
+        return `<p className="title-article-content-4"> ${block.data.text} </p>`;   
+        
+      case 5 :
+        return `<p className="title-article-content-5"> ${block.data.text} </p>`;    
+
+      case 6:
+        return `<p className="title-article-content-6"> ${block.data.text} </p>`;   
+
+      default:
+        return `<p className="wrapper-title-content" style={{ fontSize:"25px" }}> ${block.data.text} </p>`;
+    }
+    // return `<p className="wrapper-title-content"> ${block.data.text} </p>`;
+  }
+
+  const edjsParser = edjsHTML({header:customHeader});
 
   let { slug } = useParams();
 
@@ -45,7 +71,6 @@ export default function ArticlePage(props) {
   const blockToHtml = () => {
     if (data !== undefined) {
       let html = edjsParser.parse(data.content);
-      console.log(html);
       return html;
     }
   };
@@ -53,7 +78,7 @@ export default function ArticlePage(props) {
   return data !== undefined ? (
     <>
       <Header {...object} />
-      <section className="row gradient-bg-article" style={{ height: "680px" }}>
+      <section className="row gradient-bg-article" style={{ height: "680px", }}>
         <div className="container zindex">
           <div className="d-flex mt-5 justify-content-center">
             <div className="col-6 text-center wrapper-title-content">
