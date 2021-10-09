@@ -112,7 +112,7 @@ header {
   left: 0;
   height: 780px;
   width: 100%;
-  background: linear-gradient(to top, transparent 0%, $blue 900%);
+  background: linear-gradient(to top, transparent 0%, $blue 1500%);
 }
 
 .text-author {
@@ -342,6 +342,24 @@ h6 {
   color: $blue;
   font-weight: 600;
   font-size: 36px;
+}
+@media only screen and (max-width: 596px) {
+  .article-page {
+    .container {
+      margin-right: 15px;
+      margin-left: 15px;
+    }
+    .wrapper-title-content{
+      max-width: 100% !important;
+      flex: 0 0 90%;
+      font-size: 30px;
+      line-height: 30px;
+    }
+    .col-5{
+      max-width: 100% !important;
+      flex: 0 0 90%;
+    }
+  }
 }
 
 @media only screen and (max-width: 796px) {

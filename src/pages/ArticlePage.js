@@ -6,32 +6,32 @@ import axios from "axios";
 import { format } from "date-fns";
 import Header from "../parts/Header";
 import edjsHTML from "editorjs-html";
+import Button from "elements/Button";
 
 export default function ArticlePage(props) {
   const [data, setData] = useState();
   var object = {};
   object.location = useLocation();
 
-  function customHeader(block){
-    console.log(block.data.level)
+  function customHeader(block) {
     switch (block.data.level) {
-      case 1 :
+      case 1:
         return `<p className="title-article-content-1"> ${block.data.text} </p>`;
-        
-      case 2 :
+
+      case 2:
         return `<p className="title-article-content-2"> ${block.data.text} </p>`;
 
-      case 3 :
-        return `<p className="title-article-content-3"> ${block.data.text} </p>`;  
+      case 3:
+        return `<p className="title-article-content-3"> ${block.data.text} </p>`;
 
-      case 4 :
-        return `<p className="title-article-content-4"> ${block.data.text} </p>`;   
-        
-      case 5 :
-        return `<p className="title-article-content-5"> ${block.data.text} </p>`;    
+      case 4:
+        return `<p className="title-article-content-4"> ${block.data.text} </p>`;
+
+      case 5:
+        return `<p className="title-article-content-5"> ${block.data.text} </p>`;
 
       case 6:
-        return `<p className="title-article-content-6"> ${block.data.text} </p>`;   
+        return `<p className="title-article-content-6"> ${block.data.text} </p>`;
 
       default:
         return `<p className="wrapper-title-content" style={{ fontSize:"25px" }}> ${block.data.text} </p>`;
@@ -39,7 +39,7 @@ export default function ArticlePage(props) {
     // return `<p className="wrapper-title-content"> ${block.data.text} </p>`;
   }
 
-  const edjsParser = edjsHTML({header:customHeader});
+  const edjsParser = edjsHTML({ header: customHeader });
 
   let { slug } = useParams();
 
@@ -53,7 +53,6 @@ export default function ArticlePage(props) {
     instance
       .get("/v1/posts/slug/" + slug)
       .then((response) => {
-        // console.log(response)
         setData(response.data.data);
       })
       .catch((err) => {
@@ -78,7 +77,7 @@ export default function ArticlePage(props) {
   return data !== undefined ? (
     <>
       <Header {...object} />
-      <section className="row gradient-bg-article" style={{ height: "680px", }}>
+      <section className="article-page row gradient-bg-article" style={{ height: "680px" }}>
         <div className="container zindex">
           <div className="d-flex mt-5 justify-content-center">
             <div className="col-6 text-center wrapper-title-content">
@@ -88,6 +87,23 @@ export default function ArticlePage(props) {
           <div className="d-flex mt-1  justify-content-center">
             <div className="col-5 text-center">{data.description}</div>
           </div>
+
+          <div className="d-flex mt-2 justify-content-center">
+            {data.categories.map((obj) => {
+              return (
+                <Button
+                  className="btn px-2"
+                  // isPrimary
+                  hasShadow
+                  // onClick={showArticle}
+                  style={{ marginLeft: "10px" }}
+                >
+                  {obj.category}
+                </Button>
+              );
+            })}
+          </div>
+
           <div className="col mt-3" style={{ marginBottom: "15px" }}>
             <div className="card-article">
               <img
@@ -101,7 +117,7 @@ export default function ArticlePage(props) {
                   <div>
                     <p className="card-text text-sm-article">
                       posted by{" "}
-                      <span className="text-author">Dedy Bramayadi</span>
+                      <span className="text-author">{data.author_name}</span>
                     </p>
                   </div>
                 </div>
@@ -123,9 +139,27 @@ export default function ArticlePage(props) {
               return parse(obj);
             })}
           </div>
-          
+
+          <div className=" mt-5">
+            <p className="d-flex">
+              <span style={{ fontWeight: "600" }}>Tags: </span>
+              {data.tags.map((obj) => {
+                return (
+                  <Button
+                    className="btn px-2"
+                    isPrimary
+                    hasShadow
+                    // onClick={showArticle}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    {obj.tag}
+                  </Button>
+                );
+              })}{" "}
+            </p>
+          </div>
         </div>
-        <Footer/>
+        <Footer />
       </section>
     </>
   ) : (

@@ -262,23 +262,24 @@ export default function CreateArticle() {
                   style={{ padding: "1rem", overflow: "auto" }}
                 >
                   <div className="title-xs">Title</div>
-                  <input
-                    type="text"
-                    className="form-control input-new mb-3 mt-2"
-                    aria-describedby="titleArticle"
+                  <textarea
+                    class="form-control input-new mb-3 mt-2"
+                    id="exampleFormControlTextarea1"
                     placeholder="Enter title"
+                    rows="3"
                     value={title}
                     onChange={handleTitle}
-                  ></input>
+                  ></textarea>
                   <div className="title-xs">Description</div>
-                  <input
-                    type="text"
-                    className="form-control input-new mb-3 mt-2"
-                    aria-describedby="imageArticle"
-                    placeholder="Enter description"
+                  <textarea
+                    class="form-control input-new mb-3 mt-2"
+                    id="exampleFormControlTextarea1"
+                    placeholder="Enter title"
+                    rows="3"
                     value={description}
                     onChange={handleDescription}
-                  ></input>
+                  ></textarea>
+
                   <div className="title-xs">Image</div>
                   <input
                     type="file"
