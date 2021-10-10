@@ -1,7 +1,6 @@
 import Header from "../parts/Header";
 import Hero from "../parts/Hero";
 import Content from "../parts/Content";
-import landingPage from "json/landingPage.json";
 import Footer from "../parts/Footer";
 import { useLocation, useHistory } from "react-router-dom";
 import React, { useState, useEffect, useCallback, useRef } from "react";
