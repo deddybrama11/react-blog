@@ -14,6 +14,7 @@ import TagsPage from 'pages/TagsPage';
 import EditTags from 'pages/tags/Edit';
 import EditArticle from 'pages/article/Edit';
 import ArticlePage from 'pages/ArticlePage';
+import AllArticlePage from 'pages/AllArticlePage';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={LandingPage}></Route>
         <Route exact path="/article/:slug" component={ArticlePage}></Route>
+        <Route exact path="/article" component={AllArticlePage}></Route>
 
         <Route exact path="/admin" component={LoginPage}></Route>
         
