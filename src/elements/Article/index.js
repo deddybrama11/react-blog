@@ -56,7 +56,9 @@ export default function Article(props) {
           marginBottom: "12px",
         }}
       >
-        <span className="title-article-md">{props.article.title}</span>
+        <a href={`/article/${props.article.slug}`} className="title-article-md">
+          {props.article.title}
+        </a>
         <p
           className="card-text description-article"
           style={{ fontWeight: "500", fontSize: "11px" }}
@@ -87,9 +89,17 @@ export default function Article(props) {
           />
           <div className="card-body">
             <h5 className="card-title title-article-sm">
-              {props.article.title}
+              <a className="card-title title-article-sm" href={`/article/${props.article.slug}`}>
+                {props.article.title}
+              </a>
             </h5>
-            <p className="card-text description-article" style={{ fontWeight:"500", fontSize:"12px" }}>By <span>{props.article.author_name}</span> ― {format(new Date(props.article.created_at), "MMMM dd, yyyy")}</p>
+            <p
+              className="card-text description-article"
+              style={{ fontWeight: "500", fontSize: "12px" }}
+            >
+              By <span>{props.article.author_name}</span> ―{" "}
+              {format(new Date(props.article.created_at), "MMMM dd, yyyy")}
+            </p>
             <p className="card-text description-article">
               {props.article.description}
             </p>
