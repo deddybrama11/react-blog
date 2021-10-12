@@ -6,8 +6,8 @@ export default function Footer() {
       <footer>
         <hr />
         <div className="container">
-          <div className="row">
-            <div className="col mr-5">
+          <div className="d-flex justify-content-lg-between">
+            <div className="col-lg">
               <a href="/" style={{ fontSize: "30px", fontWeight: "600" }}>
                 Mize.
               </a>
@@ -17,7 +17,7 @@ export default function Footer() {
               </p>
             </div>
 
-            <div className="col-auto mr-5 ml-5">
+            <div className="col-lg">
               <h6 className="mt-2">Contact</h6>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">081224170543</li>
@@ -25,7 +25,7 @@ export default function Footer() {
               </ul>
             </div>
 
-            <div className="col-3 mr-2">
+            <div className="col-lg">
               <h6 className="mt-2">Reach us on Facebook !</h6>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">Rais Maulana</li>
@@ -33,7 +33,7 @@ export default function Footer() {
               </ul>
             </div>
 
-            <div className="col">
+            <div className="col-lg">
               <h6 className="mt-2">Email</h6>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">lufriraismaulana@gmail.com</li>
