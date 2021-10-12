@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import Article from "elements/Article";
 import Button from "elements/Button";
+import ReactLoading from 'react-loading';
 import { data } from "jquery";
 
 export default function Content() {
@@ -125,6 +126,6 @@ export default function Content() {
       </div>
     </section>
   ) : (
-    <span>Loading ...</span>
+    <ReactLoading type={"balls"} color={"#ffffff"} height={'20%'} width={'20%'} />
   );
 }
