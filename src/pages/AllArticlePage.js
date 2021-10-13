@@ -5,7 +5,7 @@ import axios from "axios";
 import Article from "elements/Article";
 import Header from "../parts/Header";
 import ReactPaginate from "react-paginate";
-import ReactLoading from "react-loading";
+import loading from "../assets/images/loading-buffering.gif";
 
 export default function AllArticlePage(props) {
   var object = {};
@@ -109,13 +109,11 @@ export default function AllArticlePage(props) {
             </div>
           </div>
         ) : (
-          <div className="d-flex mt-5 justify-content-center">
-            <ReactLoading
-              type={"bars"}
-              color={"#0984E3"}
-              height={"10%"}
-              width={"10%"}
-            />
+          <div
+            className="d-flex mt-5 justify-content-center"
+            style={{ width: "100%" }}
+          >
+            <img className="loading" src={loading} alt="loading" />
           </div>
         )}
         <Footer />

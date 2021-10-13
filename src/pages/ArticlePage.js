@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import Header from "../parts/Header";
 import edjsHTML from "editorjs-html";
 import Button from "elements/Button";
-import ReactLoading from "react-loading";
+import loading from "../assets/images/loading-buffering.gif";
 
 export default function ArticlePage(props) {
   const [data, setData] = useState();
@@ -60,15 +60,14 @@ export default function ArticlePage(props) {
         .catch((err) => {
           console.log(err.response);
         });
-    }, 3000);
+    }, 2000);
   };
-
 
   useEffect(() => {
     window.scrollTo({
-      top:0,
-      behavior:"smooth"
-  })
+      top: 0,
+      behavior: "smooth",
+    });
     getArticle();
   }, []);
   useEffect(() => {
@@ -172,12 +171,14 @@ export default function ArticlePage(props) {
             </div>
           </div>
         ) : (
-          <div className="d-flex mt-5 justify-content-center">
-            <ReactLoading
-              type={"bars"}
-              color={"#0984E3"}
-              height={"10%"}
-              width={"10%"}
+          <div
+            className="d-flex mt-5 justify-content-center"
+            style={{ width: "100%" }}
+          >
+            <img
+              className="loading"
+              src={loading}
+              alt="loading"
             />
           </div>
         )}

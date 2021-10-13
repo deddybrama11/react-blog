@@ -103,7 +103,10 @@ header {
 .zindex {
   z-index: 999;
 }
-
+.loading{
+  width: 100px;
+  height: 100px;
+}
 .gradient-bg-article::after {
   z-index: 1;
   content: "";

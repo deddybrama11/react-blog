@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import Article from "elements/Article";
 import Button from "elements/Button";
-import ReactLoading from 'react-loading';
+import loading from "../assets/images/loading-buffering.gif";
 import { data } from "jquery";
 
 export default function Content() {
@@ -12,7 +12,7 @@ export default function Content() {
     baseURL: "http://localhost:8080",
   });
 
-  delete instance.defaults.headers.common.Authorization
+  delete instance.defaults.headers.common.Authorization;
 
   const getArticle = () => {
     instance
@@ -126,6 +126,11 @@ export default function Content() {
       </div>
     </section>
   ) : (
-    <ReactLoading type={"balls"} color={"#ffffff"} height={'20%'} width={'20%'} />
+    <div
+      className="d-flex mt-5 justify-content-center"
+      style={{ width: "100%" }}
+    >
+      <img className="loading" src={loading} alt="loading" />
+    </div>
   );
 }
