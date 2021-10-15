@@ -100,19 +100,21 @@ export default function ArticlePage(props) {
             </div>
 
             <div className="d-flex mt-2 justify-content-center">
-              {data.categories.map((obj) => {
-                return (
-                  <Button
-                    className="btn px-2"
-                    // isPrimary
-                    hasShadow
-                    // onClick={showArticle}
-                    style={{ marginLeft: "10px" }}
-                  >
-                    {obj.category}
-                  </Button>
-                );
-              })}
+              {data.categories !== null
+                ? data.categories.map((obj) => {
+                    return (
+                      <Button
+                        className="btn px-2"
+                        // isPrimary
+                        hasShadow
+                        // onClick={showArticle}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        {obj.category}
+                      </Button>
+                    );
+                  })
+                : ""}
             </div>
 
             <div className="col mt-3" style={{ marginBottom: "15px" }}>
@@ -154,19 +156,21 @@ export default function ArticlePage(props) {
             <div className=" mt-5">
               <p className="d-flex">
                 <span style={{ fontWeight: "600" }}>Tags: </span>
-                {data.tags.map((obj) => {
-                  return (
-                    <Button
-                      className="btn px-2"
-                      isPrimary
-                      hasShadow
-                      // onClick={showArticle}
-                      style={{ marginLeft: "10px" }}
-                    >
-                      {obj.tag}
-                    </Button>
-                  );
-                })}{" "}
+                {data.tags !== null
+                  ? data.tags.map((obj) => {
+                      return (
+                        <Button
+                          className="btn px-2"
+                          isPrimary
+                          hasShadow
+                          // onClick={showArticle}
+                          style={{ marginLeft: "10px" }}
+                        >
+                          {obj.tag}
+                        </Button>
+                      );
+                    })
+                  : ""}{" "}
               </p>
             </div>
           </div>
@@ -175,11 +179,7 @@ export default function ArticlePage(props) {
             className="d-flex mt-5 justify-content-center"
             style={{ width: "100%" }}
           >
-            <img
-              className="loading"
-              src={loading}
-              alt="loading"
-            />
+            <img className="loading" src={loading} alt="loading" />
           </div>
         )}
         <Footer />

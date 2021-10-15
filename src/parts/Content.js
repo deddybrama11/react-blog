@@ -74,25 +74,30 @@ export default function Content() {
         <div className="col-lg-8">
           <span className="title-md">Latest Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
-            {getItem("latest").value.map((article, index) => (
-              <Article
-                key={`latest-article-` + index}
-                type="big"
-                article={article}
-              ></Article>
-            ))}
+            {getItem("latest").value !== null
+              ? getItem("latest").value !==
+                null.map((article, index) => (
+                  <Article
+                    key={`latest-article-` + index}
+                    type="big"
+                    article={article}
+                  ></Article>
+                ))
+              : ""}
           </div>
         </div>
         <div className="col-lg-4">
           <span className="title-md">Interesting Article</span>
           <div style={{ marginTop: "20px" }}>
-            {getItem("interesting").value.map((article, index) => (
-              <Article
-                key={`interesting-article-` + index}
-                type="medium"
-                article={article}
-              ></Article>
-            ))}
+            {getItem("interesting").value !== null
+              ? getItem("interesting").value.map((article, index) => (
+                  <Article
+                    key={`interesting-article-` + index}
+                    type="medium"
+                    article={article}
+                  ></Article>
+                ))
+              : ""}
           </div>
         </div>
       </div>
@@ -100,13 +105,16 @@ export default function Content() {
         <div className="col-12">
           <span className="title-md">Most Popular Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
-            {getItem("popular").value.map((article, index) => (
-              <Article
-                key={`popular-article-` + index}
-                type="small"
-                article={article}
-              ></Article>
-            ))}
+            {getItem("popular").value !== null
+              ? getItem("popular").value !==
+                null.map((article, index) => (
+                  <Article
+                    key={`popular-article-` + index}
+                    type="small"
+                    article={article}
+                  ></Article>
+                ))
+              : ""}
           </div>
         </div>
       </div>

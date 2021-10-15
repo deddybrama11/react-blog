@@ -79,15 +79,17 @@ export default function AllArticlePage(props) {
         {itemPage && itemPage[0] !== undefined ? (
           <div className="container zindex">
             <div className="mt-5">
-              {itemPage[0].value.map((obj, index) => {
-                return (
-                  <Article
-                    key={`popular-article-` + index}
-                    type="medium"
-                    article={obj}
-                  ></Article>
-                );
-              })}
+              {itemPage[0].value !== null
+                ? itemPage[0].value.map((obj, index) => {
+                    return (
+                      <Article
+                        key={`popular-article-` + index}
+                        type="medium"
+                        article={obj}
+                      ></Article>
+                    );
+                  })
+                : ""}
               <div className="d-flex mt-5 justify-content-center">
                 <ReactPaginate
                   previousLabel={"previous"}
