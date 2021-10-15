@@ -138,16 +138,25 @@ export default function CreateArticle() {
     axios
       .get("v1/categories")
       .then((response) => {
-        response.data.data.categories.map((object) => {
-          setDataCategory((category) => [
-            ...category,
-            { label: object.category, value: object.id_category },
-          ]);
-          setIsLoadingCategory(false);
-        });
+        if (response.data.data.categories !== null) {
+          response.data.data.categories.map((object) => {
+            setDataCategory((category) => [
+              ...category,
+              { label: object.category, value: object.id_category },
+            ]);
+            setIsLoadingCategory(false);
+          });
+        } else {
+          throw new Error("NODATA");
+        }
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        if (err.message === "NODATA") {
+          console.log("masuk sinis");
+          alert.show("Please add category", {
+            type: "error",
+          });
+        } else if (err.response.status === 401) {
           localStorage.clear();
           history.push("/admin");
 
@@ -161,16 +170,25 @@ export default function CreateArticle() {
     axios
       .get("v1/tags")
       .then((response) => {
-        response.data.data.tags.map((object) => {
-          setDataTags((tags) => [
-            ...tags,
-            { label: object.name, value: object.id_tag },
-          ]);
-          setIsLoadingTag(false);
-        });
+        if (response.data.data.tags !== null) {
+          response.data.data.tags.map((object) => {
+            setDataTags((tags) => [
+              ...tags,
+              { label: object.name, value: object.id_tag },
+            ]);
+            setIsLoadingTag(false);
+          });
+        } else {
+          throw new Error("NODATA");
+        }
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        if (err.message === "NODATA") {
+          alert.show("Please create data tag first", {
+            type: "error",
+          });
+          history.push("/admin");
+        } else if (err.response.status === 401) {
           localStorage.clear();
           history.push("/admin");
 
@@ -263,7 +281,7 @@ export default function CreateArticle() {
                 >
                   <div className="title-xs">Title</div>
                   <textarea
-                    class="form-control input-new mb-3 mt-2"
+                    className="form-control input-new mb-3 mt-2"
                     id="exampleFormControlTextarea1"
                     placeholder="Enter title"
                     rows="3"
@@ -272,7 +290,7 @@ export default function CreateArticle() {
                   ></textarea>
                   <div className="title-xs">Description</div>
                   <textarea
-                    class="form-control input-new mb-3 mt-2"
+                    className="form-control input-new mb-3 mt-2"
                     id="exampleFormControlTextarea1"
                     placeholder="Enter title"
                     rows="3"

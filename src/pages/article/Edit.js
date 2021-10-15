@@ -54,19 +54,24 @@ export default function EditArticle() {
         setTitle(data.title);
         setUrl(data.cover);
 
-        data.categories.map((object) => {
-          setCategories((category) => [
-            ...category,
-            { label: object.category, value: object.id_category },
-          ]);
-        });
+        if (data.categories !== null) {
+          data.categories.map((object) => {
+            setCategories((category) => [
+              ...category,
+              { label: object.category, value: object.id_category },
+            ]);
+          });
+        }
 
-        data.tags.map((object) => {
-          setTags((tag) => [
-            ...tag,
-            { label: object.tag, value: object.id_tag },
-          ]);
-        });
+        if (data.tags !== null) {
+          data.tags.map((object) => {
+            setTags((tag) => [
+              ...tag,
+              { label: object.tag, value: object.id_tag },
+            ]);
+          });
+        }
+
         setDataEditor(response.data.data.content);
         console.log(response);
       })
@@ -222,16 +227,25 @@ export default function EditArticle() {
     axios
       .get("v1/categories")
       .then((response) => {
-        response.data.data.categories.map((object) => {
-          setDataCategory((category) => [
-            ...category,
-            { label: object.category, value: object.id_category },
-          ]);
-          setIsLoadingCategory(false);
-        });
+        if (response.data.data.categories !== null) {
+          response.data.data.categories.map((object) => {
+            setDataCategory((category) => [
+              ...category,
+              { label: object.category, value: object.id_category },
+            ]);
+            setIsLoadingCategory(false);
+          });
+        } else {
+          throw new Error("NODATA");
+        }
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        if (err.message === "NODATA") {
+          console.log("masuk sinis");
+          alert.show("Please add category", {
+            type: "error",
+          });
+        } else if (err.response.status === 401) {
           localStorage.clear();
           history.push("/admin");
 
@@ -245,16 +259,25 @@ export default function EditArticle() {
     axios
       .get("v1/tags")
       .then((response) => {
-        response.data.data.tags.map((object) => {
-          setDataTags((tags) => [
-            ...tags,
-            { label: object.name, value: object.id_tag },
-          ]);
-          setIsLoadingTag(false);
-        });
+        if (response.data.data.tags !== null) {
+          response.data.data.tags.map((object) => {
+            setDataTags((tags) => [
+              ...tags,
+              { label: object.name, value: object.id_tag },
+            ]);
+            setIsLoadingTag(false);
+          });
+        } else {
+          throw new Error("NODATA");
+        }
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        if (err.message === "NODATA") {
+          alert.show("Please create data tag first", {
+            type: "error",
+          });
+          history.push("/admin");
+        } else if (err.response.status === 401) {
           localStorage.clear();
           history.push("/admin");
 

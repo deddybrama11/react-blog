@@ -161,8 +161,8 @@ export default function Articles(props) {
                         style={{ height: "100px" }}
                       />
                     </td>
-                    <td>{object.categories.map((child) => child.category+", ")}</td>
-                    <td>{object.tags.map((child) => child.tag+", ")}</td>
+                    <td>{object.categories ? object.categories.map((child) => child.category+", ") : ""}</td>
+                    <td>{object.tags ? object.tags.map((child) => child.tag+", "): "" }</td>
                     <td>{object.slug}</td>
                     <td>
                       <Button
