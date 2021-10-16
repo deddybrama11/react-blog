@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import $, { map, type } from "jquery";
+import $ from "jquery";
 import { useLocation, useHistory } from "react-router-dom";
 import {
   faAlignLeft,

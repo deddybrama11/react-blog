@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Article from "elements/Article";
 import Button from "elements/Button";
 import loading from "../assets/images/loading-buffering.gif";
-import { data } from "jquery";
 
 export default function Content() {
   const [dataPage, setDataPage] = useState([]);
@@ -75,8 +74,7 @@ export default function Content() {
           <span className="title-md">Latest Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
             {getItem("latest").value !== null
-              ? getItem("latest").value !==
-                null.map((article, index) => (
+              ? getItem("latest").value.map((article, index) => (
                   <Article
                     key={`latest-article-` + index}
                     type="big"
@@ -106,8 +104,7 @@ export default function Content() {
           <span className="title-md">Most Popular Article</span>
           <div className="row" style={{ marginTop: "20px" }}>
             {getItem("popular").value !== null
-              ? getItem("popular").value !==
-                null.map((article, index) => (
+              ? getItem("popular").value.map((article, index) => (
                   <Article
                     key={`popular-article-` + index}
                     type="small"

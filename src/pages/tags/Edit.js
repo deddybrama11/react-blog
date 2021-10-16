@@ -1,13 +1,9 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import $, { map, type } from "jquery";
+import $ from "jquery";
 import { useLocation, useHistory, useParams } from "react-router-dom";
-import {
-  faAlignLeft,
-  faPencilAlt,
-  faEraser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import Button from "elements/Button";
 import axios from "axios";
 import { useAlert } from "react-alert";

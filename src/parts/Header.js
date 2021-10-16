@@ -9,7 +9,7 @@ export default function Header(props) {
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light">
           <a className="navbar-brand" href="/">
-            Mize.
+            Dokter Koding
           </a>
           <button
             className="navbar-toggler"

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useLocation, useHistory, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Footer from "../parts/Footer";
 import axios from "axios";
 import Article from "elements/Article";

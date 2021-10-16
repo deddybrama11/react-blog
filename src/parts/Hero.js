@@ -20,8 +20,7 @@ export default function Hero() {
       <div className="wrapper-hero-content">
         <div className="container" style={{ marginTop: "250px" }}>
           <div className="col-sm-6 text-tes">
-            Welcome To Mize.
-            <br></br>Enjoy yourself here!
+            Welcome To <br/> Dokter Koding. <br/>Enjoy yourself here!
             <Button
                 className="btn px-5"
                 isPrimary

@@ -3,8 +3,7 @@ import Hero from "../parts/Hero";
 import Content from "../parts/Content";
 import Footer from "../parts/Footer";
 import { useLocation, useHistory } from "react-router-dom";
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import axios from "axios";
+import React from "react";
 
 export default function LandingPage() {
   var object = {};

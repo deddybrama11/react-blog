@@ -1,13 +1,10 @@
 import React from "react";
 import Button from "elements/Button";
-import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faNewspaper,
   faList,
   faTags,
-  faComment,
-  faUsers,
   faUser,
   faSignOutAlt,
   faArrowLeft,
@@ -93,9 +90,10 @@ export default function SideNavbar(props) {
           type="link"
           className={`item ${getNavLinkClass("/admin/logout")}`}
           href={`/admin`}
-          onClick={()=> {
-            if(window.confirm('Are you sure want to logout ?')) localStorage.clear()
-          }}  
+          onClick={() => {
+            if (window.confirm("Are you sure want to logout ?"))
+              localStorage.clear();
+          }}
         >
           <div>
             <FontAwesomeIcon icon={faSignOutAlt} /> {"\u00A0"}Logout
