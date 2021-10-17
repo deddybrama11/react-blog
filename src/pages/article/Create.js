@@ -1,22 +1,19 @@
 import React, {
-  Component,
   useRef,
   useState,
   useEffect,
-  useCallback,
 } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAlignLeft,
-  faGrinTongueSquint,
 } from "@fortawesome/free-solid-svg-icons";
 import SideNavbar from "parts/SideNavbar";
-import $, { data } from "jquery";
+import $ from "jquery";
 import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "constants/editorconst";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MultiSelect } from "react-multi-select-component";
-import { useLocation, useHistory, useParams } from "react-router-dom";
+import { useLocation, useHistory} from "react-router-dom";
 import Button from "elements/Button";
 import axios from "axios";
 import { useAlert } from "react-alert";
@@ -151,18 +148,27 @@ export default function CreateArticle() {
         }
       })
       .catch((err) => {
-        if (err.message === "NODATA") {
-          console.log("masuk sinis");
-          alert.show("Please add category", {
-            type: "error",
-          });
-        } else if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
+        if (err.message !== undefined) {
+          if (err.message === "Network Error") {
+            alert.show("Network Error, please comeback later", {
+              type: "error",
+            });
+          } else if (err.message === "NODATA") {
+            console.log("masuk sinis");
+            alert.show("Please add category", {
+              type: "error",
+            });
+          }
+        }
+        if (err.response !== undefined) {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
 
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          }
         }
         console.log(err);
       });
@@ -183,18 +189,27 @@ export default function CreateArticle() {
         }
       })
       .catch((err) => {
-        if (err.message === "NODATA") {
-          alert.show("Please create data tag first", {
-            type: "error",
-          });
-          history.push("/admin");
-        } else if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
+        if (err.message !== undefined) {
+          if (err.message === "Network Error") {
+            alert.show("Network Error, please comeback later", {
+              type: "error",
+            });
+          } else if (err.message === "NODATA") {
+            console.log("masuk sinis");
+            alert.show("Please add category", {
+              type: "error",
+            });
+          }
+        }
+        if (err.response !== undefined) {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
 
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          }
         }
         console.log(err);
       });

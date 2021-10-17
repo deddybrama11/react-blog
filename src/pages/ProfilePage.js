@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import $  from "jquery";
+import $ from "jquery";
 import { useLocation, useHistory } from "react-router-dom";
 import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import ReactDatePicker from "react-datepicker";
@@ -37,13 +37,22 @@ export default function ProfilePage(props) {
         console.log(response);
       })
       .catch((err) => {
-        if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
+        if (err.message !== undefined) {
+          if (err.message === "Network Error") {
+            alert.show("Network Error, please comeback later", {
+              type: "error",
+            });
+          }
+        }
+        if (err.response !== undefined) {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
 
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          }
         }
         console.log(err);
       });

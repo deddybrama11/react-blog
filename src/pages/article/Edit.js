@@ -1,17 +1,8 @@
-import React, {
-  Component,
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAlignLeft,
-  faGrinTongueSquint,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import SideNavbar from "parts/SideNavbar";
-import $, { data } from "jquery";
+import $ from "jquery";
 import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "constants/editorconst";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -77,13 +68,27 @@ export default function EditArticle() {
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
+        if (err.message !== undefined) {
+          if (err.message === "Network Error") {
+            alert.show("Network Error, please comeback later", {
+              type: "error",
+            });
+          } else if (err.message === "NODATA") {
+            console.log("masuk sinis");
+            alert.show("Please add category", {
+              type: "error",
+            });
+          }
+        }
+        if (err.response !== undefined) {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
 
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          }
         }
         console.log(err);
       });
@@ -130,17 +135,31 @@ export default function EditArticle() {
           }
         })
         .catch((err) => {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
+          if (err.message !== undefined) {
+            if (err.message === "Network Error") {
+              alert.show("Network Error, please comeback later", {
+                type: "error",
+              });
+            } else if (err.message === "NODATA") {
+              console.log("masuk sinis");
+              alert.show("Please add category", {
+                type: "error",
+              });
+            }
+          }
+          if (err.response !== undefined) {
+            if (err.response.status === 401) {
+              localStorage.clear();
+              history.push("/admin");
 
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          } else {
-            alert.show("Error: " + err.response.data.errorMessage, {
-              type: "error",
-            });
+              alert.show("Your credentials expired, please login again", {
+                type: "error",
+              });
+            } else {
+              alert.show("Error: " + err.response.data.errorMessage, {
+                type: "error",
+              });
+            }
           }
         });
     } else {
@@ -190,17 +209,31 @@ export default function EditArticle() {
           }
         })
         .catch((err) => {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
+          if (err.message !== undefined) {
+            if (err.message === "Network Error") {
+              alert.show("Network Error, please comeback later", {
+                type: "error",
+              });
+            } else if (err.message === "NODATA") {
+              console.log("masuk sinis");
+              alert.show("Please add category", {
+                type: "error",
+              });
+            }
+          }
+          if (err.response !== undefined) {
+            if (err.response.status === 401) {
+              localStorage.clear();
+              history.push("/admin");
 
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          } else {
-            alert.show("Error: " + err.response.data.errorMessage, {
-              type: "error",
-            });
+              alert.show("Your credentials expired, please login again", {
+                type: "error",
+              });
+            } else {
+              alert.show("Error: " + err.response.data.errorMessage, {
+                type: "error",
+              });
+            }
           }
         });
     }
@@ -240,18 +273,27 @@ export default function EditArticle() {
         }
       })
       .catch((err) => {
-        if (err.message === "NODATA") {
-          console.log("masuk sinis");
-          alert.show("Please add category", {
-            type: "error",
-          });
-        } else if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
+        if (err.message !== undefined) {
+          if (err.message === "Network Error") {
+            alert.show("Network Error, please comeback later", {
+              type: "error",
+            });
+          } else if (err.message === "NODATA") {
+            console.log("masuk sinis");
+            alert.show("Please add category", {
+              type: "error",
+            });
+          }
+        }
+        if (err.response !== undefined) {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
 
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          }
         }
         console.log(err);
       });
@@ -272,18 +314,27 @@ export default function EditArticle() {
         }
       })
       .catch((err) => {
-        if (err.message === "NODATA") {
-          alert.show("Please create data tag first", {
-            type: "error",
-          });
-          history.push("/admin");
-        } else if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
+        if (err.message !== undefined) {
+          if (err.message === "Network Error") {
+            alert.show("Network Error, please comeback later", {
+              type: "error",
+            });
+          } else if (err.message === "NODATA") {
+            console.log("masuk sinis");
+            alert.show("Please add category", {
+              type: "error",
+            });
+          }
+        }
+        if (err.response !== undefined) {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
 
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          }
         }
         console.log(err);
       });

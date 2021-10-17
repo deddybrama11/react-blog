@@ -6,10 +6,10 @@ export default function Footer() {
       <footer>
         <hr />
         <div className="container">
-          <div className="d-flex justify-content-lg-between">
-            <div className="col-lg">
+          <div className="row">
+            <div className="col-sm mt-2" >
               <a href="/" style={{ fontSize: "30px", fontWeight: "600" }}>
-                Mize.
+                Codermuda.
               </a>
               <p className="brand-tagline">
                 Hello ! Enjoy our blog say something to us, if there was
@@ -17,7 +17,7 @@ export default function Footer() {
               </p>
             </div>
 
-            <div className="col-lg">
+            <div className="col-sm mt-2">
               <h6 className="mt-2">Contact</h6>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">081224170543</li>
@@ -25,7 +25,7 @@ export default function Footer() {
               </ul>
             </div>
 
-            <div className="col-lg">
+            <div className="col-sm mt-2">
               <h6 className="mt-2">Reach us on Facebook !</h6>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">Rais Maulana</li>
@@ -33,7 +33,7 @@ export default function Footer() {
               </ul>
             </div>
 
-            <div className="col-lg">
+            <div className="col-sm mt-2">
               <h6 className="mt-2">Email</h6>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">lufriraismaulana@gmail.com</li>
@@ -43,7 +43,7 @@ export default function Footer() {
           </div>
           <div className="row">
             <div className="col text-center copyrights">
-              Copyright 2019 - All rights reserved - Mize.
+              Copyright 2021 - All rights reserved - Codermuda.
             </div>
           </div>
         </div>

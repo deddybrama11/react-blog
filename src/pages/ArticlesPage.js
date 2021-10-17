@@ -1,5 +1,5 @@
 import SideNavbar from "parts/SideNavbar";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Button from "elements/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useHistory } from "react-router-dom";
@@ -47,14 +47,23 @@ export default function Articles(props) {
         console.log(response);
       })
       .catch((err) => {
-        console.log(err.response);
-        if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
+        console.log(err.message);
+        if (err.message !== undefined) {
+          if (err.message === "Network Error") {
+            alert.show("Network Error, please comeback later", {
+              type: "error",
+            });
+          }
+        }
+        if (err.response !== undefined) {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
 
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          }
         }
       });
   };
@@ -76,17 +85,26 @@ export default function Articles(props) {
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
+        if (err.message !== undefined) {
+          if (err.message === "Network Error") {
+            alert.show("Network Error, please comeback later", {
+              type: "error",
+            });
+          }
+        }
+        if (err.response !== undefined) {
+          if (err.response.status === 401) {
+            localStorage.clear();
+            history.push("/admin");
 
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
-        } else {
-          alert.show("Error: Check your internet connection", {
-            type: "error",
-          });
+            alert.show("Your credentials expired, please login again", {
+              type: "error",
+            });
+          } else {
+            alert.show("Error: Check your internet connection", {
+              type: "error",
+            });
+          }
         }
       });
   };
@@ -161,8 +179,18 @@ export default function Articles(props) {
                         style={{ height: "100px" }}
                       />
                     </td>
-                    <td>{object.categories ? object.categories.map((child) => child.category+", ") : ""}</td>
-                    <td>{object.tags ? object.tags.map((child) => child.tag+", "): "" }</td>
+                    <td>
+                      {object.categories
+                        ? object.categories.map(
+                            (child) => child.category + ", "
+                          )
+                        : ""}
+                    </td>
+                    <td>
+                      {object.tags
+                        ? object.tags.map((child) => child.tag + ", ")
+                        : ""}
+                    </td>
                     <td>{object.slug}</td>
                     <td>
                       <Button
