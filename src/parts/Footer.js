@@ -12,32 +12,24 @@ export default function Footer() {
                 Codermuda.
               </a>
               <p className="brand-tagline">
-                Hello ! Enjoy our blog say something to us, if there was
-                something you dont like it
+                Hello ! Enjoy our blog. say something to us if there was
+                something you dont like.
               </p>
             </div>
 
             <div className="col-sm mt-2">
-              <h6 className="mt-2">Contact</h6>
+              <h6 className="mt-2">Github</h6>
               <ul className="list-group list-group-flush">
-                <li className="list-group-item">081224170543</li>
-                <li className="list-group-item">082246422070</li>
-              </ul>
-            </div>
-
-            <div className="col-sm mt-2">
-              <h6 className="mt-2">Reach us on Facebook !</h6>
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item">Rais Maulana</li>
-                <li className="list-group-item">Deddy Brama</li>
+                <li className="list-group-item">github.com/raismaulana</li>
+                <li className="list-group-item">github.com/deddybrama11</li>
               </ul>
             </div>
 
             <div className="col-sm mt-2">
               <h6 className="mt-2">Email</h6>
               <ul className="list-group list-group-flush">
-                <li className="list-group-item">lufriraismaulana@gmail.com</li>
-                <li className="list-group-item">dedybramayadi@gmail.com</li>
+                <li className="list-group-item">rais@codermuda.com</li>
+                <li className="list-group-item">bram@codermuda.com</li>
               </ul>
             </div>
           </div>

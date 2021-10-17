@@ -34,7 +34,6 @@ export default function ProfilePage(props) {
         setBirthDay(new Date(response.data.data.birthday));
         setWebProfile(response.data.data.web_profile);
         setImgSrc(response.data.data.photo_profile);
-        console.log(response);
       })
       .catch((err) => {
         if (err.message !== undefined) {
@@ -54,7 +53,6 @@ export default function ProfilePage(props) {
             });
           }
         }
-        console.log(err);
       });
   }, []);
 
@@ -76,8 +74,6 @@ export default function ProfilePage(props) {
   });
 
   const handleSave = useCallback((event) => {
-    console.log("submit clicked");
-
     if (photoProfile) {
       const formData = new FormData();
       formData.append("photo_profile", photoProfile);
@@ -99,7 +95,6 @@ export default function ProfilePage(props) {
               type: "error",
             });
           }
-          console.log("gagal upload gambar");
         });
     }
 
@@ -115,7 +110,6 @@ export default function ProfilePage(props) {
         alert.show("Data saved successfully", {
           type: "success",
         });
-        console.log(response);
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -126,7 +120,6 @@ export default function ProfilePage(props) {
             type: "error",
           });
         } else {
-          console.log(err);
           alert.show("Error: Failed to save data", {
             type: "error",
           });

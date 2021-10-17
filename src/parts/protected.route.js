@@ -7,10 +7,8 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => {
         if (localStorage.getItem("token") !== null) {
-          console.log(localStorage.getItem("token"))
           return <Component {...props} />;
         } else {
-          console.log("Return protected route !")
           return (
             <Redirect
               to={{

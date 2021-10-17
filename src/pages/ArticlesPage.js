@@ -44,10 +44,8 @@ export default function Articles(props) {
       .get("/v1/posts")
       .then((response) => {
         setData(response.data.data.posts);
-        console.log(response);
       })
       .catch((err) => {
-        console.log(err.message);
         if (err.message !== undefined) {
           if (err.message === "Network Error") {
             alert.show("Network Error, please comeback later", {
@@ -72,7 +70,7 @@ export default function Articles(props) {
     axios
       .delete("/v1/posts/" + id)
       .then((response) => {
-        if (response.status === 200 && response.statusText === "OK") {
+        if (response.status === 200 && response.data.success === true) {
           getArticles();
           alert.show("Data deleted successfully", {
             type: "success",
@@ -84,7 +82,6 @@ export default function Articles(props) {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.message !== undefined) {
           if (err.message === "Network Error") {
             alert.show("Network Error, please comeback later", {
@@ -174,7 +171,7 @@ export default function Articles(props) {
                     <td>
                       <img
                         src={object.cover}
-                        class="img-fluid img-thumbnail"
+                        className="img-fluid img-thumbnail"
                         alt={object.slug}
                         style={{ height: "100px" }}
                       />

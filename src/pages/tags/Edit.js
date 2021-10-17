@@ -19,17 +19,14 @@ export default function EditTags(props) {
   const [tag, setTag] = useState("");
 
   const getTag = async () => {
-    console.log(id);
+
     axios
       .get("/v1/tags/" + id)
       .then((response) => {
-        console.log(response);
         setTag(response.data.data.tag);
-        console.log(response);
       })
 
       .catch((err) => {
-        console.log(err);
         if (err.response.status === 401) {
           localStorage.clear();
           history.push("/admin");
@@ -47,12 +44,10 @@ export default function EditTags(props) {
         tag: tag,
       })
       .then((response) => {
-        console.log(response);
-        if (response.status === 200 && response.statusText === "OK") {
+        if (response.status === 200 && response.data.success === true) {
           alert.show("Data updated successfully", {
             type: "success",
           });
-          console.log(response);
           history.goBack();
         } else {
           alert.show("There is something wrong with your data or server", {
@@ -61,7 +56,6 @@ export default function EditTags(props) {
         }
       })
       .catch((err) => {
-        console.log(err);
         alert.show("Error: Check your internet connection", {
           type: "error",
         });
@@ -75,10 +69,6 @@ export default function EditTags(props) {
   useEffect(() => {
     getTag();
   }, []);
-
-  useEffect(() => {
-    console.log(tag);
-  }, [tag]);
 
   useEffect(() => {
     $("#dismiss, .overlay, .side-navbar-item").on("click", function () {

@@ -62,19 +62,15 @@ export default function EditArticle() {
             ]);
           });
         }
-
         setDataEditor(response.data.data.content);
-        console.log(response);
       })
       .catch((err) => {
-        console.log(err);
         if (err.message !== undefined) {
           if (err.message === "Network Error") {
             alert.show("Network Error, please comeback later", {
               type: "error",
             });
           } else if (err.message === "NODATA") {
-            console.log("masuk sinis");
             alert.show("Please add category", {
               type: "error",
             });
@@ -90,13 +86,11 @@ export default function EditArticle() {
             });
           }
         }
-        console.log(err);
       });
   };
 
   async function handleSave() {
     const savedData = await instanceRef.current.save();
-    console.log(savedData);
     let ctgrs = [];
     categories.map((ob) => {
       ctgrs = [...ctgrs, ob.value];
@@ -106,10 +100,9 @@ export default function EditArticle() {
     tags.map((object) => {
       tgs = [...tgs, object.value];
     });
-    console.log(savedData);
 
     const instance = axios.create({
-      baseURL: "http://localhost:8181",
+      baseURL: "https://static.codermuda.com",
     });
 
     if (coverPhoto === "") {
@@ -141,7 +134,6 @@ export default function EditArticle() {
                 type: "error",
               });
             } else if (err.message === "NODATA") {
-              console.log("masuk sinis");
               alert.show("Please add category", {
                 type: "error",
               });
@@ -169,7 +161,6 @@ export default function EditArticle() {
       const url = await instance
         .post("/image/upload", formData)
         .then((response) => {
-          console.log(response);
           if (response.data.success === true) {
             alert.show("Cover Image berhasil di uplaod", {
               type: "success",
@@ -215,7 +206,6 @@ export default function EditArticle() {
                 type: "error",
               });
             } else if (err.message === "NODATA") {
-              console.log("masuk sinis");
               alert.show("Please add category", {
                 type: "error",
               });
@@ -279,7 +269,6 @@ export default function EditArticle() {
               type: "error",
             });
           } else if (err.message === "NODATA") {
-            console.log("masuk sinis");
             alert.show("Please add category", {
               type: "error",
             });
@@ -295,7 +284,6 @@ export default function EditArticle() {
             });
           }
         }
-        console.log(err);
       });
 
     axios
@@ -320,7 +308,6 @@ export default function EditArticle() {
               type: "error",
             });
           } else if (err.message === "NODATA") {
-            console.log("masuk sinis");
             alert.show("Please add category", {
               type: "error",
             });
@@ -336,7 +323,6 @@ export default function EditArticle() {
             });
           }
         }
-        console.log(err);
       });
     getArticle();
   }, []);

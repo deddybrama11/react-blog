@@ -8,7 +8,7 @@ export default function Content() {
   const [dataPage, setDataPage] = useState([]);
 
   const instance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "https://api.codermuda.com",
   });
 
   delete instance.defaults.headers.common.Authorization;
@@ -23,7 +23,7 @@ export default function Content() {
         ]);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
 
     instance
@@ -35,7 +35,7 @@ export default function Content() {
         ]);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
 
     instance
@@ -47,7 +47,7 @@ export default function Content() {
         ]);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
   };
 
@@ -63,9 +63,9 @@ export default function Content() {
     getArticle();
   }, []);
 
-  useEffect(() => {
-    console.log(dataPage[0]);
-  }, [dataPage]);
+  // useEffect(() => {
+  //   console.log(dataPage[0]);
+  // }, [dataPage]);
 
   return dataPage.length === 3 ? (
     <section className="container justify-center">

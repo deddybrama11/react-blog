@@ -43,7 +43,7 @@ export default function CategoriesPage(props) {
     axios
       .delete("/v1/categories/" + id)
       .then((response) => {
-        if (response.status === 200 && response.statusText === "OK") {
+        if (response.status === 200 && response.data.success === true) {
           getCategories();
           alert.show("Data deleted successfully", {
             type: "success",
@@ -55,7 +55,6 @@ export default function CategoriesPage(props) {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.message !== undefined) {
           if (err.message === "Network Error") {
             alert.show("Network Error, please comeback later", {
@@ -89,10 +88,8 @@ export default function CategoriesPage(props) {
       .get("/v1/categories")
       .then((response) => {
         setData(response.data.data.categories);
-        console.log(response);
       })
       .catch((err) => {
-        console.log(err);
         if (err.message !== undefined) {
           if (err.message === "Network Error") {
             alert.show("Network Error, please comeback later", {
@@ -119,7 +116,7 @@ export default function CategoriesPage(props) {
         category: category,
       })
       .then((response) => {
-        if (response.status === 200 && response.statusText === "OK") {
+        if (response.status === 200 && response.data.success === true) {
           getCategories();
           setCategory("");
           alert.show("Data saved successfully", {
@@ -132,7 +129,6 @@ export default function CategoriesPage(props) {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.message !== undefined) {
           if (err.message === "Network Error") {
             alert.show("Network Error, please comeback later", {
@@ -160,10 +156,6 @@ export default function CategoriesPage(props) {
   useEffect(() => {
     getCategories();
   }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <div

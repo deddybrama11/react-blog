@@ -21,7 +21,6 @@ class LoginPage extends Component {
     axios
       .get("v1/users/username/" + localStorage.getItem("username"))
       .then((response) => {
-        console.log(response);
         localStorage.setItem("id_user", response.data.data.id_user);
       })
       .catch((err) => {
@@ -46,7 +45,6 @@ class LoginPage extends Component {
       })
       .then((response) => {
         if (response.data.errorCode === "") {
-          console.log(response.data);
           localStorage.setItem("token", response.data.data.token);
           localStorage.setItem("username", this.state.username);
           axios.defaults.headers.common.Authorization =
@@ -90,7 +88,7 @@ class LoginPage extends Component {
                 marginLeft: "10px",
               }}
             >
-              Mize.
+              Codermuda.
             </span>
             <div
               className="card col-sm-8 shadow"

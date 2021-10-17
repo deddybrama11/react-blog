@@ -1,5 +1,6 @@
 {
-  "name": "mize-app",
+  "name": "codermuda",
+  "homepage": "http://codermuda.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -16,7 +16,7 @@ export default function AllArticlePage(props) {
 
   const pageSize = 10;
   const instance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "https://api.codermuda.com",
   });
 
   delete instance.defaults.headers.common.Authorization;
@@ -37,7 +37,7 @@ export default function AllArticlePage(props) {
         ]);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
   };
 
@@ -48,7 +48,7 @@ export default function AllArticlePage(props) {
         return [{ name: "latest", value: response.data.data.posts }];
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -64,10 +64,6 @@ export default function AllArticlePage(props) {
     const tmp = await getItemArticle(data.selected + 1);
     setItemPage(tmp);
   };
-
-  useEffect(() => {
-    console.log(itemPage);
-  }, [itemPage]);
 
   return (
     <>

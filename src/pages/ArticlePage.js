@@ -45,22 +45,20 @@ export default function ArticlePage(props) {
   let { slug } = useParams();
 
   const instance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "https://api.codermuda.com",
   });
 
   delete instance.defaults.headers.common.Authorization;
 
   const getArticle = () => {
-    setTimeout(function () {
       instance
         .get("/v1/posts/slug/" + slug)
         .then((response) => {
           setData(response.data.data);
         })
         .catch((err) => {
-          console.log(err.response);
+          // console.log(err.response);
         });
-    }, 2000);
   };
 
   useEffect(() => {
@@ -70,9 +68,6 @@ export default function ArticlePage(props) {
     });
     getArticle();
   }, []);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const blockToHtml = () => {
     if (data !== undefined) {

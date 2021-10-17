@@ -43,7 +43,7 @@ export default function SideNavbar(props) {
           marginLeft: "10px",
         }}
       >
-        Mize.
+        Codermuda.
       </span>
       <div className="d-flex flex-column side-navbar-item">
         <Button

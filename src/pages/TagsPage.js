@@ -43,7 +43,7 @@ export default function CategoriesPage(props) {
     axios
       .delete("/v1/tags/" + id)
       .then((response) => {
-        if (response.status === 200 && response.statusText === "OK") {
+        if (response.status === 200 && response.data.success === true) {
           getTags();
           alert.show("Data deleted successfully", {
             type: "success",
@@ -55,7 +55,6 @@ export default function CategoriesPage(props) {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.response.status === 401) {
           localStorage.clear();
           history.push("/admin");
@@ -80,7 +79,6 @@ export default function CategoriesPage(props) {
       .get("/v1/tags")
       .then((response) => {
         setData(response.data.data.tags);
-        console.log(response);
       })
       .catch((err) => {
         if (err.message !== undefined) {
@@ -100,7 +98,6 @@ export default function CategoriesPage(props) {
             });
           }
         }
-        console.log(err);
       });
   };
 
@@ -110,7 +107,7 @@ export default function CategoriesPage(props) {
         tag: tag,
       })
       .then((response) => {
-        if (response.status === 200 && response.statusText === "OK") {
+        if (response.status === 200 && response.data.success === true) {
           getTags();
           setTag("");
           alert.show("Data saved successfully", {
@@ -123,7 +120,6 @@ export default function CategoriesPage(props) {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.message !== undefined) {
           if (err.message === "Network Error") {
             alert.show("Network Error, please comeback later", {
@@ -151,10 +147,6 @@ export default function CategoriesPage(props) {
   useEffect(() => {
     getTags();
   }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <div

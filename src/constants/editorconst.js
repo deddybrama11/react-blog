@@ -43,7 +43,7 @@ export const EDITOR_JS_TOOLS = {
       uploader: {
         async uploadByFile(file) {
           const instance = axios.create({
-            baseURL: "http://localhost:8181",
+            baseURL: "https://static.codermuda.com",
           });
 
           const formData = new FormData();

@@ -1,19 +1,13 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAlignLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import SideNavbar from "parts/SideNavbar";
 import $ from "jquery";
 import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "constants/editorconst";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MultiSelect } from "react-multi-select-component";
-import { useLocation, useHistory} from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import Button from "elements/Button";
 import axios from "axios";
 import { useAlert } from "react-alert";
@@ -48,10 +42,9 @@ export default function CreateArticle() {
     tags.map((object) => {
       tgs = [...tgs, object.value];
     });
-    console.log(savedData);
 
     const instance = axios.create({
-      baseURL: "http://localhost:8181",
+      baseURL: "https://static.codermuda.com",
     });
 
     const formData = new FormData();
@@ -72,9 +65,17 @@ export default function CreateArticle() {
         return response.data.data.location;
       })
       .catch((err) => {
-        alert.show("Error: " + err.response.data.errorMessage, {
-          type: "error",
-        });
+        console.log(err);
+        if (err.response !== undefined) {
+          alert.show("Error: " + err.response.data.errorMessage, {
+            type: "error",
+          });
+        }
+        if (err.message === "Network Error") {
+          alert.show("Error: " + err.message, {
+            type: "error",
+          });
+        }
       });
 
     await axios

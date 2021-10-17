@@ -27,7 +27,6 @@ export default function EditCategory(props) {
       .get("/v1/categories/" + id)
       .then((response) => {
         setCategory(response.data.data.category);
-        console.log(response);
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -38,7 +37,6 @@ export default function EditCategory(props) {
             type: "error",
           });
         }
-        console.log(err);
       });
   };
 
@@ -48,12 +46,10 @@ export default function EditCategory(props) {
         category: category,
       })
       .then((response) => {
-        console.log(response);
-        if (response.status === 200 && response.statusText === "OK") {
+        if (response.status === 200 && response.data.success === true) {
           alert.show("Data updated successfully", {
             type: "success",
           });
-          console.log(response);
           history.goBack();
         } else {
           alert.show("There is something wrong with your data or server", {
@@ -62,7 +58,6 @@ export default function EditCategory(props) {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.response.status === 401) {
           localStorage.clear();
           history.push("/admin");
@@ -85,10 +80,6 @@ export default function EditCategory(props) {
   useEffect(() => {
     getCategory();
   }, []);
-
-  useEffect(() => {
-    console.log(category);
-  }, [category]);
 
   useEffect(() => {
     $("#dismiss, .overlay, .side-navbar-item").on("click", function () {
