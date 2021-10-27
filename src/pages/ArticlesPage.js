@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Button from "elements/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import $ from "jquery";
 import axios from "axios";
@@ -11,10 +12,13 @@ import {
   faPencilAlt,
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
+import { fetchPosts } from "../redux";
+import { errorHandling } from "redux/errorHandling";
 
 export default function Articles(props) {
   var object = {};
   object.location = useLocation();
+  const dispatch = useDispatch();
   let history = useHistory();
 
   const alert = useAlert();
@@ -38,34 +42,21 @@ export default function Articles(props) {
   });
 
   const [data, setData] = useState();
+  const { posts, loading, error } = useSelector((state) => state.articles);
 
-  const getArticles = async () => {
-    await axios
-      .get("/v1/posts")
-      .then((response) => {
-        setData(response.data.data.posts);
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          }
-        }
+  useEffect(() => {
+    if (error !== "") {
+      const errMessage = errorHandling(error);
+      alert.show(errMessage, {
+        type: "error",
       });
-  };
+      console.log("errMessage : " + error);
+    }
+  }, [error]);
 
+  const getArticles = () => {
+    dispatch(fetchPosts());
+  };
   const handleDelete = (id) => () => {
     axios
       .delete("/v1/posts/" + id)
@@ -107,7 +98,7 @@ export default function Articles(props) {
   };
 
   useEffect(() => {
-    getArticles();
+    dispatch(fetchPosts());
   }, []);
 
   return (
@@ -163,8 +154,8 @@ export default function Articles(props) {
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((object) => (
+              {posts &&
+                posts.map((object) => (
                   <tr key={object.id_post}>
                     <th scope="row">{object.id_post}</th>
                     <td>{object.title}</td>
