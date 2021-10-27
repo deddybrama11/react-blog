@@ -24,7 +24,7 @@ function App() {
         <Route exact path="/article/:slug" component={ArticlePage}></Route>
         <Route exact path="/article" component={AllArticlePage}></Route>
 
-        <Route exact path="/admin" component={LoginPage}></Route>
+        <Route exact path="/admin" component={() => <LoginPage />}></Route>
 
         <ProtectedRoute
           exact
