@@ -27,9 +27,13 @@ const fetchUserFailure = (error) => {
 
 export const fetchUsers = (username, pass) => {
   return (dispatch) => {
-    delete axios.defaults.headers.common["Authorization"];
+    const instance = axios.create({
+      baseURL: "https://api.codermuda.com",
+    });
+  
+    delete instance.defaults.headers.common.Authorization;
     dispatch(fetchUserRequest());
-    axios
+    instance
       .post("v1/users/auth", {
         username: username,
         password: pass,

@@ -12,8 +12,7 @@ import {
   faPencilAlt,
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
-import { fetchPosts } from "../redux";
-import { errorHandling } from "redux/errorHandling";
+import { fetchPosts, deletePost } from "../redux";
 
 export default function Articles(props) {
   var object = {};
@@ -42,61 +41,57 @@ export default function Articles(props) {
   });
 
   const [data, setData] = useState();
-  const { posts, loading, error } = useSelector((state) => state.articles);
-
-  useEffect(() => {
-    if (error !== "") {
-      const errMessage = errorHandling(error);
-      alert.show(errMessage, {
-        type: "error",
-      });
-      console.log("errMessage : " + error);
-    }
-  }, [error]);
+  const { posts, loading, error, update } = useSelector(
+    (state) => state.articles
+  );
 
   const getArticles = () => {
     dispatch(fetchPosts());
   };
-  const handleDelete = (id) => () => {
-    axios
-      .delete("/v1/posts/" + id)
-      .then((response) => {
-        if (response.status === 200 && response.data.success === true) {
-          getArticles();
-          alert.show("Data deleted successfully", {
-            type: "success",
-          });
-        } else {
-          alert.show("There is something wrong with your data", {
-            type: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
+  // const handleDelete = (id) => () => {
+  //   axios
+  //     .delete("/v1/posts/" + id)
+  //     .then((response) => {
+  //       if (response.status === 200 && response.data.success === true) {
+  //         getArticles();
+  //         alert.show("Data deleted successfully", {
+  //           type: "success",
+  //         });
+  //       } else {
+  //         alert.show("There is something wrong with your data", {
+  //           type: "error",
+  //         });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       if (err.message !== undefined) {
+  //         if (err.message === "Network Error") {
+  //           alert.show("Network Error, please comeback later", {
+  //             type: "error",
+  //           });
+  //         }
+  //       }
+  //       if (err.response !== undefined) {
+  //         if (err.response.status === 401) {
+  //           localStorage.clear();
+  //           history.push("/admin");
 
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          } else {
-            alert.show("Error: Check your internet connection", {
-              type: "error",
-            });
-          }
-        }
-      });
-  };
-
+  //           alert.show("Your credentials expired, please login again", {
+  //             type: "error",
+  //           });
+  //         } else {
+  //           alert.show("Error: Check your internet connection", {
+  //             type: "error",
+  //           });
+  //         }
+  //       }
+  //     });
+  // };
+  useEffect(() => {
+    if (update) {
+      dispatch(fetchPosts());
+    }
+  }, [update]);
   useEffect(() => {
     dispatch(fetchPosts());
   }, []);
@@ -198,7 +193,9 @@ export default function Articles(props) {
                       <Button
                         href="#"
                         type="link"
-                        onClick={handleDelete(object.id_post)}
+                        onClick={() => {
+                          dispatch(deletePost(object.id_post));
+                        }}
                         style={{ backgroundColor: "red", padding: "3px" }}
                       >
                         <FontAwesomeIcon
