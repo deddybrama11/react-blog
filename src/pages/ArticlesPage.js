@@ -13,6 +13,7 @@ import {
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
 import { fetchPosts, deletePost } from "../redux";
+import Loading from "parts/Loading";
 
 export default function Articles(props) {
   var object = {};
@@ -149,7 +150,7 @@ export default function Articles(props) {
               </tr>
             </thead>
             <tbody>
-              {posts &&
+              {loading ? ( <Loading/>) :posts &&
                 posts.map((object) => (
                   <tr key={object.id_post}>
                     <th scope="row">{object.id_post}</th>

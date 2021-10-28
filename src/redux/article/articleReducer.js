@@ -5,6 +5,9 @@ import {
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAILURE,
+  POST_POST_REQUEST,
+  POST_POST_SUCCESS,
+  POST_POST_FAILURE,
 } from "./articleTypes";
 
 const initialState = {
@@ -75,5 +78,36 @@ export const deleteArticle = (state = initialState, action) => {
         ...state,
         error: "",
       };
+  }
+};
+
+const initialStateArticle = {
+  loading: false,
+  error: "",
+  success: "",
+};
+
+export const createArticle = (state = initialStateArticle, action) => {
+  switch (action.type) {
+    case POST_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case POST_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload,
+      };
+    case POST_POST_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    default:
+      return state;
   }
 };

@@ -11,11 +11,23 @@ import {
 import Button from "elements/Button";
 import axios from "axios";
 import { useAlert } from "react-alert";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteCategory,
+  fetchCategories,
+} from "redux/categories/categoryAction";
+import loadingImg from "../assets/images/loading-buffering.gif";
+import Loading from "parts/Loading";
 
 export default function CategoriesPage(props) {
   var object = {};
   object.location = useLocation();
   let history = useHistory();
+
+  const dispatch = useDispatch();
+  const { categories, loading, error } = useSelector(
+    (state) => state.categories
+  );
 
   const alert = useAlert();
   const [data, setData] = useState();
@@ -39,75 +51,8 @@ export default function CategoriesPage(props) {
     });
   }, []);
 
-  const handleDelete = (id) => () => {
-    axios
-      .delete("/v1/categories/" + id)
-      .then((response) => {
-        if (response.status === 200 && response.data.success === true) {
-          getCategories();
-          alert.show("Data deleted successfully", {
-            type: "success",
-          });
-        } else {
-          alert.show("There is something wrong with your data or server", {
-            type: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          } else {
-            alert.show("Error: Check your internet connection", {
-              type: "error",
-            });
-          }
-        }
-      });
-  };
-
   const handleChange = (e) => {
     setCategory(e.target.value);
-  };
-
-  const getCategories = async () => {
-    await axios
-      .get("/v1/categories")
-      .then((response) => {
-        setData(response.data.data.categories);
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          }
-        }
-      });
   };
 
   const saveCategory = async () => {
@@ -117,8 +62,8 @@ export default function CategoriesPage(props) {
       })
       .then((response) => {
         if (response.status === 200 && response.data.success === true) {
-          getCategories();
-          setCategory("");
+          // getCategories();
+          // setCategory("");
           alert.show("Data saved successfully", {
             type: "success",
           });
@@ -152,9 +97,9 @@ export default function CategoriesPage(props) {
         }
       });
   };
-
   useEffect(() => {
-    getCategories();
+    // getCategories();
+    dispatch(fetchCategories());
   }, []);
 
   return (
@@ -206,8 +151,13 @@ export default function CategoriesPage(props) {
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((object) => (
+              {loading ? (
+                <Loading />
+              ) : (
+                categories &&
+                categories.data &&
+                categories.data.categories &&
+                categories.data.categories.map((object) => (
                   <tr key={object.id_category}>
                     <th scope="row">{object.id_category}</th>
                     <td>{object.category}</td>
@@ -229,7 +179,9 @@ export default function CategoriesPage(props) {
                       <Button
                         href="#"
                         type="link"
-                        onClick={handleDelete(object.id_category)}
+                        onClick={() => {
+                          dispatch(deleteCategory(object.id_category));
+                        }}
                         style={{ backgroundColor: "red", padding: "3px" }}
                       >
                         <FontAwesomeIcon
@@ -243,7 +195,8 @@ export default function CategoriesPage(props) {
                       </Button>
                     </td>
                   </tr>
-                ))}
+                ))
+              )}
             </tbody>
           </table>
         </div>

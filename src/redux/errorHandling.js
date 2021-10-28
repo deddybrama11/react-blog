@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 export const errorHandling = (err) => {
   if (err.message !== undefined) {
     if (err.message === "Network Error") {
-      console.log("network error tapi di error handling");
+      console.log("Network error");
       Swal.fire({
         icon: "error",
         title: "Oops...",

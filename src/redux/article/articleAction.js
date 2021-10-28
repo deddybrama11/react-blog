@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import { errorHandling } from "redux/errorHandling";
 import {
   FETCH_POSTS_REQUEST,
@@ -7,6 +8,9 @@ import {
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAILURE,
+  POST_POST_REQUEST,
+  POST_POST_SUCCESS,
+  POST_POST_FAILURE,
 } from "./articleTypes";
 
 const fetchPostRequest = () => {
@@ -25,25 +29,6 @@ const fetchPostSuccess = (posts) => {
 const fetchPostFailure = (error) => {
   return {
     type: FETCH_POSTS_FAILURE,
-    payload: error,
-  };
-};
-
-const deletePostRequest = () => {
-  return {
-    type: DELETE_POST_REQUEST,
-  };
-};
-
-const deletePostSuccess = (data) => {
-  return {
-    type: DELETE_POST_SUCCESS,
-  };
-};
-
-const deletePostFailure = (error) => {
-  return {
-    type: DELETE_POST_FAILURE,
     payload: error,
   };
 };
@@ -68,6 +53,25 @@ export const fetchPosts = () => {
   };
 };
 
+const deletePostRequest = () => {
+  return {
+    type: DELETE_POST_REQUEST,
+  };
+};
+
+const deletePostSuccess = (data) => {
+  return {
+    type: DELETE_POST_SUCCESS,
+  };
+};
+
+const deletePostFailure = (error) => {
+  return {
+    type: DELETE_POST_FAILURE,
+    payload: error,
+  };
+};
+
 export const deletePost = (id) => {
   return (dispatch) => {
     dispatch(deletePostRequest());
@@ -77,6 +81,11 @@ export const deletePost = (id) => {
         if (response.status === 200 && response.data.success === true) {
           dispatch(deletePostSuccess(response));
           dispatch(fetchPosts());
+          Swal.fire({
+            icon: "success",
+            title: "Hore..",
+            text: "Data deleted successfully",
+          });
         } else {
           dispatch(deletePostFailure(response.data));
           errorHandling(response.data);
@@ -86,5 +95,25 @@ export const deletePost = (id) => {
         dispatch(deletePostFailure(err));
         errorHandling(err);
       });
+  };
+};
+
+const postPostRequest = () => {
+  return {
+    type: POST_POST_REQUEST,
+  };
+};
+
+const postPostSuccess = (data) => {
+  return {
+    type: POST_POST_SUCCESS,
+    payload: data,
+  };
+};
+
+const postPostFailure = (error) => {
+  return {
+    type: POST_POST_FAILURE,
+    payload: error,
   };
 };
