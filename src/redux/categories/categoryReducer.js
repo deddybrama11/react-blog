@@ -5,6 +5,9 @@ import {
   FETCH_CATEGORIES_FAILURE,
   FETCH_CATEGORIES_REQUEST,
   FETCH_CATEGORIES_SUCCESS,
+  POST_CATEGORY_REQUEST,
+  POST_CATEGORY_SUCCESS,
+  POST_CATEGORY_FAILURE,
 } from "./categoryTypes";
 
 const initialState = {
@@ -12,6 +15,7 @@ const initialState = {
   categories: [],
   error: "",
   success: "",
+  btnLoading: false,
 };
 export const categoryReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -48,6 +52,21 @@ export const categoryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        error: action.payload,
+      };
+    case POST_CATEGORY_REQUEST:
+      return {
+        ...state,
+        btnLoading: true,
+      };
+    case POST_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        success: action.payload,
+      };
+    case POST_CATEGORY_FAILURE:
+      return {
+        ...state,
         error: action.payload,
       };
 

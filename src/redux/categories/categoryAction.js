@@ -5,6 +5,9 @@ import {
   DELETE_CATEGORY_REQUEST,
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_FAILURE,
+  POST_CATEGORY_REQUEST,
+  POST_CATEGORY_SUCCESS,
+  POST_CATEGORY_FAILURE,
 } from "./categoryTypes";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -92,6 +95,52 @@ export const deleteCategory = (id) => {
       .catch((err) => {
         dispatch(deleteCategoryFailure(err));
         errorHandling(err);
+      });
+  };
+};
+
+const postCategoryRequest = () => {
+  return {
+    type: POST_CATEGORY_REQUEST,
+  };
+};
+
+const postCategorySuccess = (success) => {
+  return {
+    type: POST_CATEGORY_SUCCESS,
+    payload: success,
+  };
+};
+
+const postCategoryFailure = (error) => {
+  return {
+    type: POST_CATEGORY_FAILURE,
+    payload: error,
+  };
+};
+
+export const postCategory = (category) => {
+  return (dispatch) => {
+    dispatch(postCategoryRequest());
+    return axios
+      .post("/v1/categories", {
+        category: category,
+      })
+      .then((response) => {
+        if (response.status === 200 && response.data.success === true) {
+          dispatch(postCategorySuccess(response.data));
+          Swal.fire({
+            icon: "success",
+            title: "Yayy..",
+            text: "Data added successfully",
+          });
+          dispatch(fetchCategories());
+        } else {
+          dispatch(postCategoryFailure(response.data));
+        }
+      })
+      .catch((err) => {
+        dispatch(postCategoryFailure(err));
       });
   };
 };

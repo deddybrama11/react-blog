@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteCategory,
   fetchCategories,
+  postCategory,
 } from "redux/categories/categoryAction";
 import loadingImg from "../assets/images/loading-buffering.gif";
 import Loading from "parts/Loading";
@@ -55,48 +56,6 @@ export default function CategoriesPage(props) {
     setCategory(e.target.value);
   };
 
-  const saveCategory = async () => {
-    axios
-      .post("/v1/categories", {
-        category: category,
-      })
-      .then((response) => {
-        if (response.status === 200 && response.data.success === true) {
-          // getCategories();
-          // setCategory("");
-          alert.show("Data saved successfully", {
-            type: "success",
-          });
-        } else {
-          alert.show("There is something wrong with your data or server", {
-            type: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          } else {
-            alert.show("Error: Check your internet connection", {
-              type: "error",
-            });
-          }
-        }
-      });
-  };
   useEffect(() => {
     // getCategories();
     dispatch(fetchCategories());
@@ -134,7 +93,9 @@ export default function CategoriesPage(props) {
             <Button
               isPrimary
               type="button"
-              onClick={saveCategory}
+              onClick={() => {
+                dispatch(postCategory(category));
+              }}
               style={{ height: "40px" }}
               className="btn text-white mt-5 ml-3"
             >
