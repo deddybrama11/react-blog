@@ -10,10 +10,10 @@ export default function Hero() {
         })
     }
   return (
-    <section className="row gradient-bg" style={{ height: "680px" }}>
+    <section className="d-flex flex-wrap gradient-bg" style={{ height: "680px" }}>
       <img
         className="img-fluid"
-        style={{ height: "auto", objectFit: "cover" }}
+        style={{ height: "auto", objectFit: "cover"}}
         src="/images/image-hero.jpg"
         alt="hero-img"
       ></img>
