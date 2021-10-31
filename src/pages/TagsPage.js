@@ -3,6 +3,7 @@ import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from "jquery";
 import { useLocation, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   faAlignLeft,
   faPencilAlt,
@@ -11,11 +12,15 @@ import {
 import Button from "elements/Button";
 import axios from "axios";
 import { useAlert } from "react-alert";
+import { fetchTags, postTag } from "redux/tags/tagAction";
 
 export default function CategoriesPage(props) {
   var object = {};
   object.location = useLocation();
   let history = useHistory();
+
+  const dispatch = useDispatch();
+  const { tags, loading, error } = useSelector((state) => state.tags);
 
   const alert = useAlert();
   const [data, setData] = useState();
@@ -101,51 +106,51 @@ export default function CategoriesPage(props) {
       });
   };
 
-  const saveTag = async () => {
-    axios
-      .post("/v1/tags", {
-        tag: tag,
-      })
-      .then((response) => {
-        if (response.status === 200 && response.data.success === true) {
-          getTags();
-          setTag("");
-          alert.show("Data saved successfully", {
-            type: "success",
-          });
-        } else {
-          alert.show("There is something wrong with your data", {
-            type: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
+  // const saveTag = async () => {
+  //   axios
+  //     .post("/v1/tags", {
+  //       tag: tag,
+  //     })
+  //     .then((response) => {
+  //       if (response.status === 200 && response.data.success === true) {
+  //         getTags();
+  //         setTag("");
+  //         alert.show("Data saved successfully", {
+  //           type: "success",
+  //         });
+  //       } else {
+  //         alert.show("There is something wrong with your data", {
+  //           type: "error",
+  //         });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       if (err.message !== undefined) {
+  //         if (err.message === "Network Error") {
+  //           alert.show("Network Error, please comeback later", {
+  //             type: "error",
+  //           });
+  //         }
+  //       }
+  //       if (err.response !== undefined) {
+  //         if (err.response.status === 401) {
+  //           localStorage.clear();
+  //           history.push("/admin");
 
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          } else {
-            alert.show("Error: Check your internet connection", {
-              type: "error",
-            });
-          }
-        }
-      });
-  };
+  //           alert.show("Your credentials expired, please login again", {
+  //             type: "error",
+  //           });
+  //         } else {
+  //           alert.show("Error: Check your internet connection", {
+  //             type: "error",
+  //           });
+  //         }
+  //       }
+  //     });
+  // };
 
   useEffect(() => {
-    getTags();
+    dispatch(fetchTags());
   }, []);
 
   return (
@@ -180,7 +185,9 @@ export default function CategoriesPage(props) {
             <Button
               isPrimary
               type="button"
-              onClick={saveTag}
+              onClick={() => {
+                dispatch(postTag(tag));
+              }}
               style={{ height: "40px" }}
               className="btn text-white mt-5 ml-3"
             >
@@ -197,8 +204,10 @@ export default function CategoriesPage(props) {
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((object) => (
+              {tags &&
+                tags.data &&
+                tags.data.tags &&
+                tags.data.tags.map((object) => (
                   <tr key={object.id_tag}>
                     <th scope="row">{object.id_tag}</th>
                     <td>{object.name}</td>

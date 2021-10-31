@@ -16,8 +16,8 @@ function LoginPage() {
 
   useEffect(() => {
     if (users.length !== 0) {
-      localStorage.setItem("token", users.data.token);
-      localStorage.setItem("username", username);
+      console.log("token : " + users.data.token);
+      
       history.push("/admin/articles");
     }
   }, [users]);

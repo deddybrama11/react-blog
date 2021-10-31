@@ -30,7 +30,7 @@ export const fetchUsers = (username, pass) => {
     const instance = axios.create({
       baseURL: "https://api.codermuda.com",
     });
-  
+
     delete instance.defaults.headers.common.Authorization;
     dispatch(fetchUserRequest());
     instance
@@ -41,6 +41,10 @@ export const fetchUsers = (username, pass) => {
       .then((response) => {
         if (response.data.success === true) {
           dispatch(fetchUserSuccess(response.data));
+          localStorage.setItem("token", response.data.data.token);
+          localStorage.setItem("username", username);
+          axios.defaults.headers.common.Authorization =
+            "Bearer " + localStorage.getItem("token");
         } else {
           dispatch(fetchUserFailure(response.data));
         }

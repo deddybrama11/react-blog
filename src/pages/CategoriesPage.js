@@ -9,15 +9,12 @@ import {
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "elements/Button";
-import axios from "axios";
-import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteCategory,
   fetchCategories,
   postCategory,
 } from "redux/categories/categoryAction";
-import loadingImg from "../assets/images/loading-buffering.gif";
 import Loading from "parts/Loading";
 
 export default function CategoriesPage(props) {
@@ -30,8 +27,6 @@ export default function CategoriesPage(props) {
     (state) => state.categories
   );
 
-  const alert = useAlert();
-  const [data, setData] = useState();
   const [category, setCategory] = useState("");
 
   useEffect(() => {
