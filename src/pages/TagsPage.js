@@ -12,7 +12,7 @@ import {
 import Button from "elements/Button";
 import axios from "axios";
 import { useAlert } from "react-alert";
-import { fetchTags, postTag } from "redux/tags/tagAction";
+import { deleteTag, fetchTags, postTag } from "redux/tags/tagAction";
 
 export default function CategoriesPage(props) {
   var object = {};
@@ -229,7 +229,9 @@ export default function CategoriesPage(props) {
                       <Button
                         href="#"
                         type="link"
-                        onClick={handleDelete(object.id_tag)}
+                        onClick={() => {
+                          dispatch(deleteTag(object.id_tag));
+                        }}
                         style={{ backgroundColor: "red", padding: "3px" }}
                       >
                         <FontAwesomeIcon

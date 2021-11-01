@@ -98,3 +98,47 @@ export const postTag = (tag) => {
       });
   };
 };
+
+const deleteTagRequest = () => {
+  return {
+    type: DELETE_TAG_REQUEST,
+  };
+};
+
+const deleteTagSuccess = (success) => {
+  return {
+    type: DELETE_TAG_SUCCESS,
+    payload: success,
+  };
+};
+
+const deleteTagFailure = (err) => {
+  return {
+    type: DELETE_TAG_FAILURE,
+    payload: err,
+  };
+};
+
+export const deleteTag = (id) => {
+  return (dispatch) => {
+    dispatch(deleteTagRequest());
+    return axios
+      .delete("/v1/tags/" + id)
+      .then((response) => {
+        if (response.status === 200 && response.data.success === true) {
+          dispatch(deleteTagSuccess(response.data));
+          Swal.fire({
+            icon: "success",
+            title: "Horee..",
+            text: "Data deleted successfully",
+          });
+          dispatch(fetchTags());
+        } else {
+          dispatch(deleteTagFailure(response.data));
+        }
+      })
+      .catch((err) => {
+        dispatch(deleteTagFailure(err));
+      });
+  };
+};
