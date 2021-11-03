@@ -63,7 +63,7 @@ export default function CategoriesPage(props) {
     >
       <div className="row" style={{ height: "100%" }}>
         <SideNavbar {...object} />
-        <div className="col">
+        <div className="col" style={{ overflow: "auto", height: "100vh" }}>
           <div className="row">
             <button
               id="sidebarCollapse"

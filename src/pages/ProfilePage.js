@@ -6,9 +6,12 @@ import { useLocation, useHistory } from "react-router-dom";
 import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import ReactDatePicker from "react-datepicker";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "elements/Button";
 import axios from "axios";
 import { useAlert } from "react-alert";
+import { fetchUserData, postUserData } from "../redux";
+import Loading from "parts/Loading";
 
 export default function ProfilePage(props) {
   var object = {};
@@ -16,6 +19,9 @@ export default function ProfilePage(props) {
   const alert = useAlert();
   let history = useHistory();
 
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.userData);
+  const { loading, error } = data;
   const [imgSrc, setImgSrc] = useState();
   const [name, setName] = useState("");
   const [country, setCountry] = useState("");
@@ -25,36 +31,19 @@ export default function ProfilePage(props) {
   const [photoProfile, setPhotoProfile] = useState();
 
   useEffect(() => {
-    axios
-      .get("v1/users/username/" + localStorage.getItem("username"))
-      .then((response) => {
-        setName(response.data.data.name);
-        setCity(response.data.data.city);
-        setCountry(response.data.data.country);
-        setBirthDay(new Date(response.data.data.birthday));
-        setWebProfile(response.data.data.web_profile);
-        setImgSrc(response.data.data.photo_profile);
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          }
-        }
-      });
+    dispatch(fetchUserData());
   }, []);
+
+  useEffect(() => {
+    if (data.users.name !== undefined) {
+      setName(data.users.name);
+      setCountry(data.users.country);
+      setCity(data.users.city);
+      setBirthDay(new Date(data.users.birthday));
+      setWebProfile(data.users.web_profile);
+      setPhotoProfile(data.users.photo_profile);
+    }
+  }, [data]);
 
   const fileImg = useRef();
 
@@ -97,34 +86,16 @@ export default function ProfilePage(props) {
           }
         });
     }
-
-    axios
-      .put("v1/users/" + localStorage.getItem("id_user"), {
+    dispatch(
+      postUserData({
         name: name,
         city: city,
         country: country,
         birthday: birthday,
-        web_profile: webProfile,
+        webProfile: webProfile,
+        id_user: data.users.id_user,
       })
-      .then((response) => {
-        alert.show("Data saved successfully", {
-          type: "success",
-        });
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
-
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
-        } else {
-          alert.show("Error: Failed to save data", {
-            type: "error",
-          });
-        }
-      });
+    );
     event.preventDefault();
   });
 
@@ -153,7 +124,7 @@ export default function ProfilePage(props) {
     >
       <div className="row" style={{ height: "100%" }}>
         <SideNavbar {...object} />
-        <div className="col">
+        <div className="col" style={{ overflow: "auto", height: "100vh" }}>
           <div className="row">
             <button
               id="sidebarCollapse"
@@ -164,140 +135,144 @@ export default function ProfilePage(props) {
             </button>
           </div>
           <div className="title-md m-3">Profile Information</div>
-          <form onSubmit={handleSave}>
-            <div className="row ml-3 mb-5">
-              <div style={{ position: "relative" }}>
-                <label
-                  htmlFor="photo-input"
-                  style={{
-                    cursor: "pointer",
-                    position: "absolute",
-                    bottom: 0,
-                    right: 5,
-                  }}
-                >
-                  <div
-                    className="card shadow"
+          {loading ? (
+            <Loading />
+          ) : (
+            <form onSubmit={handleSave}>
+              <div className="row ml-3 mb-5">
+                <div style={{ position: "relative" }}>
+                  <label
+                    htmlFor="photo-input"
                     style={{
-                      backgroundColor: "blue",
-                      color: "white",
-                      padding: "5px",
-                      borderRadius: "100px",
+                      cursor: "pointer",
+                      position: "absolute",
+                      bottom: 0,
+                      right: 5,
                     }}
                   >
-                    <FontAwesomeIcon icon={faPencilAlt} />
-                  </div>
-                </label>
-                <input
-                  id="photo-input"
-                  type="file"
-                  ref={fileImg}
-                  name="user[image]"
-                  multiple={true}
-                  onChange={handleImage}
-                  style={{ display: "none" }}
-                ></input>
-                <img
-                  className="rounded-circle shadow"
-                  style={{
-                    width: "120px",
-                    height: "120px",
-                    objectFit: "cover",
-                  }}
-                  src={imgSrc}
-                ></img>
-              </div>
-              <div className="d-flex align-items-center ml-3">
-                <div>
-                  <div style={{ fontWeight: "600", fontSize: "20px" }}>
-                    {name}
-                  </div>
+                    <div
+                      className="card shadow"
+                      style={{
+                        backgroundColor: "blue",
+                        color: "white",
+                        padding: "5px",
+                        borderRadius: "100px",
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faPencilAlt} />
+                    </div>
+                  </label>
+                  <input
+                    id="photo-input"
+                    type="file"
+                    ref={fileImg}
+                    name="user[image]"
+                    multiple={true}
+                    onChange={handleImage}
+                    style={{ display: "none" }}
+                  ></input>
+                  <img
+                    className="rounded-circle shadow"
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      objectFit: "cover",
+                    }}
+                    src={photoProfile}
+                  ></img>
+                </div>
+                <div className="d-flex align-items-center ml-3">
                   <div>
-                    {city}, {country}
+                    <div style={{ fontWeight: "600", fontSize: "20px" }}>
+                      {data?.users?.name}
+                    </div>
+                    <div>
+                      {data?.users?.city}, {data?.users?.country}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div></div>
-            </div>
-
-            <div className="d-flex flex-wrap justify-content-between">
-              <div className="col-12">
-                <label htmlFor="name">Name</label>
-                <input
-                  id="name"
-                  type="text"
-                  className="form-control input-new mb-4"
-                  aria-describedby="nameHelp"
-                  placeholder="Enter name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  style={{ padding: "25px" }}
-                ></input>
-              </div>
-              <div className="col-5">
-                <label htmlFor="city">City</label>
-                <input
-                  id="city"
-                  type="text"
-                  className="form-control input-new mb-4"
-                  aria-describedby="cityHelp"
-                  placeholder="Enter city"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  style={{ padding: "25px" }}
-                ></input>
-              </div>
-              <div className="col-5">
-                <label htmlFor="country">Country</label>
-                <input
-                  id="country"
-                  type="text"
-                  className="form-control input-new mb-4"
-                  aria-describedby="countryHelp"
-                  placeholder="Enter country"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  style={{ padding: "25px" }}
-                ></input>
-              </div>
-              <div className="col-5">
-                <label htmlFor="birthday">Birthday</label>
-                <ReactDatePicker
-                  dateFormat="dd/MM/yyyy"
-                  onChange={(e) => setBirthDay(e)}
-                  selected={birthday}
-                  className="form-control input-new"
-                  style={{ width: "100%" }}
-                />
-              </div>
-              <div className="col-5">
-                <label htmlFor="web-profile">Web Profile</label>
-                <input
-                  id="web-profile"
-                  type="text"
-                  className="form-control input-new mb-4"
-                  aria-describedby="countryHelp"
-                  placeholder="Enter your Web Profile"
-                  value={webProfile}
-                  onChange={(e) => setWebProfile(e.target.value)}
-                  style={{ padding: "25px" }}
-                ></input>
+                <div></div>
               </div>
 
-              <div className="d-flex justify-content-center col-12">
-                <Button
-                  type="submit"
-                  isPrimary
-                  hasShadow
-                  type="submit"
-                  style={{ width: "150px", height: "40px" }}
-                  className="btn text-white mt-3"
-                >
-                  Save
-                </Button>
+              <div className="d-flex flex-wrap justify-content-between">
+                <div className="col-12">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    id="name"
+                    type="text"
+                    className="form-control input-new mb-4"
+                    aria-describedby="nameHelp"
+                    placeholder="Enter name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    style={{ padding: "25px" }}
+                  ></input>
+                </div>
+                <div className="col-5">
+                  <label htmlFor="city">City</label>
+                  <input
+                    id="city"
+                    type="text"
+                    className="form-control input-new mb-4"
+                    aria-describedby="cityHelp"
+                    placeholder="Enter city"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    style={{ padding: "25px" }}
+                  ></input>
+                </div>
+                <div className="col-5">
+                  <label htmlFor="country">Country</label>
+                  <input
+                    id="country"
+                    type="text"
+                    className="form-control input-new mb-4"
+                    aria-describedby="countryHelp"
+                    placeholder="Enter country"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    style={{ padding: "25px" }}
+                  ></input>
+                </div>
+                <div className="col-5">
+                  <label htmlFor="birthday">Birthday</label>
+                  <ReactDatePicker
+                    dateFormat="dd/MM/yyyy"
+                    onChange={(e) => setBirthDay(e)}
+                    selected={birthday}
+                    className="form-control input-new"
+                    style={{ width: "100%" }}
+                  />
+                </div>
+                <div className="col-5">
+                  <label htmlFor="web-profile">Web Profile</label>
+                  <input
+                    id="web-profile"
+                    type="text"
+                    className="form-control input-new mb-4"
+                    aria-describedby="countryHelp"
+                    placeholder="Enter your Web Profile"
+                    value={webProfile}
+                    onChange={(e) => setWebProfile(e.target.value)}
+                    style={{ padding: "25px" }}
+                  ></input>
+                </div>
+
+                <div className="d-flex justify-content-center col-12">
+                  <Button
+                    type="submit"
+                    isPrimary
+                    hasShadow
+                    type="submit"
+                    style={{ width: "150px", height: "40px" }}
+                    className="btn text-white mt-3"
+                  >
+                    Save
+                  </Button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          )}
         </div>
         <div className="overlay"></div>
       </div>

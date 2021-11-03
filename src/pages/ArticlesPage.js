@@ -6,7 +6,6 @@ import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import $ from "jquery";
-import axios from "axios";
 import {
   faAlignLeft,
   faPencilAlt,
@@ -46,48 +45,8 @@ export default function Articles(props) {
     (state) => state.articles
   );
 
-  const getArticles = () => {
-    dispatch(fetchPosts());
-  };
-  // const handleDelete = (id) => () => {
-  //   axios
-  //     .delete("/v1/posts/" + id)
-  //     .then((response) => {
-  //       if (response.status === 200 && response.data.success === true) {
-  //         getArticles();
-  //         alert.show("Data deleted successfully", {
-  //           type: "success",
-  //         });
-  //       } else {
-  //         alert.show("There is something wrong with your data", {
-  //           type: "error",
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       if (err.message !== undefined) {
-  //         if (err.message === "Network Error") {
-  //           alert.show("Network Error, please comeback later", {
-  //             type: "error",
-  //           });
-  //         }
-  //       }
-  //       if (err.response !== undefined) {
-  //         if (err.response.status === 401) {
-  //           localStorage.clear();
-  //           history.push("/admin");
+  // localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBY3RpdmF0ZWQiOnRydWUsIkVtYWlsIjoiYnJhbUBjb2Rlcm11ZGEuY29tIiwiSUQiOjMsIlJvbGUiOiJhZG1pbiIsImF1ZCI6Imh0dHA6Ly9hcGkuY29kZXJtdWRhLmNvbSIsImV4cCI6MTYzNjA4MDA5NiwianRpIjoiNjM4ZTZjYmItN2VkZS00ZDRhLTk3ZWItNWI3MmRjZTY4ZDFmIiwiaWF0IjoxNjM1OTA3Mjk2LCJpc3MiOiJodHRwOi8vYXBpLmNvZGVybXVkYS5jb20iLCJuYmYiOjE2MzU5MDcyOTYsInN1YiI6IkQgQnJhbWF5YWRpIn0.kZTmlCNiBeotcvwwVdRKUWZunA_OOQcBANqbncSfNkI")
 
-  //           alert.show("Your credentials expired, please login again", {
-  //             type: "error",
-  //           });
-  //         } else {
-  //           alert.show("Error: Check your internet connection", {
-  //             type: "error",
-  //           });
-  //         }
-  //       }
-  //     });
-  // };
   useEffect(() => {
     if (update) {
       dispatch(fetchPosts());
@@ -104,7 +63,7 @@ export default function Articles(props) {
     >
       <div className="row" style={{ height: "100%" }}>
         <SideNavbar {...object} />
-        <div className="col">
+        <div className="col" style={{ overflow: "auto", height: "100vh" }}>
           <div className="row">
             <button
               id="sidebarCollapse"
@@ -150,7 +109,10 @@ export default function Articles(props) {
               </tr>
             </thead>
             <tbody>
-              {loading ? ( <Loading/>) :posts &&
+              {loading ? (
+                <Loading />
+              ) : (
+                posts &&
                 posts.map((object) => (
                   <tr key={object.id_post}>
                     <th scope="row">{object.id_post}</th>
@@ -210,7 +172,8 @@ export default function Articles(props) {
                       </Button>
                     </td>
                   </tr>
-                ))}
+                ))
+              )}
             </tbody>
           </table>
         </div>

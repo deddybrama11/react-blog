@@ -10,9 +10,9 @@ import {
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "elements/Button";
-import axios from "axios";
 import { useAlert } from "react-alert";
 import { deleteTag, fetchTags, postTag } from "redux/tags/tagAction";
+import Loading from "parts/Loading";
 
 export default function CategoriesPage(props) {
   var object = {};
@@ -44,111 +44,6 @@ export default function CategoriesPage(props) {
     });
   }, []);
 
-  const handleDelete = (id) => () => {
-    axios
-      .delete("/v1/tags/" + id)
-      .then((response) => {
-        if (response.status === 200 && response.data.success === true) {
-          getTags();
-          alert.show("Data deleted successfully", {
-            type: "success",
-          });
-        } else {
-          alert.show("There is something wrong with your data or server", {
-            type: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
-
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
-        } else {
-          alert.show("Error: Check your internet connection", {
-            type: "error",
-          });
-        }
-      });
-  };
-
-  const handleChange = (e) => {
-    setTag(e.target.value);
-  };
-
-  const getTags = async () => {
-    axios
-      .get("/v1/tags")
-      .then((response) => {
-        setData(response.data.data.tags);
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          }
-        }
-      });
-  };
-
-  // const saveTag = async () => {
-  //   axios
-  //     .post("/v1/tags", {
-  //       tag: tag,
-  //     })
-  //     .then((response) => {
-  //       if (response.status === 200 && response.data.success === true) {
-  //         getTags();
-  //         setTag("");
-  //         alert.show("Data saved successfully", {
-  //           type: "success",
-  //         });
-  //       } else {
-  //         alert.show("There is something wrong with your data", {
-  //           type: "error",
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       if (err.message !== undefined) {
-  //         if (err.message === "Network Error") {
-  //           alert.show("Network Error, please comeback later", {
-  //             type: "error",
-  //           });
-  //         }
-  //       }
-  //       if (err.response !== undefined) {
-  //         if (err.response.status === 401) {
-  //           localStorage.clear();
-  //           history.push("/admin");
-
-  //           alert.show("Your credentials expired, please login again", {
-  //             type: "error",
-  //           });
-  //         } else {
-  //           alert.show("Error: Check your internet connection", {
-  //             type: "error",
-  //           });
-  //         }
-  //       }
-  //     });
-  // };
-
   useEffect(() => {
     dispatch(fetchTags());
   }, []);
@@ -160,7 +55,7 @@ export default function CategoriesPage(props) {
     >
       <div className="row" style={{ height: "100%" }}>
         <SideNavbar {...object} />
-        <div className="col">
+        <div className="col" style={{ overflow: "auto", height: "100vh" }}>
           <div className="row">
             <button
               id="sidebarCollapse"
@@ -179,7 +74,9 @@ export default function CategoriesPage(props) {
               aria-describedby="search"
               placeholder="Type new category here .."
               value={tag}
-              onChange={handleChange}
+              onChange={(e) => {
+                setTag(e.target.value)
+              }}
               style={{ padding: "10px" }}
             ></input>
             <Button
@@ -204,7 +101,10 @@ export default function CategoriesPage(props) {
               </tr>
             </thead>
             <tbody>
-              {tags &&
+              {loading ? (
+                <Loading />
+              ) : (
+                tags &&
                 tags.data &&
                 tags.data.tags &&
                 tags.data.tags.map((object) => (
@@ -245,7 +145,8 @@ export default function CategoriesPage(props) {
                       </Button>
                     </td>
                   </tr>
-                ))}
+                ))
+              )}
             </tbody>
           </table>
         </div>

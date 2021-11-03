@@ -137,10 +137,12 @@ export const postCategory = (category) => {
           dispatch(fetchCategories());
         } else {
           dispatch(postCategoryFailure(response.data));
+          errorHandling(response.data);
         }
       })
       .catch((err) => {
         dispatch(postCategoryFailure(err));
+        errorHandling(err);
       });
   };
 };
