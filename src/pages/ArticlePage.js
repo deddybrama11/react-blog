@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import parse from "html-react-parser";
 import Footer from "../parts/Footer";
@@ -12,6 +12,7 @@ import loading from "../assets/images/loading-buffering.gif";
 export default function ArticlePage(props) {
   const [data, setData] = useState();
   var object = {};
+  const contactRef = useRef();
   object.location = useLocation();
 
   function customHeader(block) {
@@ -51,14 +52,14 @@ export default function ArticlePage(props) {
   delete instance.defaults.headers.common.Authorization;
 
   const getArticle = () => {
-      instance
-        .get("/v1/posts/slug/" + slug)
-        .then((response) => {
-          setData(response.data.data);
-        })
-        .catch((err) => {
-          // console.log(err.response);
-        });
+    instance
+      .get("/v1/posts/slug/" + slug)
+      .then((response) => {
+        setData(response.data.data);
+      })
+      .catch((err) => {
+        // console.log(err.response);
+      });
   };
 
   useEffect(() => {
@@ -78,7 +79,7 @@ export default function ArticlePage(props) {
 
   return (
     <>
-      <Header {...object} />
+      <Header {...object} contactRef={contactRef} />
       <section
         className="article-page row gradient-bg-article"
         style={{ height: "680px" }}
@@ -177,7 +178,7 @@ export default function ArticlePage(props) {
             <img className="loading" src={loading} alt="loading" />
           </div>
         )}
-        <Footer />
+        <Footer contactRef={contactRef} />
       </section>
     </>
   );

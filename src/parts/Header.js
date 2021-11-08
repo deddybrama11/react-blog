@@ -45,7 +45,15 @@ export default function Header(props) {
                 </Button>
               </li>
               <li className={`nav-item${getNavLinkClass("/contact")}`}>
-                <Button className="nav-link" type="link" href="/contact">
+                <Button
+                  className="nav-link"
+                  type="link"
+                  onClick={() => {
+                    props.contactRef.current.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                  }}
+                >
                   Contact
                 </Button>
               </li>
