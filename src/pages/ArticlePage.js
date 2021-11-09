@@ -85,7 +85,7 @@ export default function ArticlePage(props) {
         style={{ height: "680px" }}
       >
         {data !== undefined ? (
-          <div className="container zindex">
+          <div className="container zindex" style={{ marginTop:"80px" }}>
             <div className="d-flex mt-5 justify-content-center">
               <div className="col-6 text-center wrapper-title-content">
                 {data.title}

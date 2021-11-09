@@ -76,7 +76,7 @@ export default function AllArticlePage(props) {
         style={{ height: "680px" }}
       >
         {itemPage && itemPage[0] !== undefined ? (
-          <div className="container zindex">
+          <div className="container zindex" style={{ marginTop:"100px" }}>
             <div className="mt-5">
               {itemPage[0].value !== null
                 ? itemPage[0].value.map((obj, index) => {

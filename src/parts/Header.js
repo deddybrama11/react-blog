@@ -5,7 +5,15 @@ export default function Header(props) {
     return props.location.pathname === path ? " active" : "";
   };
   return (
-    <header className="spacing-sm">
+    <header
+      className="spacing-sm"
+      style={{
+        position: "fixed",
+        top: 0,
+        zIndex: 999,
+        backgroundColor: "white",
+      }}
+    >
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light">
           <a className="navbar-brand" href="/">
@@ -33,16 +41,26 @@ export default function Header(props) {
                   Blog
                 </Button>
               </li>
-              <li className={`nav-item${getNavLinkClass("/about")}`}>
-                <Button className="nav-link" type="link" href="/about">
-                  About
-                </Button>
-              </li>
-
-              <li className={`nav-item${getNavLinkClass("/projects")}`}>
-                <Button className="nav-link" type="link" href="/projects">
-                  Projects
-                </Button>
+              <li className={`nav-item${getNavLinkClass("/about")} dropdown`}>
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  About us
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/portfolio/rais">
+                    L Rais Maulana
+                  </a>
+                  <a class="dropdown-item" href="/portfolio/dedy">
+                    Dedy Bramayadi
+                  </a>
+                </div>
               </li>
               <li className={`nav-item${getNavLinkClass("/contact")}`}>
                 <Button

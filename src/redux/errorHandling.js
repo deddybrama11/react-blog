@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import React from "react";
 
 export const errorHandling = (err) => {
   console.log(err.response);
@@ -22,7 +23,6 @@ export const errorHandling = (err) => {
         title: "Oops...",
         text: "Your credentials expired, please login again",
       });
-      return;
     }
   }
 
