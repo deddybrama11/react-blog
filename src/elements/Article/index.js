@@ -36,12 +36,11 @@ export default function Article(props) {
               isPrimary
               hasShadow
               type="link"
-              className="btn stretched-link d-block text-white"
+              className="stretched-link d-block text-white"
               href={`/article/${props.article.slug}`}
               // onClick={showArticle}
               // style={{ marginTop: "50px" }}
             >
-              Read Article
             </Button>
           </div>
         </div>

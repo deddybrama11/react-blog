@@ -3,19 +3,24 @@ import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from "jquery";
 import { useLocation, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   faAlignLeft,
   faPencilAlt,
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "elements/Button";
-import axios from "axios";
 import { useAlert } from "react-alert";
+import { deleteTag, fetchTags, postTag } from "redux/tags/tagAction";
+import Loading from "parts/Loading";
 
 export default function CategoriesPage(props) {
   var object = {};
   object.location = useLocation();
   let history = useHistory();
+
+  const dispatch = useDispatch();
+  const { tags, loading, error } = useSelector((state) => state.tags);
 
   const alert = useAlert();
   const [data, setData] = useState();
@@ -39,113 +44,8 @@ export default function CategoriesPage(props) {
     });
   }, []);
 
-  const handleDelete = (id) => () => {
-    axios
-      .delete("/v1/tags/" + id)
-      .then((response) => {
-        if (response.status === 200 && response.data.success === true) {
-          getTags();
-          alert.show("Data deleted successfully", {
-            type: "success",
-          });
-        } else {
-          alert.show("There is something wrong with your data or server", {
-            type: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          localStorage.clear();
-          history.push("/admin");
-
-          alert.show("Your credentials expired, please login again", {
-            type: "error",
-          });
-        } else {
-          alert.show("Error: Check your internet connection", {
-            type: "error",
-          });
-        }
-      });
-  };
-
-  const handleChange = (e) => {
-    setTag(e.target.value);
-  };
-
-  const getTags = async () => {
-    axios
-      .get("/v1/tags")
-      .then((response) => {
-        setData(response.data.data.tags);
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          }
-        }
-      });
-  };
-
-  const saveTag = async () => {
-    axios
-      .post("/v1/tags", {
-        tag: tag,
-      })
-      .then((response) => {
-        if (response.status === 200 && response.data.success === true) {
-          getTags();
-          setTag("");
-          alert.show("Data saved successfully", {
-            type: "success",
-          });
-        } else {
-          alert.show("There is something wrong with your data", {
-            type: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          } else {
-            alert.show("Error: Check your internet connection", {
-              type: "error",
-            });
-          }
-        }
-      });
-  };
-
   useEffect(() => {
-    getTags();
+    dispatch(fetchTags());
   }, []);
 
   return (
@@ -155,7 +55,7 @@ export default function CategoriesPage(props) {
     >
       <div className="row" style={{ height: "100%" }}>
         <SideNavbar {...object} />
-        <div className="col">
+        <div className="col" style={{ overflow: "auto", height: "100vh" }}>
           <div className="row">
             <button
               id="sidebarCollapse"
@@ -174,13 +74,17 @@ export default function CategoriesPage(props) {
               aria-describedby="search"
               placeholder="Type new category here .."
               value={tag}
-              onChange={handleChange}
+              onChange={(e) => {
+                setTag(e.target.value)
+              }}
               style={{ padding: "10px" }}
             ></input>
             <Button
               isPrimary
               type="button"
-              onClick={saveTag}
+              onClick={() => {
+                dispatch(postTag(tag));
+              }}
               style={{ height: "40px" }}
               className="btn text-white mt-5 ml-3"
             >
@@ -197,8 +101,13 @@ export default function CategoriesPage(props) {
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((object) => (
+              {loading ? (
+                <Loading />
+              ) : (
+                tags &&
+                tags.data &&
+                tags.data.tags &&
+                tags.data.tags.map((object) => (
                   <tr key={object.id_tag}>
                     <th scope="row">{object.id_tag}</th>
                     <td>{object.name}</td>
@@ -220,7 +129,9 @@ export default function CategoriesPage(props) {
                       <Button
                         href="#"
                         type="link"
-                        onClick={handleDelete(object.id_tag)}
+                        onClick={() => {
+                          dispatch(deleteTag(object.id_tag));
+                        }}
                         style={{ backgroundColor: "red", padding: "3px" }}
                       >
                         <FontAwesomeIcon
@@ -234,7 +145,8 @@ export default function CategoriesPage(props) {
                       </Button>
                     </td>
                   </tr>
-                ))}
+                ))
+              )}
             </tbody>
           </table>
         </div>

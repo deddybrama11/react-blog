@@ -5,7 +5,9 @@ import { BrowserRouter } from "react-router-dom";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
 import axios from "axios";
+import store from "./redux/store";
 
 const options = {
   // you can also just use 'bottom center'
@@ -23,9 +25,11 @@ axios.defaults.headers.post["Content-Type"] =
 ReactDOM.render(
   <React.StrictMode>
     <AlertProvider template={AlertTemplate} {...options}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </AlertProvider>
   </React.StrictMode>,
   document.getElementById("root")
