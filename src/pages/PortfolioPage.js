@@ -195,12 +195,12 @@ export default function PortfolioPage() {
             Valorant and other online games(no gacha game) Currently im learning
             GPRC and AWS.
           </p>
-          <div className="text-center wrapper-title-content mt-5">
+          {/* <div className="text-center wrapper-title-content mt-5">
             WHAT I HAVE DONE
-          </div>
+          </div> */}
 
           {/* ----------------------------- desktop ----------------------------- */}
-          <div className="d-none d-md-flex flex-wrap justify-content-between mt-5">
+          {/* <div className="d-none d-md-flex flex-wrap justify-content-between mt-5">
             <Project
               image={image}
               className="col-4"
@@ -233,10 +233,10 @@ export default function PortfolioPage() {
                 semper, tellus a condimentum blandit, neque justo porttitor nulla,
                 v"
             />
-          </div>
+          </div> */}
 
           {/* ----------------------------- mobile ----------------------------- */}
-          <div className="mt-5 d-block d-md-none">
+          {/* <div className="mt-5 d-block d-md-none">
             <Project
               image={image}
               description="Nunc cursus a turpis a dapibus. Nunc dolor orci, rutrum et
@@ -258,8 +258,9 @@ export default function PortfolioPage() {
                 semper, tellus a condimentum blandit, neque justo porttitor nulla,
                 v"
             />
-          </div>
+          </div> */}
         </div>
+        <Footer contactRef={contactRef} />
       </div>
     );
   }

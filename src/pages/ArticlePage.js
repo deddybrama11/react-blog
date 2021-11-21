@@ -8,12 +8,17 @@ import Header from "../parts/Header";
 import edjsHTML from "editorjs-html";
 import Button from "elements/Button";
 import loading from "../assets/images/loading-buffering.gif";
+import { Helmet } from "react-helmet";
 
 export default function ArticlePage(props) {
   const [data, setData] = useState();
   var object = {};
   const contactRef = useRef();
   object.location = useLocation();
+
+  function customImage(block) {
+    return `<img src="${block.data.file.url}" className="img-fluid"/>`;
+  }
 
   function customHeader(block) {
     switch (block.data.level) {
@@ -41,7 +46,7 @@ export default function ArticlePage(props) {
     // return `<p className="wrapper-title-content"> ${block.data.text} </p>`;
   }
 
-  const edjsParser = edjsHTML({ header: customHeader });
+  const edjsParser = edjsHTML({ header: customHeader, image: customImage });
 
   let { slug } = useParams();
 
@@ -85,10 +90,16 @@ export default function ArticlePage(props) {
         style={{ height: "680px" }}
       >
         {data !== undefined ? (
-          <div className="container zindex" style={{ marginTop:"80px" }}>
+          <div className="container zindex" style={{ marginTop: "80px" }}>
+            <Helmet>
+              <title>{data.title}</title>
+              <meta name="description" content={data.description}></meta>
+            </Helmet>
             <div className="d-flex mt-5 justify-content-center">
-              <div className="col-6 text-center wrapper-title-content">
-                {data.title}
+              <div className="col-6">
+                <h1 className="text-center wrapper-title-content">
+                  {data.title}
+                </h1>
               </div>
             </div>
             <div className="d-flex mt-1  justify-content-center">
@@ -118,7 +129,7 @@ export default function ArticlePage(props) {
                 <img
                   className="card-img-top"
                   src={data.cover}
-                  alt="card-cover-top"
+                  alt={data.title + " image"}
                   style={{ height: "400px" }}
                 />
                 <div className="mt-2">

@@ -11,7 +11,7 @@ export default function Article(props) {
           <img
             className="card-img-top"
             src={props.article.cover}
-            alt="card-cover-top"
+            alt={props.article.title+" image"}
             style={{ height: "240px" }}
           />
           <div className="card-body">
