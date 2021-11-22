@@ -1,4 +1,4 @@
-# WEB-BLOG-REACT
+# REACT-BLOG
 Web Blog made by react, editorjs and Golang as backedn
 
 ## Requrement
