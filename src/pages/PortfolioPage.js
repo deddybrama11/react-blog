@@ -29,7 +29,7 @@ export default function PortfolioPage() {
         ></div> */}
 
         <div
-          className="d-flex flex-column d-block mt-5 justify-content-center container container-portfolio"
+          className="d-flex flex-column d-block mt-5 justify-content-center container container-portfolio gradient-bg-article"
           style={{ width: "100%" }}
         >
           <div className="text-center wrapper-title-content">About</div>
