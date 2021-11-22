@@ -36,7 +36,7 @@ const fetchUserFailure = (error) => {
 export const fetchUsers = (username, pass) => {
   return (dispatch) => {
     const instance = axios.create({
-      baseURL: "https://api.codermuda.com",
+      baseURL: `${process.env.REACT_APP_API_URL}`,
     });
 
     delete instance.defaults.headers.common.Authorization;
