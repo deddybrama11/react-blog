@@ -11,7 +11,7 @@ export default function Article(props) {
           <img
             className="card-img-top"
             src={props.article.cover}
-            alt="card-cover-top"
+            alt={props.article.title+" image"}
             style={{ height: "240px" }}
           />
           <div className="card-body">
@@ -36,12 +36,11 @@ export default function Article(props) {
               isPrimary
               hasShadow
               type="link"
-              className="btn stretched-link d-block text-white"
+              className="stretched-link d-block text-white"
               href={`/article/${props.article.slug}`}
               // onClick={showArticle}
               // style={{ marginTop: "50px" }}
             >
-              Read Article
             </Button>
           </div>
         </div>

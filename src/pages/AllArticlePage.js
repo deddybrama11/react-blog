@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Footer from "../parts/Footer";
 import axios from "axios";
@@ -7,16 +7,19 @@ import Header from "../parts/Header";
 import ReactPaginate from "react-paginate";
 import loading from "../assets/images/loading-buffering.gif";
 
+
 export default function AllArticlePage(props) {
   var object = {};
   object.location = useLocation();
-
+  const contactRef = useRef()
+  
   const [dataPage, setDataPage] = useState([]);
   const [itemPage, setItemPage] = useState([]);
 
+  
   const pageSize = 10;
   const instance = axios.create({
-    baseURL: "https://api.codermuda.com",
+    baseURL: `${process.env.REACT_APP_API_URL}`,
   });
 
   delete instance.defaults.headers.common.Authorization;
@@ -67,13 +70,13 @@ export default function AllArticlePage(props) {
 
   return (
     <>
-      <Header {...object} />
+      <Header {...object} contactRef={contactRef} />
       <section
         className="article-page row gradient-bg-article"
         style={{ height: "680px" }}
       >
         {itemPage && itemPage[0] !== undefined ? (
-          <div className="container zindex">
+          <div className="container zindex" style={{ marginTop:"100px" }}>
             <div className="mt-5">
               {itemPage[0].value !== null
                 ? itemPage[0].value.map((obj, index) => {
@@ -114,7 +117,7 @@ export default function AllArticlePage(props) {
             <img className="loading" src={loading} alt="loading" />
           </div>
         )}
-        <Footer />
+        <Footer contactRef={contactRef} />
       </section>
     </>
   );

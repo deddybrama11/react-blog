@@ -1,8 +1,8 @@
 import React from "react";
 // import Button from "elements/Button";
-export default function Footer() {
+export default function Footer(props) {
   return (
-    <div style={{ width:"100%" }} className="mt-5">
+    <div style={{ width:"100%" }} className="mt-5" ref={props.contactRef}>
       <footer>
         <hr />
         <div className="container">

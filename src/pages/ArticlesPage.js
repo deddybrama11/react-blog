@@ -3,18 +3,21 @@ import React, { useState, useEffect } from "react";
 import Button from "elements/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import $ from "jquery";
-import axios from "axios";
 import {
   faAlignLeft,
   faPencilAlt,
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
+import { fetchPosts, deletePost } from "../redux";
+import Loading from "parts/Loading";
 
 export default function Articles(props) {
   var object = {};
   object.location = useLocation();
+  const dispatch = useDispatch();
   let history = useHistory();
 
   const alert = useAlert();
@@ -38,76 +41,19 @@ export default function Articles(props) {
   });
 
   const [data, setData] = useState();
+  const { posts, loading, error, update } = useSelector(
+    (state) => state.articles
+  );
 
-  const getArticles = async () => {
-    await axios
-      .get("/v1/posts")
-      .then((response) => {
-        setData(response.data.data.posts);
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          }
-        }
-      });
-  };
-
-  const handleDelete = (id) => () => {
-    axios
-      .delete("/v1/posts/" + id)
-      .then((response) => {
-        if (response.status === 200 && response.data.success === true) {
-          getArticles();
-          alert.show("Data deleted successfully", {
-            type: "success",
-          });
-        } else {
-          alert.show("There is something wrong with your data", {
-            type: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.message !== undefined) {
-          if (err.message === "Network Error") {
-            alert.show("Network Error, please comeback later", {
-              type: "error",
-            });
-          }
-        }
-        if (err.response !== undefined) {
-          if (err.response.status === 401) {
-            localStorage.clear();
-            history.push("/admin");
-
-            alert.show("Your credentials expired, please login again", {
-              type: "error",
-            });
-          } else {
-            alert.show("Error: Check your internet connection", {
-              type: "error",
-            });
-          }
-        }
-      });
-  };
+  // localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBY3RpdmF0ZWQiOnRydWUsIkVtYWlsIjoiYnJhbUBjb2Rlcm11ZGEuY29tIiwiSUQiOjMsIlJvbGUiOiJhZG1pbiIsImF1ZCI6Imh0dHA6Ly9hcGkuY29kZXJtdWRhLmNvbSIsImV4cCI6MTYzNjA4MDA5NiwianRpIjoiNjM4ZTZjYmItN2VkZS00ZDRhLTk3ZWItNWI3MmRjZTY4ZDFmIiwiaWF0IjoxNjM1OTA3Mjk2LCJpc3MiOiJodHRwOi8vYXBpLmNvZGVybXVkYS5jb20iLCJuYmYiOjE2MzU5MDcyOTYsInN1YiI6IkQgQnJhbWF5YWRpIn0.kZTmlCNiBeotcvwwVdRKUWZunA_OOQcBANqbncSfNkI")
 
   useEffect(() => {
-    getArticles();
+    if (update) {
+      dispatch(fetchPosts());
+    }
+  }, [update]);
+  useEffect(() => {
+    dispatch(fetchPosts());
   }, []);
 
   return (
@@ -117,7 +63,7 @@ export default function Articles(props) {
     >
       <div className="row" style={{ height: "100%" }}>
         <SideNavbar {...object} />
-        <div className="col">
+        <div className="col" style={{ overflow: "auto", height: "100vh" }}>
           <div className="row">
             <button
               id="sidebarCollapse"
@@ -163,8 +109,11 @@ export default function Articles(props) {
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((object) => (
+              {loading ? (
+                <Loading />
+              ) : (
+                posts &&
+                posts.map((object) => (
                   <tr key={object.id_post}>
                     <th scope="row">{object.id_post}</th>
                     <td>{object.title}</td>
@@ -207,7 +156,9 @@ export default function Articles(props) {
                       <Button
                         href="#"
                         type="link"
-                        onClick={handleDelete(object.id_post)}
+                        onClick={() => {
+                          dispatch(deletePost(object.id_post));
+                        }}
                         style={{ backgroundColor: "red", padding: "3px" }}
                       >
                         <FontAwesomeIcon
@@ -221,7 +172,8 @@ export default function Articles(props) {
                       </Button>
                     </td>
                   </tr>
-                ))}
+                ))
+              )}
             </tbody>
           </table>
         </div>
