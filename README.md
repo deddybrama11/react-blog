@@ -1,5 +1,5 @@
 # REACT-BLOG
-Web Blog made by react, editorjs and Golang as backedn
+Web Blog made by react, editorjs and Golang as backend
 
 ## Requrement
 1. Bootstrap 4 (for library css)
