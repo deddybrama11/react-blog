@@ -43,7 +43,7 @@ export default function Header(props) {
               </li>
               <li className={`nav-item${getNavLinkClass("/about")} dropdown`}>
                 <a
-                  class="nav-link dropdown-toggle"
+                  className="nav-link dropdown-toggle"
                   href="#"
                   id="navbarDropdown"
                   role="button"
@@ -53,11 +53,11 @@ export default function Header(props) {
                 >
                   About us
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/portfolio/rais">
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a className="dropdown-item" href="/portfolio/rais">
                     L Rais Maulana
                   </a>
-                  <a class="dropdown-item" href="/portfolio/dedy">
+                  <a className="dropdown-item" href="/portfolio/dedy">
                     Dedy Bramayadi
                   </a>
                 </div>
