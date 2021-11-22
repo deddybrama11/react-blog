@@ -2,9 +2,11 @@
 Web Blog made by react, editorjs and Golang as backedn
 
 ## Requrement
-1. Bootstrap 5 (for library css)
+1. Bootstrap 4 (for library css)
 2. React JS (for library Node js)
-3. Node JS
+3. Editor.js
+4. Golang as server (look the bottom of this page)
+5. NPM
 
 ## Instalation
 ```
