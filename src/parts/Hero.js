@@ -21,7 +21,7 @@ export default function Hero() {
       ></img>
       <div className="wrapper-hero-content">
         <div className="container" style={{ marginTop: "250px" }}>
-          <div className="col-sm-6 text-tes">
+          <div className="col-md-6 text-tes">
             Welcome To <br /> Codermuda. <br />
             Enjoy yourself here!
             <Button

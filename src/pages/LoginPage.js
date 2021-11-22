@@ -15,6 +15,7 @@ function LoginPage() {
   }
 
   useEffect(() => {
+    console.log(process.env);
     if (users.length !== 0) {
       console.log("token : " + users.data.token);
       

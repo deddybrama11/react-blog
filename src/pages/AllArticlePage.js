@@ -19,7 +19,7 @@ export default function AllArticlePage(props) {
   
   const pageSize = 10;
   const instance = axios.create({
-    baseURL: "https://api.codermuda.com",
+    baseURL: `${process.env.REACT_APP_API_URL}`,
   });
 
   delete instance.defaults.headers.common.Authorization;

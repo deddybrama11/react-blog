@@ -19,7 +19,7 @@ const options = {
 };
 axios.defaults.headers.common.Authorization =
   "Bearer " + localStorage.getItem("token");
-axios.defaults.baseURL = "https://api.codermuda.com/";
+axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 ReactDOM.render(

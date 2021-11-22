@@ -8,7 +8,7 @@ export default function Content() {
   const [dataPage, setDataPage] = useState([]);
 
   const instance = axios.create({
-    baseURL: "https://api.codermuda.com",
+    baseURL: `${process.env.REACT_APP_API_URL}`,
   });
 
   delete instance.defaults.headers.common.Authorization;

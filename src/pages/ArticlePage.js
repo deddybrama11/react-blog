@@ -51,7 +51,7 @@ export default function ArticlePage(props) {
   let { slug } = useParams();
 
   const instance = axios.create({
-    baseURL: "https://api.codermuda.com",
+    baseURL: `${process.env.REACT_APP_API_URL}`,
   });
 
   delete instance.defaults.headers.common.Authorization;
@@ -86,7 +86,7 @@ export default function ArticlePage(props) {
     <>
       <Header {...object} contactRef={contactRef} />
       <section
-        className="article-page row gradient-bg-article"
+        className="article-page d-flex flex-wrap gradient-bg-article"
         style={{ height: "680px" }}
       >
         {data !== undefined ? (
@@ -96,7 +96,7 @@ export default function ArticlePage(props) {
               <meta name="description" content={data.description}></meta>
             </Helmet>
             <div className="d-flex mt-5 justify-content-center">
-              <div className="col-6">
+              <div className="col-lg-6 col-sm-12">
                 <h1 className="text-center wrapper-title-content">
                   {data.title}
                 </h1>
