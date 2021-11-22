@@ -96,7 +96,7 @@ export default function ArticlePage(props) {
               <meta name="description" content={data.description}></meta>
             </Helmet>
             <div className="d-flex mt-5 justify-content-center">
-              <div className="col-6">
+              <div className="col-lg-6 col-sm-12">
                 <h1 className="text-center wrapper-title-content">
                   {data.title}
                 </h1>

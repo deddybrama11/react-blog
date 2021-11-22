@@ -374,10 +374,13 @@ h6 {
   font-size: 36px;
 }
 @media only screen and (max-width: 596px) {
+  .wrapper-hero-content {
+    font-size: 40px;
+  }
   .article-page {
     .container {
-      margin-right: 15px;
-      margin-left: 15px;
+      margin-right: 5px;
+      margin-left: 5px;
     }
     .wrapper-title-content {
       max-width: 100% !important;
