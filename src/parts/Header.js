@@ -6,7 +6,7 @@ export default function Header(props) {
   };
   return (
     <header
-      className="spacing-sm"
+      className="spacing-sm shadow-sm mb-5 bg-white"
       style={{
         position: "fixed",
         top: 0,
