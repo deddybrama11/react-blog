@@ -26,5 +26,5 @@ npm run start
 |![image](https://user-images.githubusercontent.com/43480898/142857938-8726a453-bd21-41b5-8d51-0164fb2ab749.png)|![image](https://user-images.githubusercontent.com/43480898/142858223-6313b161-d92d-450e-b4bc-94f254815883.png)|
     
 ## Back End :
-[API Server](https://github.com/raismaulana/blogP)
+[API Server](https://github.com/raismaulana/blogP) | 
 [Assets Server](https://github.com/raismaulana/assetsP)
