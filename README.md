@@ -13,6 +13,7 @@ Web Blog made by react, editorjs and Golang as backend
 npm install
 npm run start
 ```
+copy .env.example and adjust to your localhost port
 
 ## Screen Shoot
 
