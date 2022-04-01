@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from "jquery";
-import { useLocation, useHistory, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import Button from "elements/Button";
 import axios from "axios";
@@ -10,7 +10,7 @@ import { useAlert } from "react-alert";
 
 export default function EditTags(props) {
   let { id } = useParams();
-  const history = useHistory();
+  const history = useNavigate();
   const alert = useAlert();
 
   var object = {};
@@ -19,7 +19,6 @@ export default function EditTags(props) {
   const [tag, setTag] = useState("");
 
   const getTag = async () => {
-
     axios
       .get("/v1/tags/" + id)
       .then((response) => {
@@ -117,6 +116,7 @@ export default function EditTags(props) {
               style={{ padding: "10px" }}
             ></input>
             <Button
+              href="#"
               isPrimary
               type="button"
               onClick={updateTag}

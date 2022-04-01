@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from "jquery";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import ReactDatePicker from "react-datepicker";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
@@ -17,7 +17,7 @@ export default function ProfilePage(props) {
   var object = {};
   object.location = useLocation();
   const alert = useAlert();
-  let history = useHistory();
+  let history = useNavigate();
 
   const dispatch = useDispatch();
   const data = useSelector((state) => state.userData);
@@ -263,7 +263,7 @@ export default function ProfilePage(props) {
                     type="submit"
                     isPrimary
                     hasShadow
-                    type="submit"
+                    href="#"
                     style={{ width: "150px", height: "40px" }}
                     className="btn text-white mt-3"
                   >

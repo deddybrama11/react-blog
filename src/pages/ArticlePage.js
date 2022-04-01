@@ -116,6 +116,7 @@ export default function ArticlePage(props) {
                         hasShadow
                         // onClick={showArticle}
                         style={{ marginLeft: "10px" }}
+                        href="#"
                       >
                         {obj.category}
                       </Button>
@@ -169,6 +170,7 @@ export default function ArticlePage(props) {
                         <Button
                           className="btn px-2"
                           isPrimary
+                          href="#"
                           hasShadow
                           // onClick={showArticle}
                           style={{ marginLeft: "10px" }}

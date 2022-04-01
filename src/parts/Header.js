@@ -1,8 +1,11 @@
 import React from "react";
 import Button from "../elements/Button";
+import { createMemoryHistory } from "history";
+
 export default function Header(props) {
+  const history = createMemoryHistory();
   const getNavLinkClass = (path) => {
-    return props.location.pathname === path ? " active" : "";
+    return history === path ? "active" : "";
   };
   return (
     <header
@@ -64,6 +67,7 @@ export default function Header(props) {
               </li>
               <li className={`nav-item${getNavLinkClass("/contact")}`}>
                 <Button
+                  href="#"
                   className="nav-link"
                   type="link"
                   onClick={() => {

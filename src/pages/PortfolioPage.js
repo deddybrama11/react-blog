@@ -1,6 +1,6 @@
 import Header from "../parts/Header";
 import Footer from "../parts/Footer";
-import { useLocation, useHistory, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import React, { useRef } from "react";
 import image from "../assets/images/rais.jpg";
 import imagededy from "../assets/images/image-dedy.jpeg";

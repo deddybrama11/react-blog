@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $, { map, type } from "jquery";
-import { useLocation, useHistory, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   faAlignLeft,
   faPencilAlt,
@@ -14,7 +14,7 @@ import { useAlert } from "react-alert";
 
 export default function EditCategory(props) {
   let { id } = useParams();
-  const history = useHistory();
+  const history = useNavigate();
   const alert = useAlert();
 
   var object = {};
@@ -128,6 +128,7 @@ export default function EditCategory(props) {
               style={{ padding: "10px" }}
             ></input>
             <Button
+              href="#"
               isPrimary
               type="button"
               onClick={updateCategory}

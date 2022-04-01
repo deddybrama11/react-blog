@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "elements/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { createMemoryHistory } from "history";
 import {
   faNewspaper,
   faList,
@@ -11,8 +12,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function SideNavbar(props) {
+  const history = createMemoryHistory();
   const getNavLinkClass = (path) => {
-    return props.location.pathname === path ? " active" : "";
+    return history === path ? "active" : "";
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from "jquery";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   faAlignLeft,
@@ -17,7 +17,7 @@ import Loading from "parts/Loading";
 export default function CategoriesPage(props) {
   var object = {};
   object.location = useLocation();
-  let history = useHistory();
+  let history = useNavigate();
 
   const dispatch = useDispatch();
   const { tags, loading, error } = useSelector((state) => state.tags);
@@ -75,11 +75,12 @@ export default function CategoriesPage(props) {
               placeholder="Type new category here .."
               value={tag}
               onChange={(e) => {
-                setTag(e.target.value)
+                setTag(e.target.value);
               }}
               style={{ padding: "10px" }}
             ></input>
             <Button
+              href="#"
               isPrimary
               type="button"
               onClick={() => {

@@ -1,14 +1,14 @@
 import Button from "elements/Button";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetchUsers } from "../redux";
 
 function LoginPage() {
   const dispatch = useDispatch();
   const { users, loading, error } = useSelector((state) => state.user);
 
-  let history = useHistory();
+  let history = useNavigate();
 
   if (localStorage.getItem("token") !== null) {
     history.push("/admin/articles");
@@ -18,7 +18,7 @@ function LoginPage() {
     console.log(process.env);
     if (users.length !== 0) {
       console.log("token : " + users.data.token);
-      
+
       history.push("/admin/articles");
     }
   }, [users]);
@@ -103,6 +103,7 @@ function LoginPage() {
                     <p className="mt-3">Sedang memproses, mohon tunggu ...</p>
                   ) : (
                     <Button
+                      href="#"
                       isPrimary
                       hasShadow
                       type="submit"

@@ -2,7 +2,7 @@ import SideNavbar from "parts/SideNavbar";
 import React, { useState, useEffect } from "react";
 import Button from "elements/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import $ from "jquery";
@@ -18,7 +18,7 @@ export default function Articles(props) {
   var object = {};
   object.location = useLocation();
   const dispatch = useDispatch();
-  let history = useHistory();
+  let history = useNavigate();
 
   const alert = useAlert();
 

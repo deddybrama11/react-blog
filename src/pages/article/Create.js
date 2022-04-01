@@ -7,7 +7,7 @@ import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "constants/editorconst";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MultiSelect } from "react-multi-select-component";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "elements/Button";
 import axios from "axios";
 import { useAlert } from "react-alert";
@@ -16,7 +16,7 @@ export default function CreateArticle() {
   const alert = useAlert();
   var object = {};
   object.location = useLocation();
-  let history = useHistory();
+  let history = useNavigate();
 
   const instanceRef = useRef(null);
 
@@ -270,6 +270,7 @@ export default function CreateArticle() {
                     />
                   </div>
                   <Button
+                    href="#"
                     type="submit"
                     isPrimary
                     isLarge

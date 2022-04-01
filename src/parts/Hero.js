@@ -15,7 +15,7 @@ export default function Hero() {
     >
       <img
         className=""
-        style={{ objectFit: "cover", width: "100%", height:"inherit" }}
+        style={{ objectFit: "cover", width: "100%", height: "inherit" }}
         src="/images/image-hero2.jpeg"
         alt="hero-img"
       ></img>
@@ -25,6 +25,7 @@ export default function Hero() {
             Welcome To <br /> Codermuda. <br />
             Enjoy yourself here!
             <Button
+              href="#"
               className="btn px-5"
               isPrimary
               hasShadow

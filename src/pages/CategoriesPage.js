@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SideNavbar from "parts/SideNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from "jquery";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   faAlignLeft,
   faPencilAlt,
@@ -20,7 +20,7 @@ import Loading from "parts/Loading";
 export default function CategoriesPage(props) {
   var object = {};
   object.location = useLocation();
-  let history = useHistory();
+  let history = useNavigate();
 
   const dispatch = useDispatch();
   const { categories, loading, error } = useSelector(
@@ -88,6 +88,7 @@ export default function CategoriesPage(props) {
             <Button
               isPrimary
               type="button"
+              href="#"
               onClick={() => {
                 dispatch(postCategory(category));
               }}

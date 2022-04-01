@@ -1,6 +1,6 @@
 import LoginPage from "./pages/LoginPage";
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./parts/protected.route";
 import "./assets/scss/style.scss";
 
@@ -20,14 +20,14 @@ import PortfolioPage from "pages/PortfolioPage";
 function App() {
   return (
     <div className="App">
-      <Switch>
-        <Route exact path="/" component={LandingPage}></Route>
-        <Route exact path="/article/:slug" component={ArticlePage}></Route>
-        <Route exact path="/article" component={AllArticlePage}></Route>
-        <Route exact path="/portfolio/:name" component={PortfolioPage}></Route>
-        <Route exact path="/admin" component={() => <LoginPage />}></Route>
+      <Routes>
+        <Route exact path="/" element={<LandingPage/>}/>
+        <Route exact path="/article/:slug" element={<ArticlePage />}/>
+        <Route exact path="/article" element={<AllArticlePage/>}/>
+        <Route exact path="/portfolio/:name" element={<PortfolioPage/>}/>
+        <Route exact path="/admin" element={<LoginPage />}/>
 
-        <ProtectedRoute
+        {/* <ProtectedRoute
           exact
           path="/admin/articles"
           component={ArticlesPage}
@@ -71,8 +71,8 @@ function App() {
           component={() => <EditTags />}
         ></ProtectedRoute>
 
-        <Route exact path="*" component={() => "404 NOT FOUND"}></Route>
-      </Switch>
+        <Route exact path="*" component={() => "404 NOT FOUND"}></Route> */}
+      </Routes>
     </div>
   );
 }
